@@ -5,7 +5,7 @@ import { FaqSection } from "@/components/marketing/FaqSection";
 import { DarkCtaBand } from "@/components/marketing/DarkCtaBand";
 import { SectionShell } from "@/components/layout/SectionShell";
 import { pageMetadata } from "@/lib/metadata";
-import { novaFeatures, novaFaq, novaDarkCta } from "@/content/nova";
+import { novaFeatures, novaFaq, novaFaqHeadline, novaDarkCta } from "@/content/nova";
 import { faqSchema } from "@/lib/schema";
 
 export const metadata: Metadata = pageMetadata.nova;
@@ -49,7 +49,7 @@ export default function NovaPage() {
       <CompareCards />
 
       {/* 4. FAQ */}
-      <FaqSection items={novaFaq} headline="Questions about Nova" />
+      <FaqSection items={novaFaq} headline={novaFaqHeadline} />
 
       {/* 5. Dark CTA */}
       <DarkCtaBand

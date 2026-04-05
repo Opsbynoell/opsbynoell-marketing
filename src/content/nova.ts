@@ -82,6 +82,8 @@ export const novaVsFullSystem = {
 
 // ── Section 4: Nova FAQ ─────────────────────────────────────────────────────────
 // Psychological job: Reduce AI skepticism and clarify practical fit
+export const novaFaqHeadline = "Questions about Nova";
+
 export const novaFaq = [
   {
     question: "Is Nova just a chatbot?",

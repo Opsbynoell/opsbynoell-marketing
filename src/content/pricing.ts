@@ -100,6 +100,8 @@ export const novaStandaloneNote = {
 
 // ── Section 4: FAQ ──────────────────────────────────────────────────────────────
 // (Also exported from src/content/faq.ts for use across pages)
+export const pricingFaqHeadline = "Common questions";
+
 export const pricingFaq = [
   {
     question: "What's included in setup?",

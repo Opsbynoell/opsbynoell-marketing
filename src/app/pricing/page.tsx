@@ -5,7 +5,7 @@ import { FaqSection } from "@/components/marketing/FaqSection";
 import { DarkCtaBand } from "@/components/marketing/DarkCtaBand";
 import { SectionShell } from "@/components/layout/SectionShell";
 import { pageMetadata } from "@/lib/metadata";
-import { pricingHero, novaStandaloneNote, pricingFaq, pricingDarkCta } from "@/content/pricing";
+import { pricingHero, novaStandaloneNote, pricingFaq, pricingFaqHeadline, pricingDarkCta } from "@/content/pricing";
 import { ROUTES } from "@/lib/constants";
 import { faqSchema } from "@/lib/schema";
 
@@ -84,7 +84,7 @@ export default function PricingPage() {
       </section>
 
       {/* 4. FAQ */}
-      <FaqSection items={pricingFaq} headline="Common questions" />
+      <FaqSection items={pricingFaq} headline={pricingFaqHeadline} />
 
       {/* 5. Dark CTA */}
       <DarkCtaBand
