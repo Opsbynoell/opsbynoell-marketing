@@ -7,6 +7,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: SITE_META.url + path,
     lastModified: now,
     changeFrequency: path === "/" ? "weekly" : "monthly",
-    priority: path === "/" ? 1 : 0.8,
+    priority: path === "/" ? 1 : path === "/systems" || path === "/verticals" ? 0.9 : 0.8,
   }));
 }

@@ -20,19 +20,19 @@ export default function PricingPage() {
       />
 
       {/* 1. Hero-lite intro */}
-      <SectionShell compact className="bg-white border-b border-[#F0F0F0]">
+      <SectionShell compact className="bg-[#FFF7F4] border-b border-[#EDE3DE]">
         <div className="max-w-2xl">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1A1A1A] tracking-tight leading-tight">
+          <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-[#1F1A1A] leading-tight">
             {pricingHero.headline}
           </h1>
-          <p className="mt-4 text-base md:text-lg text-[#4A4A4A] leading-relaxed">
+          <p className="mt-4 text-base md:text-lg text-[#6D6664] leading-relaxed">
             {pricingHero.subhead}
           </p>
-          <p className="mt-2 text-sm text-[#717171]">{pricingHero.supportingLine}</p>
+          <p className="mt-2 text-sm text-[#6D6664]">{pricingHero.supportingLine}</p>
           <div className="mt-6">
             <Link
               href={ROUTES.book}
-              className="inline-flex items-center justify-center rounded-full bg-[#E8604C] px-6 py-3 text-sm font-semibold text-white hover:bg-[#d94f3b] transition-colors"
+              className="inline-flex items-center justify-center rounded-full bg-[#6A2C3E] px-6 py-3 text-sm font-semibold text-white hover:bg-[#5a2233] transition-colors shadow-[0_2px_12px_rgba(106,44,62,0.2)]"
             >
               {pricingHero.primaryCta}
             </Link>
@@ -44,9 +44,9 @@ export default function PricingPage() {
       <PricingGrid />
 
       {/* 3. Nova standalone note — purple accent intentional */}
-      <section className="py-14 bg-white border-y border-[#F0F0F0]">
+      <section className="py-14 bg-white border-y border-[#EDE3DE]">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl md:text-2xl font-bold text-[#1A1A1A] tracking-tight mb-6">
+          <h2 className="text-xl md:text-2xl font-bold text-[#1F1A1A] tracking-tight mb-6">
             {novaStandaloneNote.headline}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -59,13 +59,13 @@ export default function PricingPage() {
                   {option.label}
                 </h3>
                 <div className="mt-1">
-                  <span className="text-2xl font-bold text-[#1A1A1A]">
+                  <span className="font-display text-2xl font-bold text-[#1F1A1A]">
                     ${option.monthlyPrice}
                   </span>
-                  <span className="text-sm text-[#717171]">/mo</span>
-                  <span className="ml-2 text-xs text-[#717171]">+ ${option.setupFee} setup</span>
+                  <span className="text-sm text-[#6D6664]">/mo</span>
+                  <span className="ml-2 text-xs text-[#6D6664]">+ ${option.setupFee} setup</span>
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-[#4A4A4A]">
+                <p className="mt-2 text-sm leading-relaxed text-[#6D6664]">
                   {option.description}
                 </p>
               </div>

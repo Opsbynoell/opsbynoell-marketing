@@ -11,18 +11,21 @@ export default function BookPage() {
   return (
     <>
       {/* 1. Reassurance intro — reduce vulnerability before the calendar */}
-      <SectionShell compact className="bg-white border-b border-[#F0F0F0]">
+      <SectionShell compact className="bg-[#FFF7F4] border-b border-[#EDE3DE]">
         <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1A1A1A] tracking-tight leading-tight">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[#6D6664] mb-4">
+            Free Audit
+          </p>
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-[#1F1A1A] leading-tight">
             {reassuranceIntro.headline}
           </h1>
-          <p className="mt-4 text-base md:text-lg text-[#4A4A4A] leading-relaxed">
+          <p className="mt-4 text-base md:text-lg text-[#6D6664] leading-relaxed">
             {reassuranceIntro.subhead}
           </p>
-          <p className="mt-3 text-sm font-medium text-[#E8604C]">
+          <p className="mt-3 text-sm font-medium text-[#6A2C3E]">
             {reassuranceIntro.reassuranceLine}
           </p>
-          <p className="mt-1 text-sm text-[#717171]">
+          <p className="mt-1 text-sm text-[#6D6664]">
             {reassuranceIntro.trustLine}
           </p>
         </div>

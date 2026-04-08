@@ -5,46 +5,49 @@ import { SectionShell } from "@/components/layout/SectionShell";
 
 export function CaseStudySection() {
   return (
-    <SectionShell className="bg-[#FAFAF9]">
+    <SectionShell className="bg-[#FFF7F4]">
       <div className="max-w-4xl mx-auto">
         {/* Eyebrow */}
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#E8604C] mb-4 text-center">
+        <p className="text-xs font-semibold uppercase tracking-widest text-[#6D6664] mb-4 text-center">
           {caseStudySection.eyebrow}
         </p>
 
-        {/* Card Spotlight — spotlight effect via CSS radial gradient on hover */}
-        <div className="group relative rounded-3xl bg-white border border-[#E8E8E8] p-8 md:p-10 overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-          {/* Subtle background highlight */}
+        {/* Card with spotlight hover */}
+        <div className="group relative rounded-3xl bg-white border border-[#EDE3DE] p-8 md:p-10 overflow-hidden shadow-[0_2px_16px_rgba(31,26,26,0.06)] hover:shadow-[0_8px_32px_rgba(31,26,26,0.1)] transition-shadow duration-300">
+          {/* Hover highlight */}
           <div
             className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             style={{
               background:
-                "radial-gradient(600px circle at 50% 0%, rgba(232,96,76,0.04) 0%, transparent 70%)",
+                "radial-gradient(600px circle at 50% 0%, rgba(106,44,62,0.03) 0%, transparent 70%)",
             }}
           />
 
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1A1A1A] tracking-tight">
+          {/* Left accent bar */}
+          <div className="absolute left-0 top-10 bottom-10 w-0.5 bg-gradient-to-b from-[#F0E4E8] via-[#6A2C3E]/30 to-[#F0E4E8] rounded-full" />
+
+          <h2 className="text-2xl md:text-3xl font-bold text-[#1F1A1A] tracking-tight">
             {caseStudySection.headline}
           </h2>
-          <p className="mt-3 text-base text-[#4A4A4A] leading-relaxed max-w-2xl">
+          <p className="mt-3 text-base text-[#6D6664] leading-relaxed max-w-2xl">
             {caseStudySection.subhead}
           </p>
 
           {/* Before / After */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-xl bg-[#FAFAF9] border border-[#F0F0F0] p-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#717171] mb-2">
+            <div className="rounded-xl bg-[#FAF5F0] border border-[#EDE3DE] p-5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#6D6664] mb-2">
                 Before
               </p>
-              <p className="text-sm leading-relaxed text-[#4A4A4A]">
+              <p className="text-sm leading-relaxed text-[#6D6664]">
                 {caseStudySection.before}
               </p>
             </div>
-            <div className="rounded-xl bg-[#FFF0F5] border border-[#E8604C]/15 p-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#E8604C] mb-2">
+            <div className="rounded-xl bg-[#F0E4E8] border border-[#6A2C3E]/15 p-5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#6A2C3E] mb-2">
                 After
               </p>
-              <p className="text-sm leading-relaxed text-[#4A4A4A]">
+              <p className="text-sm leading-relaxed text-[#1F1A1A]">
                 {caseStudySection.after}
               </p>
             </div>
@@ -55,9 +58,9 @@ export function CaseStudySection() {
             {caseStudySection.metrics.map((metric) => (
               <li
                 key={metric}
-                className="flex items-center gap-2 rounded-full bg-[#E8604C]/8 px-4 py-2 text-sm font-medium text-[#E8604C]"
+                className="flex items-center gap-2 rounded-full bg-[#6A2C3E]/8 px-4 py-2 text-sm font-medium text-[#6A2C3E]"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#E8604C]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#6A2C3E]" />
                 {metric}
               </li>
             ))}
@@ -66,8 +69,8 @@ export function CaseStudySection() {
           {/* CTA */}
           <div className="mt-8">
             <Link
-              href={ROUTES.services}
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#E8604C] hover:text-[#d94f3b] transition-colors"
+              href={ROUTES.systems}
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#6A2C3E] hover:text-[#5a2233] transition-colors"
             >
               {caseStudySection.cta}
               <span aria-hidden>→</span>

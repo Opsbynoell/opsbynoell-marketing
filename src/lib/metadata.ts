@@ -35,11 +35,17 @@ export const pageMetadata = {
     description: SITE_META.description,
     path: ROUTES.home,
   }),
-  services: buildMetadata({
-    title: "Services — " + SITE_META.name,
+  systems: buildMetadata({
+    title: "Systems — " + SITE_META.name,
     description:
-      "The 6 systems that keep leads moving and calendars full. Missed call recovery, Nova AI, reminders, reviews, lead follow-up, and reactivation.",
-    path: ROUTES.services,
+      "The eight operational systems that keep leads from slipping, calendars full, and follow-up consistent. Built, installed, and managed for service businesses.",
+    path: ROUTES.systems,
+  }),
+  verticals: buildMetadata({
+    title: "Who We Work With — " + SITE_META.name,
+    description:
+      "Ops by Noell works with med spas, salons, massage therapists, dental offices, HVAC, home services, and pool services. See if your industry is a fit.",
+    path: ROUTES.verticals,
   }),
   pricing: buildMetadata({
     title: "Pricing — " + SITE_META.name,

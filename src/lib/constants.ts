@@ -1,38 +1,42 @@
 // ─── Brand Colors ──────────────────────────────────────────────────────────────
 export const COLORS = {
-  // Primary accent — used site-wide for CTAs, highlights, links
-  coral: "#E8604C",
+  // Primary accent — wine/oxblood, used site-wide for CTAs, highlights, links
+  wine: "#6A2C3E",
+  wineHover: "#5a2233",
   // Secondary accent — Nova sections ONLY
   purple: "#7C5CFC",
   // Backgrounds
-  white: "#FFFFFF",
-  nearBlack: "#0F0F0F",       // Dark CTA band surface (not pure black)
-  offWhite: "#FAFAF9",
+  bg: "#FAF5F0",
+  bgWarm: "#FFF7F4",
+  blush: "#F0E4E8",
+  palePink: "#E8D0D6",
+  lilac: "#E0D4E8",
+  silver: "#C8C4C0",
+  dark: "#171415",
   // Text
-  textPrimary: "#1A1A1A",
-  textSecondary: "#4A4A4A",
-  textMuted: "#717171",
+  textPrimary: "#1F1A1A",
+  textSecondary: "#3D3535",
+  textMuted: "#6D6664",
   // Borders
-  borderLight: "#E8E8E8",
-  borderSubtle: "#F0F0F0",
+  border: "#EDE3DE",
+  borderLight: "#F5EFEB",
 } as const;
 
 // ─── Gradient Values ────────────────────────────────────────────────────────────
 export const GRADIENTS = {
   // Hero section gradient — blush pink to soft lavender
   hero: "linear-gradient(135deg, #FFF0F5 0%, #EDE5FF 100%)",
-  // Fallback options (in priority order)
-  heroFallback1: "linear-gradient(135deg, #FFF0F3 0%, #FFE0E6 100%)",
-  heroFallback2: "linear-gradient(135deg, #F5F0FF 0%, #EDE5FF 100%)",
+  heroAlt: "linear-gradient(135deg, #FFF3F6 0%, #F3ECFF 100%)",
   // Dark CTA band
-  darkCtaBand: "#0F0F0F",
+  darkCtaBand: "#171415",
   // Subtle section tint
-  sectionTint: "linear-gradient(180deg, #FAFAF9 0%, #FFFFFF 100%)",
+  sectionTint: "linear-gradient(180deg, #FAF5F0 0%, #FFF7F4 100%)",
 } as const;
 
 // ─── Typography ─────────────────────────────────────────────────────────────────
 export const TYPOGRAPHY = {
-  fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+  fontSans: "Inter, system-ui, -apple-system, sans-serif",
+  fontDisplay: "'Playfair Display', Georgia, serif",
   // Scale
   displayXl: "text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight",
   displayLg: "text-4xl md:text-5xl font-bold leading-tight tracking-tight",
@@ -50,7 +54,9 @@ export const TYPOGRAPHY = {
 // ─── Route Map ──────────────────────────────────────────────────────────────────
 export const ROUTES = {
   home: "/",
-  services: "/services",
+  systems: "/systems",
+  verticals: "/verticals",
+  services: "/services",   // kept for redirect
   pricing: "/pricing",
   nova: "/nova",
   about: "/about",
@@ -58,14 +64,16 @@ export const ROUTES = {
 } as const;
 
 export const ROUTE_REDIRECTS = {
-  "/solutions": "/services",
-  "/industries": "/services",
+  "/services": "/systems",
+  "/solutions": "/systems",
+  "/industries": "/verticals",
 } as const;
 
 // ─── Page Order ─────────────────────────────────────────────────────────────────
 export const PAGE_ORDER = [
   ROUTES.home,
-  ROUTES.services,
+  ROUTES.systems,
+  ROUTES.verticals,
   ROUTES.pricing,
   ROUTES.nova,
   ROUTES.about,

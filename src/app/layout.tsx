@@ -39,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body className="min-h-full flex flex-col bg-white text-[#1A1A1A]">
+      <body className="min-h-full flex flex-col bg-[#FAF5F0] text-[#1F1A1A]">
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

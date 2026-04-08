@@ -13,13 +13,20 @@ export function NovaSpotlight() {
         background: "linear-gradient(135deg, #F5F0FF 0%, #EDE5FF 100%)",
       }}
     >
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+      {/* Decorative orb */}
+      <div
+        className="pointer-events-none absolute -top-24 right-1/4 w-72 h-72 rounded-full opacity-30"
+        style={{ background: "radial-gradient(circle, #7C5CFC 0%, transparent 70%)" }}
+        aria-hidden
+      />
+
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center relative">
         {/* Nova pill badge */}
         <motion.span
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-1.5 rounded-full bg-[#7C5CFC]/10 px-4 py-1.5 text-xs font-semibold text-[#7C5CFC] mb-5"
+          className="inline-flex items-center gap-1.5 rounded-full bg-[#7C5CFC]/10 border border-[#7C5CFC]/20 px-4 py-1.5 text-xs font-semibold text-[#7C5CFC] mb-5"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[#7C5CFC]" />
           Nova AI
@@ -29,7 +36,7 @@ export function NovaSpotlight() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.06 }}
-          className="text-4xl sm:text-5xl font-bold leading-tight tracking-tight text-[#1A1A1A]"
+          className="font-display text-4xl sm:text-5xl font-bold leading-tight text-[#1F1A1A]"
         >
           {novaSpotlight.headline}
         </motion.h1>
@@ -38,7 +45,7 @@ export function NovaSpotlight() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.14 }}
-          className="mt-5 text-base md:text-lg text-[#4A4A4A] leading-relaxed max-w-2xl mx-auto"
+          className="mt-5 text-base md:text-lg text-[#6D6664] leading-relaxed max-w-2xl mx-auto"
         >
           {novaSpotlight.subhead}
         </motion.p>
@@ -60,7 +67,7 @@ export function NovaSpotlight() {
         >
           <Link
             href={ROUTES.book}
-            className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-[#7C5CFC] px-7 py-3.5 text-sm font-semibold text-white hover:bg-[#6b4de8] transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-[#7C5CFC] px-7 py-3.5 text-sm font-semibold text-white hover:bg-[#6b4de8] transition-colors shadow-[0_2px_12px_rgba(124,92,252,0.3)]"
           >
             {novaSpotlight.primaryCta}
           </Link>

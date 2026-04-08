@@ -7,7 +7,7 @@ export function CompareCards() {
   return (
     <SectionShell className="bg-white">
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-[#1A1A1A] tracking-tight mb-8 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold text-[#1F1A1A] tracking-tight mb-8 text-center">
           {novaVsFullSystem.headline}
         </h2>
 
@@ -21,15 +21,15 @@ export function CompareCards() {
                 {option.label}
               </h3>
               <div className="mt-2">
-                <span className="text-2xl font-bold text-[#1A1A1A]">
+                <span className="font-display text-2xl font-bold text-[#1F1A1A]">
                   ${option.monthlyPrice}
                 </span>
-                <span className="text-sm text-[#717171]">/mo</span>
-                <span className="ml-2 text-xs text-[#717171]">
+                <span className="text-sm text-[#6D6664]">/mo</span>
+                <span className="ml-2 text-xs text-[#6D6664]">
                   + ${option.setupFee} setup
                 </span>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-[#4A4A4A]">
+              <p className="mt-3 text-sm leading-relaxed text-[#6D6664]">
                 {option.bestFor}
               </p>
             </div>
