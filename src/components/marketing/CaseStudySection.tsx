@@ -26,7 +26,7 @@ export function CaseStudySection() {
           {/* Left accent bar */}
           <div className="absolute left-0 top-10 bottom-10 w-0.5 bg-gradient-to-b from-[#F0E4E8] via-[#6A2C3E]/30 to-[#F0E4E8] rounded-full" />
 
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1F1A1A] tracking-tight">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-[#1F1A1A] tracking-tight">
             {caseStudySection.headline}
           </h2>
           <p className="mt-3 text-base text-[#6D6664] leading-relaxed max-w-2xl">

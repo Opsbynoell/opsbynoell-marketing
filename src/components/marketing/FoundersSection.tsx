@@ -10,7 +10,7 @@ export function FoundersSection() {
           <p className="text-xs font-semibold uppercase tracking-widest text-[#6D6664] mb-3">
             Who We Are
           </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1F1A1A] tracking-tight">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-[#1F1A1A] tracking-tight">
             {foundersSection.headline}
           </h2>
           <p className="mt-3 text-base text-[#6D6664] leading-relaxed max-w-2xl">

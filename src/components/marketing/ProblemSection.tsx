@@ -7,7 +7,7 @@ export function ProblemSection() {
       <div className="max-w-3xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1F1A1A] tracking-tight">
+          <h2 className="font-display text-2xl md:text-3xl font-bold text-[#1F1A1A] tracking-tight">
             {problemSection.headline}
           </h2>
           <p className="mt-3 text-base text-[#6D6664] leading-relaxed">
