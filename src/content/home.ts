@@ -146,8 +146,9 @@ export const foundersSection = {
 // Component: CTA Section (dark variant)
 // Psychological job: Final low-friction action step
 export const darkCtaSection = {
-  headline: "Stop losing clients you never knew about.",
-  subhead: "We'll show you exactly where the leak is and what to fix first.",
+  headline: "Every missed call is a booking you'll never see.",
+  subhead:
+    "We'll audit your front desk in one conversation — and show you exactly where appointments are disappearing.",
   primaryCta: CTA.primary,
-  reassurance: "No-pitch conversation. Clear next steps.",
+  reassurance: "Free audit. No pitch. Clear next steps.",
 };
