@@ -22,9 +22,10 @@ export async function generateMetadata({
   const vertical = verticals.find((v) => v.id === slug);
   if (!vertical) return {};
   return buildMetadata({
-    title: `${vertical.title} — Ops by Noell`,
-    description: vertical.corePain.slice(0, 155),
+    title: vertical.meta.title,
+    description: vertical.meta.description,
     path: `/verticals/${slug}`,
+    ogImage: vertical.meta.ogImage,
   });
 }
 

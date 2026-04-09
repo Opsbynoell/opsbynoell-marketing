@@ -35,6 +35,12 @@ export const verticals = [
     id: "med-spas",
     title: "Med Spas",
     eyebrow: "Medical Aesthetics",
+    meta: {
+      title: "Med Spa Systems — Ops by Noell",
+      description:
+        "Missed consult inquiries and slow follow-up cost med spas real revenue. We build the systems that respond fast, reduce no-shows, and grow your reviews automatically.",
+      ogImage: "/og-verticals-med-spas.jpg",
+    },
     cardPain: "High-value leads do not wait. When consult inquiries sit too long, the booking disappears before your team ever gets to it.",
     corePain:
       "High-value leads don't wait. A Botox or filler inquiry that gets no response in the first hour is usually lost. The consult volume you could be doing isn't showing up because the lead follow-up isn't consistent.",
@@ -61,6 +67,12 @@ export const verticals = [
     id: "salons",
     title: "Salons",
     eyebrow: "Hair & Beauty",
+    meta: {
+      title: "Salon Automation Systems — Ops by Noell",
+      description:
+        "When the phone rings mid-service and no one answers, the booking goes to a competitor. We build the response and reminder systems that keep your salon's calendar full.",
+      ogImage: "/og-verticals-salons.jpg",
+    },
     cardPain: "When the phone rings during a service and no one answers, the lead usually books somewhere else.",
     corePain:
       "You built this so you could do great work, not return voicemails at 9 PM. But the phone is still ringing while you're with a client, and those missed calls are walking out the door.",
@@ -86,6 +98,12 @@ export const verticals = [
     id: "massage-therapists",
     title: "Massage Therapists",
     eyebrow: "Therapeutic & Wellness",
+    meta: {
+      title: "Massage Practice Systems — Ops by Noell",
+      description:
+        "Solo and small massage practices lose revenue to missed calls and no-shows. We install systems that respond when you are in session and keep the schedule consistent.",
+      ogImage: "/og-verticals-massage-therapists.jpg",
+    },
     cardPain: "You are in session when the call comes in. By the time you check it, the money is already gone.",
     corePain:
       "You're in session when the phone rings. By the time you check it, the lead is gone. And because you're a solo or small practice, every no-show directly hits your income.",
@@ -111,6 +129,12 @@ export const verticals = [
     id: "dental-offices",
     title: "Dental Offices",
     eyebrow: "Dental & Oral Health",
+    meta: {
+      title: "Dental Office Automation — Ops by Noell",
+      description:
+        "Overloaded front desks, slipping recalls, and cold leads cost dental offices consistent revenue. We build the follow-up systems that close that gap without adding headcount.",
+      ogImage: "/og-verticals-dental-offices.jpg",
+    },
     cardPain: "The front desk is overloaded, recalls slip, and patients who meant to come back quietly disappear.",
     corePain:
       "The front desk is overloaded, recalls are slipping, and no one has time to chase every lead or reactivation. The operational gap is in the follow-up — not the clinical work.",
@@ -138,6 +162,12 @@ export const verticals = [
     id: "hvac",
     title: "HVAC",
     eyebrow: "Heating & Cooling",
+    meta: {
+      title: "HVAC Business Systems — Ops by Noell",
+      description:
+        "In busy season, the fastest callback wins. We build the missed call recovery and lead follow-up systems that help HVAC businesses respond first — before the lead is gone.",
+      ogImage: "/og-verticals-hvac.jpg",
+    },
     cardPain: "In busy season, the fastest callback wins. If the phone goes to voicemail, that job is usually gone.",
     corePain:
       "Demand is high in season, but leads call multiple contractors at once. The fastest callback wins. If your team is on a job and the phone goes to voicemail, that lead is gone.",
@@ -163,6 +193,12 @@ export const verticals = [
     id: "home-services",
     title: "Home Services",
     eyebrow: "Home & Property",
+    meta: {
+      title: "Home Services Automation — Ops by Noell",
+      description:
+        "When the crew is on-site and the phone is ringing, leads slip. We build the systems that catch calls, follow up on estimates, and bring past clients back without manual work.",
+      ogImage: "/og-verticals-home-services.jpg",
+    },
     cardPain: "When estimates, callbacks, and follow-up depend on memory, too many jobs fall through the cracks.",
     corePain:
       "Landscaping, cleaning, pest control, painting — businesses where the crew is working and the phone is ringing at the same time. Every missed call is a job that went to a competitor.",
@@ -188,6 +224,12 @@ export const verticals = [
     id: "pool-services",
     title: "Pool Services",
     eyebrow: "Pool & Outdoor",
+    meta: {
+      title: "Pool Service Systems — Ops by Noell",
+      description:
+        "Seasonal demand spikes and recurring service gaps create the same risk: lost leads and missed revenue. We build the systems that handle both without adding overhead.",
+      ogImage: "/og-verticals-pool-services.jpg",
+    },
     cardPain: "Seasonal spikes create chaos fast. Without systems, new inquiries and repeat-service opportunities get lost at the same time.",
     corePain:
       "Seasonal demand, recurring service routes, and new customer leads all happening at once. The operational chaos of spring startup is where revenue slips the most.",
