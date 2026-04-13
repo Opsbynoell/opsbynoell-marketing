@@ -15,7 +15,7 @@ import CTA from "@/components/cta";
 export const metadata: Metadata = {
   title: "Book Your Free Audit — Ops by Noell",
   description:
-    "15 minutes. No pitch, no pressure. See exactly where leads are falling through and what a system could recover.",
+    "30 minutes. No pitch, no pressure. See exactly where leads are falling through and what a system could recover.",
 };
 
 const steps = [
@@ -24,7 +24,7 @@ const steps = [
     number: "01",
     title: "Pick a time",
     detail:
-      "Choose a 15-minute slot on Noell's calendar. You'll get a confirmation text immediately and a reminder the day before.",
+      "Choose a 30-minute slot on Noell's calendar. You'll get a confirmation text immediately and a reminder the day before.",
   },
   {
     icon: <IconClipboardCheck size={24} />,
@@ -55,8 +55,8 @@ const afterSteps = [
   },
   {
     icon: <IconPhoneCall size={18} />,
-    title: "Quick call, clear map",
-    detail: "15 focused minutes with a written follow-up afterward.",
+    title: "Focused call, clear map",
+    detail: "30 focused minutes with a written follow-up afterward.",
   },
 ];
 
@@ -98,14 +98,14 @@ export default function BookPage() {
           </span>
         </h1>
         <p className="relative z-20 mt-6 max-w-xl text-center text-charcoal/70 text-base md:text-lg leading-relaxed">
-          15 minutes. No pitch, no pressure. We look at where leads are falling
+          30 minutes. No pitch, no pressure. We look at where leads are falling
           through, how your follow-up works today, and what a system could
           recover.
         </p>
         <div className="relative z-20 mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-charcoal/50">
           <span>Free &amp; no obligation</span>
           <span>·</span>
-          <span>15 minutes, max</span>
+          <span>30 minutes, focused</span>
           <span>·</span>
           <span>Instant confirmation</span>
         </div>
@@ -121,7 +121,7 @@ export default function BookPage() {
             <h2 className="font-serif text-3xl md:text-5xl font-semibold text-charcoal leading-tight">
               Three steps.{" "}
               <span className="italic bg-gradient-to-b from-wine to-wine-light bg-clip-text text-transparent">
-                Done in 15 minutes.
+                Done in 30 minutes.
               </span>
             </h2>
           </div>
@@ -166,7 +166,7 @@ export default function BookPage() {
             </div>
 
             <div className="p-6 md:p-8">
-              {/* Real embed scaffold — replace src with live GHL/Calendly URL */}
+              {/* Real embed scaffold — replace src with live scheduler URL */}
               <div
                 className="relative rounded-2xl overflow-hidden border border-warm-border bg-cream"
                 style={{ height: "640px" }}
@@ -185,7 +185,7 @@ export default function BookPage() {
                       <code className="text-wine">
                         NEXT_PUBLIC_BOOKING_URL
                       </code>{" "}
-                      in env to wire live GHL/Calendly.
+                      in env to wire the live scheduler.
                     </p>
                   </div>
                 </div>
@@ -233,7 +233,7 @@ export default function BookPage() {
         faqs={bookFaqs}
       />
 
-      {/* Soft exit: Nova fallback */}
+      {/* Soft exit: Noell Support fallback */}
       <section className="px-4 pb-20">
         <div className="max-w-3xl mx-auto rounded-[22px] border border-warm-border bg-cream-dark p-8 text-center">
           <p className="text-[11px] uppercase tracking-[0.2em] text-lilac-dark mb-3 inline-flex items-center gap-2">
@@ -241,16 +241,16 @@ export default function BookPage() {
             Not ready to book?
           </p>
           <h3 className="font-serif text-2xl md:text-3xl font-semibold text-charcoal mb-3">
-            Ask Nova a question first.
+            Ask Noell Support a question first.
           </h3>
           <p className="text-sm text-charcoal/60 max-w-md mx-auto mb-6">
-            Nova is the first-response assistant. Pop open the chat in the
-            bottom-right and ask anything — she routes to Noell when you're
-            ready.
+            Noell Support is the new-prospect intake layer. Pop open the chat
+            in the bottom-right and ask anything — it routes to Noell when
+            you&apos;re ready.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button href="/nova" variant="lilac" className="h-11 px-6">
-              See what Nova does
+            <Button href="/noell-support" variant="lilac" className="h-11 px-6">
+              See what Noell Support does
             </Button>
             <Button href="/" variant="secondary" className="h-11 px-6">
               Back to home
@@ -264,7 +264,7 @@ export default function BookPage() {
         headlineStart="The audit is"
         headlineAccent="waiting when you are."
         body="You can always come back. We don't chase, and we don't add you to a list."
-        trustLine="Free · 15 minutes · Instant confirmation"
+        trustLine="Free · 30 minutes · Instant confirmation"
       />
     </div>
   );

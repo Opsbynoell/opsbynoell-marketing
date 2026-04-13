@@ -48,7 +48,6 @@ export function Features2({
 }) {
   return (
     <section
-      id="systems"
       className="w-full max-w-7xl mx-auto rounded-3xl bg-charcoal px-6 py-20 md:py-28 my-10 md:my-20"
     >
       <div className="text-center mb-14 max-w-3xl mx-auto">

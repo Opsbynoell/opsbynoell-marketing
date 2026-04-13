@@ -15,92 +15,92 @@ import CTA from "@/components/cta";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Nova Prospect — AI First-Response Assistant — Ops by Noell",
+  title: "Noell Support — New Prospect Intake — Ops by Noell",
   description:
-    "Nova Prospect handles first response, qualification, contact capture, routing, and booking-link handoff. Not a full AI front desk — the fastest first response you've ever had.",
+    "Noell Support handles first response, qualification, contact capture, routing, and booking-link handoff. The new-prospect intake layer of the Noell system.",
 };
 
-const novaStats = [
+const supportStats = [
   { value: "<10s", label: "First response", detail: "average text/chat reply" },
   { value: "94%", label: "Qualified", detail: "leads captured with contact" },
-  { value: "0", label: "Dropped", detail: "leads in Nova-watched hours" },
+  { value: "0", label: "Dropped", detail: "leads in covered hours" },
   { value: "24/7", label: "On", detail: "even at 11pm on a Saturday" },
 ];
 
-const novaCapabilities = [
+const supportCapabilities = [
   {
     icon: <IconBolt size={22} />,
     title: "First response",
     description:
-      "When a call goes unanswered or a chat opens, Nova responds in under ten seconds with a warm, on-brand message.",
+      "When a call goes unanswered or a chat opens, Noell Support responds in under ten seconds with a warm, on-brand message.",
   },
   {
     icon: <IconListCheck size={22} />,
     title: "Qualification",
     description:
-      "Nova asks the right questions — service type, timing, urgency — to understand what the prospect actually needs.",
+      "Noell Support asks the right questions — service type, timing, urgency — to understand what the prospect actually needs.",
   },
   {
     icon: <IconAddressBook size={22} />,
     title: "Contact capture",
     description:
-      "Name, phone, email, service interest. Nova collects what you need and logs it straight into your system.",
+      "Name, phone, email, service interest. Noell Support collects what you need and logs it straight into your dashboard.",
   },
   {
     icon: <IconRoute size={22} />,
-    title: "Routing",
+    title: "Smart routing",
     description:
-      "Different service? Different location? Nova routes the conversation to the right person or workflow automatically.",
+      "Different service? Different location? Noell Support routes the conversation to the right person or workflow automatically.",
   },
   {
     icon: <IconLink size={22} />,
     title: "Booking-link handoff",
     description:
-      "When the prospect is ready, Nova shares your scheduling link so they can book directly. No back-and-forth.",
+      "When the prospect is ready, Noell Support shares your scheduling link so they can book directly. No back-and-forth.",
   },
   {
     icon: <IconUserCheck size={22} />,
     title: "Human handoff",
     description:
-      "Anything Nova can't resolve escalates to you immediately with full context. You pick up right where she left off.",
+      "Anything Noell Support can't resolve escalates to you immediately with full context. You pick up right where it left off.",
   },
 ];
 
-const novaFaqs = [
+const supportFaqs = [
   {
-    question: "Is Nova a full AI receptionist?",
+    question: "Is Noell Support a full AI receptionist?",
     answer:
-      "No, and we're careful about that line. Nova Prospect is a first-response assistant. It handles the critical first minutes — responding, qualifying, capturing, routing, handing off. A full AI front desk is a separate product track.",
+      "No, and we're careful about that line. Noell Support is the new-prospect intake layer. It handles the critical first minutes — responding, qualifying, capturing, routing, handing off. Noell Front Desk is the separate operations layer that handles calls, scheduling, and reminders.",
   },
   {
-    question: "Where does Nova live?",
+    question: "Where does Noell Support live?",
     answer:
-      "Embedded on your website (the purple launcher bottom-right) and wired into your missed-call recovery flow. The same assistant handles chat and post-missed-call SMS replies.",
+      "Embedded on your website (the launcher bottom-right) and wired into your missed-call recovery flow. The same assistant handles website chat and post-missed-call SMS replies.",
   },
   {
-    question: "Can I customize what Nova says?",
+    question: "Can I customize what Noell Support says?",
     answer:
       "Yes. During install, we write the opening message, starter chips, qualification questions, and handoff copy in your voice. Updates are included in managed ops.",
   },
   {
-    question: "What happens if Nova gets asked something unusual?",
+    question: "What happens if Noell Support gets asked something unusual?",
     answer:
-      "Nova escalates. Anything outside her scripted scope goes to you with full transcript + context. She never makes up answers. That's the entire point of honest positioning.",
+      "Noell Support escalates. Anything outside its scripted scope goes to you with full transcript + context. It never makes up answers. That's the entire point of honest positioning.",
   },
   {
-    question: "How is this different from Nova Front Desk?",
+    question: "How is this different from Noell Front Desk?",
     answer:
-      "Nova Front Desk is a separate, deeper product track that handles calendar management, rescheduling, and more autonomous operation. It is not the same as Nova Prospect and we do not blur the two.",
+      "Noell Front Desk is the operations layer of the system — calls, scheduling, confirmations, reminders, reschedules, review capture, and reactivation. Noell Support is the entry layer for new prospects. They run together, but they are distinct agents in the Noell system.",
   },
 ];
 
-const novaScreen = (
+const supportScreen = (
   <div className="flex w-full flex-col items-stretch px-3">
     <div className="flex justify-between items-center w-full px-2 pb-2">
       <div className="flex items-center gap-1.5">
         <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
         <span className="text-xs text-charcoal/70 font-medium">
-          Nova · Online
+          Noell Support · Online
         </span>
       </div>
       <span className="text-[10px] uppercase tracking-widest text-charcoal/40">
@@ -108,9 +108,9 @@ const novaScreen = (
       </span>
     </div>
 
-    {/* Nova greeting */}
+    {/* Support greeting */}
     <div className="bg-white rounded-2xl rounded-bl-md p-3 mx-1 border border-warm-border/60 shadow-sm text-[11px] text-charcoal leading-snug">
-      Hi — I'm Nova. Looking to book or ask a question?
+      Hi — I&apos;m Noell Support. Looking to book or ask a question?
     </div>
 
     {/* Visitor reply */}
@@ -120,10 +120,10 @@ const novaScreen = (
       </div>
     </div>
 
-    {/* Nova qualification */}
+    {/* Support qualification */}
     <div className="bg-white rounded-2xl rounded-bl-md p-3 mx-1 mt-2 border border-warm-border/60 shadow-sm text-[11px] text-charcoal leading-snug">
-      That's exactly what we solve. Can I grab your name and best number? I'll
-      route this to Noell.
+      That&apos;s exactly what we solve. Can I grab your name and best number?
+      I&apos;ll route this to Noell.
     </div>
 
     {/* Handoff indicator */}
@@ -135,30 +135,30 @@ const novaScreen = (
   </div>
 );
 
-export default function NovaPage() {
+export default function NoellSupportPage() {
   return (
     <div>
       <Hero
         variant="lilac"
-        eyebrow="Nova Prospect · First-response assistant"
+        eyebrow="Noell Support · New prospect intake"
         headlineLine1Start="Your first"
         headlineLine1Accent="response."
         headlineLine2Start="Not your"
         headlineLine2Accent="whole front desk."
-        body="Nova Prospect catches the leads you can't get to. Responds instantly, qualifies the prospect, captures their info, routes them, and hands them off to you or your booking link."
-        footnote="Not Nova Front Desk. Not an autonomous receptionist. The fastest first response you've ever had."
-        primaryCta={{ label: "Get Nova on your site", href: "/book" }}
-        secondaryCta={{ label: "Try the demo chat", href: "#capabilities" }}
-        mockScreen={novaScreen}
+        body="Noell Support catches the prospects you can't get to. Responds instantly, qualifies the lead, captures their info, routes them, and hands them off to you or your booking link."
+        footnote="Noell Support is the entry layer of the Noell system. Noell Front Desk runs operations. Noell Care looks after existing clients."
+        primaryCta={{ label: "Get Noell Support on your site", href: "/book" }}
+        secondaryCta={{ label: "See the capabilities", href: "#capabilities" }}
+        mockScreen={supportScreen}
       />
 
-      {/* Nova stats */}
+      {/* Stats */}
       <Features
-        eyebrow="What Nova catches"
+        eyebrow="What Noell Support catches"
         headlineStart="Every lead gets"
         headlineAccent="a response."
-        body="The numbers we watch on a live Nova install."
-        stats={novaStats}
+        body="The numbers we watch on a live Noell Support install."
+        stats={supportStats}
         accent="lilac"
       />
 
@@ -167,7 +167,7 @@ export default function NovaPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14 max-w-3xl mx-auto">
             <p className="text-[11px] uppercase tracking-[0.25em] text-lilac-dark mb-4">
-              What Nova does
+              What Noell Support does
             </p>
             <h2 className="font-serif text-3xl md:text-5xl font-semibold text-charcoal leading-tight">
               Six things,{" "}
@@ -176,14 +176,14 @@ export default function NovaPage() {
               </span>
             </h2>
             <p className="mt-5 text-charcoal/60 max-w-xl mx-auto">
-              Nova Prospect is not trying to be everything. It handles the
-              critical first minutes of every lead — the window where most
-              revenue is lost.
+              Noell Support is not trying to be everything. It handles the
+              critical first minutes of every new prospect — the window where
+              most revenue is lost.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {novaCapabilities.map((cap, i) => (
+            {supportCapabilities.map((cap, i) => (
               <div
                 key={i}
                 className={cn(
@@ -218,12 +218,13 @@ export default function NovaPage() {
             Honest positioning
           </p>
           <h2 className="font-serif text-3xl md:text-5xl font-semibold text-cream leading-tight">
-            First response,{" "}
+            Prospect intake,{" "}
             <span className="italic text-lilac">not full front desk.</span>
           </h2>
           <p className="mt-5 text-cream/50 max-w-xl mx-auto">
-            Nova Prospect handles the first minutes. A complete AI front desk
-            is a separate product track — and we'll tell you when it's ready.
+            Noell Support handles the first minutes with new prospects. Noell
+            Front Desk is the separate operations layer that handles calls,
+            scheduling, and everything a receptionist runs.
           </p>
         </div>
 
@@ -231,7 +232,7 @@ export default function NovaPage() {
           {/* Does */}
           <div className="rounded-[17px] border border-lilac-dark/30 bg-lilac-dark/10 p-6 md:p-7">
             <p className="text-[10px] uppercase tracking-[0.2em] text-lilac mb-4 font-semibold">
-              Nova Prospect does
+              Noell Support does
             </p>
             <ul className="space-y-3">
               {[
@@ -256,7 +257,7 @@ export default function NovaPage() {
           {/* Does Not */}
           <div className="rounded-[17px] border border-white/10 bg-white/[0.04] p-6 md:p-7">
             <p className="text-[10px] uppercase tracking-[0.2em] text-cream/40 mb-4 font-semibold">
-              Nova Prospect does not
+              Noell Support does not
             </p>
             <ul className="space-y-3">
               {[
@@ -265,7 +266,7 @@ export default function NovaPage() {
                 "Process payments",
                 "Replace your staff",
                 "Run fully autonomously",
-                "Pretend to be Nova Front Desk",
+                "Pretend to be Noell Front Desk",
               ].map((item) => (
                 <li
                   key={item}
@@ -281,27 +282,27 @@ export default function NovaPage() {
 
         <div className="max-w-3xl mx-auto mt-8 rounded-[17px] bg-lilac-dark/20 border border-lilac-dark/30 px-6 py-4 text-center">
           <p className="text-sm text-cream/85">
-            <span className="font-semibold text-cream">Nova Front Desk</span> is
-            a separate product track, not a marketing rebrand. If you need full
-            front-desk automation, we'll tell you when it's live.
+            <span className="font-semibold text-cream">Noell Front Desk</span>{" "}
+            is the operations layer of the Noell system. If you need the full
+            front-desk workflow, it layers on top of Noell Support.
           </p>
         </div>
       </section>
 
-      {/* Relief — what life looks like with Nova */}
+      {/* Relief — what life looks like */}
       <Features3
         accent="lilac"
         eyebrow="What it feels like"
         headlineStart="You stop worrying"
         headlineAccent="about the phone."
-        body="Nova runs in the background. You do the work in front of you. Leads still get caught."
+        body="Noell Support runs in the background. You do the work in front of you. Leads still get caught."
         capabilities={[
           {
             icon: <IconBolt size={28} />,
             number: "01",
             title: "Never miss the first minute",
             description:
-              "The moment someone reaches out, Nova is already talking to them. No more dead windows.",
+              "The moment someone reaches out, Noell Support is already talking to them. No more dead windows.",
             points: [
               "<10s response time",
               "Runs 24/7",
@@ -313,7 +314,7 @@ export default function NovaPage() {
             number: "02",
             title: "Qualified leads land on your phone",
             description:
-              "Nova filters the noise and only hands you contacts who are actually ready to book or need you directly.",
+              "Noell Support filters the noise and only hands you contacts who are actually ready to book or need you directly.",
             points: [
               "Service + urgency captured",
               "Contact info verified",
@@ -337,19 +338,19 @@ export default function NovaPage() {
 
       <FAQ
         accent="lilac"
-        eyebrow="Nova questions"
+        eyebrow="Noell Support questions"
         headlineStart="Honest"
-        headlineAccent="answers about Nova."
-        body="What people ask before they install a first-response assistant."
-        faqs={novaFaqs}
+        headlineAccent="answers."
+        body="What people ask before they install the prospect-intake layer."
+        faqs={supportFaqs}
       />
 
       <CTA
         accent="lilac"
-        eyebrow="Try Nova"
-        headlineStart="See what Nova would catch"
+        eyebrow="Try Noell Support"
+        headlineStart="See what it would catch"
         headlineAccent="on your site."
-        body="Book a free audit and we'll show you exactly how Nova would handle your current missed calls and chats — with your copy, in your voice."
+        body="Book a free audit and we'll show you exactly how Noell Support would handle your current missed calls and chats — with your copy, in your voice."
         primaryCta={{ label: "Book Your Free Audit", href: "/book" }}
         secondaryCta={{ label: "Back to home", href: "/" }}
         trustLine="Free audit · No contracts · Installed in 14 days"

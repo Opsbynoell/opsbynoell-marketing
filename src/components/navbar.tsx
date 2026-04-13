@@ -27,8 +27,8 @@ export const Navbar = () => {
     { name: "Systems", link: "/#systems" },
     { name: "Verticals", link: "/#verticals" },
     { name: "Pricing", link: "/#pricing" },
-    { name: "Nova", link: "/nova", nova: true },
-    { name: "About", link: "/#about" },
+    { name: "Noell Support", link: "/noell-support", nova: true },
+    { name: "Book", link: "/book" },
   ];
 
   const ref = useRef<HTMLDivElement>(null);

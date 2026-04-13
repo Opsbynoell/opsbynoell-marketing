@@ -18,7 +18,7 @@ const defaultFaqs: FaqItem[] = [
   {
     question: "Do I need to replace my current booking tool?",
     answer:
-      "No. We integrate with the major scheduling platforms (GoHighLevel, Calendly, Acuity, Vagaro, and similar). The Ops by Noell system layers on top to handle missed-call recovery, reminders, and review capture.",
+      "No. We integrate with the major scheduling platforms (Calendly, Acuity, Vagaro, and similar). The Noell system layers on top with smart booking logic, missed-call recovery, reminders, and review capture.",
   },
   {
     question: "What does \"managed\" actually mean?",
@@ -26,9 +26,9 @@ const defaultFaqs: FaqItem[] = [
       "We monitor the automations weekly, tune the copy and cadence, handle escalations, and give you a simple monthly report. You don't touch the dashboard unless you want to.",
   },
   {
-    question: "Is Nova Prospect really an AI receptionist?",
+    question: "Is Noell Support really an AI receptionist?",
     answer:
-      "No, and we are careful about that. Nova Prospect handles first response, qualification, contact capture, routing, and booking-link handoff — then escalates to you. A full AI front desk is a separate product track.",
+      "No, and we are careful about that. Noell Support handles new-prospect intake — first response, qualification, contact capture, routing, and booking-link handoff — then escalates to you. Noell Front Desk is the separate operations layer that handles calls, scheduling, reminders, and reactivation.",
   },
   {
     question: "What if it does not work for my business?",

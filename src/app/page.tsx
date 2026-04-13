@@ -2,6 +2,7 @@ import { Hero } from "@/components/hero";
 import { LogoCloud } from "@/components/logos-cloud";
 import { Features } from "@/components/features";
 import { Features2 } from "@/components/features2";
+import { Systems } from "@/components/systems";
 import { Features3 } from "@/components/features3";
 import Pricing from "@/components/pricing";
 import { Testimonials } from "@/components/testimonials";
@@ -23,13 +24,16 @@ export default function Home() {
       {/* Tension — the real problem */}
       <Features2 />
 
+      {/* The Noell system — 3-agent product section */}
+      <Systems />
+
       {/* Relief — what changes */}
       <Features3 />
 
       {/* Pricing — honest packages */}
       <Pricing />
 
-      {/* Proof — Sarah case study */}
+      {/* Proof — case study */}
       <Testimonials />
 
       {/* FAQ */}

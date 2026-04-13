@@ -14,7 +14,7 @@ type Message = {
 const initialConversation: Message[] = [
   {
     from: "nova",
-    text: "Hi — I'm Nova, the first-response assistant for Ops by Noell. I can help you get started. Are you looking to book a free audit, ask about our systems, or something else?",
+    text: "Hi — I'm Noell Support, the new-prospect intake layer for Ops by Noell. I can help you get started. Are you looking to book a free audit, ask about our systems, or something else?",
     timestamp: "now",
   },
 ];
@@ -22,7 +22,7 @@ const initialConversation: Message[] = [
 const starterChips = [
   "I'm missing calls",
   "Book an audit",
-  "What does Nova do?",
+  "What does Noell Support do?",
 ];
 
 // Scripted flow demonstrating the 6 capabilities
@@ -30,31 +30,31 @@ const responseFlow: Record<string, Message[]> = {
   "i'm missing calls": [
     {
       from: "nova",
-      text: "That's exactly what our system catches. When a call goes unanswered, we auto-text the prospect in under 10 seconds with a booking link.",
+      text: "That's exactly what the Noell system catches. When a call goes unanswered, we auto-text the prospect in under 10 seconds with a booking link.",
     },
     {
       from: "nova",
-      text: "To get you a tailored audit, can I grab your name and the best number? I'll route this to Noell for a 15-minute call.",
+      text: "To get you a tailored audit, can I grab your name and the best number? I'll route this to Noell for a 30-minute call.",
     },
   ],
   "book an audit": [
     {
       from: "nova",
-      text: "Perfect. The audit is free, 15 minutes, and you walk away with a map of where leads are leaking — whether you work with us or not.",
+      text: "Perfect. The audit is free, 30 minutes, and you walk away with a map of where leads are leaking — whether you work with us or not.",
     },
     {
       from: "nova",
       text: "Share your name + best contact number and I'll route this straight to Noell's calendar.",
     },
   ],
-  "what does nova do?": [
+  "what does noell support do?": [
     {
       from: "nova",
-      text: "I'm Nova Prospect. I handle first response, qualification, contact capture, routing, and booking-link handoff. Anything I can't resolve I escalate to a human with full context.",
+      text: "I'm Noell Support. I handle first response, qualification, contact capture, routing, and booking-link handoff. Anything I can't resolve I escalate to a human with full context.",
     },
     {
       from: "nova",
-      text: "A full AI front desk is a separate product track — we don't pretend Nova Prospect is that. Want to see an audit of what I'd catch on your site?",
+      text: "Noell Front Desk is the separate operations layer that handles calls, scheduling, reminders, and reactivation. Want to see an audit of what the Noell system would catch on your site?",
     },
   ],
 };
@@ -151,7 +151,7 @@ export function NovaChat() {
           "shadow-[0px_20px_40px_-10px_rgba(139,111,156,0.45),_0px_8px_16px_-4px_rgba(28,25,23,0.15),_0px_0px_0px_1px_rgba(139,111,156,0.12),_0px_1px_1px_2px_rgba(255,255,255,0.28)_inset]",
           "flex items-center justify-center hover:scale-105 transition-transform"
         )}
-        aria-label={isOpen ? "Close Nova chat" : "Open Nova chat"}
+        aria-label={isOpen ? "Close Noell Support chat" : "Open Noell Support chat"}
       >
         <AnimatePresence mode="wait">
           {isOpen ? (
@@ -202,11 +202,11 @@ export function NovaChat() {
                 </span>
               </div>
               <div className="flex-1">
-                <p className="text-sm font-semibold text-white">Nova</p>
+                <p className="text-sm font-semibold text-white">Noell Support</p>
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.8)]" />
                   <p className="text-[10px] text-white/70">
-                    Prospect Assistant · Online
+                    New prospect intake · Online
                   </p>
                 </div>
               </div>
@@ -265,8 +265,8 @@ export function NovaChat() {
                 </button>
               </div>
               <p className="text-[9px] text-charcoal/40 mt-2 text-center">
-                Nova handles first response, qualification, routing, and human
-                handoff. Not a full AI front desk.
+                Noell Support handles new-prospect intake — first response,
+                qualification, routing, and human handoff.
               </p>
             </div>
           </motion.div>
