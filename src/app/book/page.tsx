@@ -7,10 +7,78 @@ import {
   IconBellRinging,
   IconMessage2,
   IconPhoneCall,
+  IconMail,
+  IconArrowRight,
 } from "@tabler/icons-react";
 import { Button } from "@/components/button";
 import { FAQ } from "@/components/faq";
 import CTA from "@/components/cta";
+
+function BookingSlot() {
+  const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL;
+
+  if (bookingUrl) {
+    return (
+      <div
+        className="relative rounded-2xl overflow-hidden border border-warm-border bg-cream"
+        style={{ height: "640px" }}
+      >
+        <iframe
+          title="Book an audit"
+          src={bookingUrl}
+          className="absolute inset-0 w-full h-full"
+          loading="lazy"
+        />
+      </div>
+    );
+  }
+
+  // Fallback when the scheduler isn't wired yet. This is a real, usable path
+  // for visitors — not a debug skeleton.
+  return (
+    <div className="rounded-2xl border border-warm-border bg-gradient-to-b from-cream to-white p-8 md:p-10">
+      <div className="max-w-lg mx-auto text-center">
+        <p className="text-[11px] uppercase tracking-[0.25em] text-wine mb-3">
+          Direct booking
+        </p>
+        <h3 className="font-serif text-2xl md:text-3xl font-semibold text-charcoal mb-4">
+          Reach out and Noell will put you on the calendar within the day.
+        </h3>
+        <p className="text-sm text-charcoal/60 leading-relaxed mb-8">
+          Audits are scheduled by hand right now. Email or text with two or
+          three windows that work for you this week, and we&apos;ll confirm
+          back in under an hour during business hours.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mx-auto">
+          <a
+            href="mailto:hello@opsbynoell.com?subject=Free%20audit%20request&body=Hi%20Noell%20%E2%80%94%20I%27d%20like%20to%20book%20a%20free%20audit.%0A%0AName%3A%20%0ABusiness%3A%20%0APhone%3A%20%0ATimes%20that%20work%3A%20"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-wine text-cream text-sm font-medium px-5 hover:bg-wine-dark transition-colors"
+          >
+            <IconMail size={16} />
+            Email to book
+          </a>
+          <Link
+            href="/noell-support"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white border border-warm-border text-charcoal text-sm font-medium px-5 hover:bg-cream-dark transition-colors"
+          >
+            Ask Noell Support
+            <IconArrowRight size={14} />
+          </Link>
+        </div>
+
+        <p className="mt-8 text-[11px] uppercase tracking-[0.2em] text-charcoal/40">
+          Why no instant calendar?
+        </p>
+        <p className="mt-2 text-xs text-charcoal/50 leading-relaxed">
+          Audits are scheduled personally right now. Booking by hand keeps the
+          quality bar high. Instant self-serve booking returns when capacity
+          allows.
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export const metadata: Metadata = {
   title: "Book Your Free Audit — Ops by Noell",
@@ -152,7 +220,7 @@ export default function BookPage() {
         </div>
       </section>
 
-      {/* Booking embed scaffold — template card */}
+      {/* Booking embed */}
       <section className="pb-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="rounded-[28px] border border-warm-border bg-white shadow-[0px_61px_24px_0px_rgba(28,25,23,0.00),0px_34px_21px_0px_rgba(28,25,23,0.04),0px_15px_15px_0px_rgba(28,25,23,0.06),0px_4px_8px_0px_rgba(28,25,23,0.08)] overflow-hidden">
@@ -166,39 +234,7 @@ export default function BookPage() {
             </div>
 
             <div className="p-6 md:p-8">
-              {/* Real embed scaffold — replace src with live scheduler URL */}
-              <div
-                className="relative rounded-2xl overflow-hidden border border-warm-border bg-cream"
-                style={{ height: "640px" }}
-              >
-                {/* Skeleton + iframe (iframe only loads when NEXT_PUBLIC_BOOKING_URL is set) */}
-                <div className="absolute inset-0 flex items-center justify-center z-0">
-                  <div className="flex flex-col items-center gap-3 max-w-sm text-center px-6">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-wine animate-pulse" />
-                      <span className="text-[11px] uppercase tracking-widest text-charcoal/50">
-                        Loading calendar
-                      </span>
-                    </div>
-                    <p className="text-xs text-charcoal/40">
-                      Scheduling widget scaffold. Replace{" "}
-                      <code className="text-wine">
-                        NEXT_PUBLIC_BOOKING_URL
-                      </code>{" "}
-                      in env to wire the live scheduler.
-                    </p>
-                  </div>
-                </div>
-                <iframe
-                  title="Book an audit"
-                  src={
-                    process.env.NEXT_PUBLIC_BOOKING_URL ||
-                    "about:blank"
-                  }
-                  className="absolute inset-0 w-full h-full z-10"
-                  loading="lazy"
-                />
-              </div>
+              <BookingSlot />
             </div>
           </div>
 
