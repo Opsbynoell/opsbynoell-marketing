@@ -18,56 +18,57 @@ interface PricingTier {
 const tiers: PricingTier[] = [
   {
     tier: "Essentials",
-    priceFrom: "$497",
+    priceFrom: "$197",
     cadence: "/mo",
-    tagline: "The entry layer. Catch missed prospects and open the door to the Noell system.",
+    tagline:
+      "One system. Ideal for solo practitioners who want to stop missing calls.",
     features: [
-      "Noell Support entry layer",
-      "Missed-call text-back",
-      "Website chat response",
-      "Basic contact capture + smart routing",
-      "Core reminder flow",
-      "One vertical configuration",
+      "Missed Call Text-Back",
+      "Appointment Confirmations",
+      "1 Review Request Sequence",
+      "Monthly Report",
+      "Email Support",
     ],
     ctaLabel: "Start with Essentials",
     ctaHref: "/book",
-    note: "Pricing confirmed at audit",
+    note: "+ $497 one-time setup",
   },
   {
     tier: "Growth",
-    priceFrom: "$997",
+    priceFrom: "$797",
     cadence: "/mo",
-    tagline: "Most practices start here. Noell Support plus the Noell Front Desk operations layer.",
+    tagline:
+      "The full front desk system. Most popular for growing practices.",
     features: [
       "Everything in Essentials",
-      "Full Noell Support coverage",
-      "Noell Front Desk layer",
-      "Advanced reminders + follow-up sequences",
-      "Review capture + filter routing",
-      "Reactivation workflows",
-      "Smart booking logic + custom booking paths",
+      "Noell Support AI Chat (24/7 booking)",
+      "No-Show Recovery Sequences",
+      "Google Review Automation",
+      "Lead Pipeline Management",
+      "Monthly Strategy Call",
     ],
     ctaLabel: "Get Growth",
     ctaHref: "/book",
     isHighlighted: true,
-    note: "Most popular · Pricing confirmed at audit",
+    note: "Most popular · + $997 one-time setup",
   },
   {
     tier: "Custom Ops",
-    priceFrom: "Custom",
-    cadence: "",
-    tagline: "Multi-location or deeper workflow needs. The full Noell system, tuned to you.",
+    priceFrom: "$1,497",
+    cadence: "/mo",
+    tagline:
+      "Full system plus reactivation. For practices ready to scale.",
     features: [
       "Everything in Growth",
-      "Custom Noell system buildout",
-      "Multi-location or custom routing",
-      "Deeper front-desk workflow support",
-      "Dedicated implementation support",
-      "White-glove install + ongoing optimization",
+      "Reactivation Campaigns",
+      "Multi-location Support",
+      "Custom Reporting Dashboard",
+      "Priority Support (same day)",
+      "Quarterly Business Review",
     ],
     ctaLabel: "Book a scoping call",
     ctaHref: "/book",
-    note: "Quoted at audit",
+    note: "+ $1,497 one-time setup",
   },
 ];
 
@@ -161,8 +162,9 @@ export default function Pricing() {
         ))}
       </div>
       <p className="text-center text-xs text-charcoal/50 mt-10 max-w-2xl mx-auto">
-        Your audit is where we confirm the right package, establish fit, and
-        quote the install clearly. No bait pricing, no mystery scope.
+        Each package includes a one-time setup in addition to the monthly
+        subscription. Your audit is where we confirm the right fit, answer any
+        questions, and book the install. No bait pricing, no mystery scope.
       </p>
     </div>
   );

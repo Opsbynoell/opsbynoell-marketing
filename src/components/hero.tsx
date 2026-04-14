@@ -243,7 +243,7 @@ function DefaultMockScreen() {
             <p className="text-[10px] uppercase tracking-widest text-wine/70 font-medium">
               Missed-call recovery
             </p>
-            <p className="text-sm text-charcoal font-medium mt-0.5">Sarah M.</p>
+            <p className="text-sm text-charcoal font-medium mt-0.5">Santa E.</p>
             <p className="text-[11px] text-charcoal/50">Auto-text sent · 8s</p>
           </div>
           <span className="text-[10px] px-2 py-0.5 rounded-full bg-blush text-wine">
@@ -251,7 +251,7 @@ function DefaultMockScreen() {
           </span>
         </div>
         <div className="mt-2 bg-cream-dark rounded-lg p-2 text-[11px] text-charcoal/80 leading-snug">
-          "Hi Sarah — sorry I missed you. I can get you in Saturday 2pm or 3pm.
+          "Hi Santa — sorry I missed you. I can get you in Saturday 2pm or 3pm.
           Which works?"
         </div>
       </div>

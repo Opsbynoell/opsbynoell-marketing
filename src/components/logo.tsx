@@ -2,87 +2,72 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export const LogoIcon = ({ className }: { className?: string }) => (
+/**
+ * Ops by Noell — final logo system.
+ *
+ * LogoMark: the "ON" monogram. Serif uppercase, kerned tight so the O and N
+ *   visually kiss, rendered in plum/wine-dark to match the approved direction.
+ *   Uses inline SVG with real <text> in Playfair Display (already loaded
+ *   site-wide) so it's crisp at any size and keeps the same typographic voice
+ *   as the rest of the site.
+ *
+ * Logo: full lockup. LogoMark + "Ops by Noell" wordmark in a two-line stack.
+ *   Used in the navbar and the footer.
+ */
+
+const PLUM = "#5A1F30"; // matches --color-wine-dark in globals.css
+
+export const LogoMark = ({ className }: { className?: string }) => (
   <svg
-    width="28"
-    height="29"
-    viewBox="0 0 28 29"
-    fill="none"
+    viewBox="0 0 110 80"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
+    aria-hidden="true"
+    role="presentation"
   >
-    <g filter="url(#filter0_di_noell)">
-      <path
-        d="M4.53553 16.0355C2.58291 14.0829 2.58291 10.9171 4.53553 8.96447L10.1924 3.30761C12.145 1.35499 15.3108 1.35499 17.2635 3.30761L22.9203 8.96447C24.8729 10.9171 24.8729 14.0829 22.9203 16.0355L17.2635 21.6924C15.3108 23.645 12.145 23.645 10.1924 21.6924L4.53553 16.0355Z"
-        fill="#6B2D3E"
-      />
-    </g>
-    <defs>
-      <filter
-        id="filter0_di_noell"
-        x="0.0712891"
-        y="0.843262"
-        width="27.3135"
-        height="27.3135"
-        filterUnits="userSpaceOnUse"
-        colorInterpolationFilters="sRGB"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-        <feColorMatrix
-          in="SourceAlpha"
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          result="hardAlpha"
-        />
-        <feOffset dy="2" />
-        <feGaussianBlur stdDeviation="1.5" />
-        <feComposite in2="hardAlpha" operator="out" />
-        <feColorMatrix
-          type="matrix"
-          values="0 0 0 0 0.42 0 0 0 0 0.18 0 0 0 0 0.24 0 0 0 0.18 0"
-        />
-        <feBlend
-          mode="normal"
-          in2="BackgroundImageFix"
-          result="effect1_dropShadow"
-        />
-        <feBlend
-          mode="normal"
-          in="SourceGraphic"
-          in2="effect1_dropShadow"
-          result="shape"
-        />
-        <feColorMatrix
-          in="SourceAlpha"
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          result="hardAlpha"
-        />
-        <feOffset dy="2" />
-        <feGaussianBlur stdDeviation="2" />
-        <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-        <feColorMatrix
-          type="matrix"
-          values="0 0 0 0 0.96 0 0 0 0 0.87 0 0 0 0 0.83 0 0 0 1 0"
-        />
-        <feBlend mode="normal" in2="shape" result="effect2_innerShadow" />
-      </filter>
-    </defs>
+    <text
+      x="0"
+      y="66"
+      fontFamily='"Playfair Display", Georgia, serif'
+      fontWeight={900}
+      fontStyle="italic"
+      fontSize="82"
+      letterSpacing="-6"
+      fill={PLUM}
+    >
+      O
+    </text>
+    <text
+      x="44"
+      y="66"
+      fontFamily='"Playfair Display", Georgia, serif'
+      fontWeight={900}
+      fontSize="82"
+      letterSpacing="-6"
+      fill={PLUM}
+    >
+      N
+    </text>
   </svg>
 );
+
+/** Back-compat alias — some older imports referenced `LogoIcon`. */
+export const LogoIcon = LogoMark;
 
 export const Logo = ({ className }: { className?: string }) => {
   return (
     <Link
       href="/"
+      aria-label="Ops by Noell — home"
       className={cn(
-        "font-normal flex gap-2 justify-center items-center text-sm text-charcoal px-2 py-1 shrink-0 relative z-20",
+        "flex gap-2.5 items-center shrink-0 relative z-20 px-1 py-1",
         className
       )}
     >
-      <LogoIcon />
-      <span className="font-serif font-semibold text-charcoal text-lg tracking-tight">
-        Noell
+      <LogoMark className="h-8 w-auto md:h-9" />
+      <span className="flex flex-col leading-[0.95] font-serif font-semibold text-charcoal">
+        <span className="text-[13px] md:text-[14px] tracking-tight">Ops by</span>
+        <span className="text-[13px] md:text-[14px] tracking-tight">Noell</span>
       </span>
     </Link>
   );

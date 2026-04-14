@@ -66,7 +66,7 @@ export function Testimonials({
                 size={32}
               />
               <p className="text-charcoal/80 leading-relaxed">
-                Sarah, a massage therapist in Lago Vista, went from digital
+                Santa, a massage therapist in Lago Vista, went from digital
                 patchwork to a system that followed up, reminded clients, and
                 protected her calendar. Inside 14 days, the system had paid for
                 itself.
@@ -78,10 +78,10 @@ export function Testimonials({
                     accentSolid
                   )}
                 >
-                  SM
+                  SE
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-charcoal">Sarah M.</p>
+                  <p className="text-sm font-medium text-charcoal">Santa E.</p>
                   <p className="text-xs text-charcoal/50">
                     Massage therapist · Lago Vista
                   </p>
