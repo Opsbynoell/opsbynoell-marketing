@@ -4,8 +4,15 @@ import type { AgentConfig } from "../types";
  * Noell Support
  *
  * New-prospect intake layer. Catches brand-new visitors on the website
- * (chat widget + post-missed-call SMS replies), qualifies them, captures
- * contact, and hands off to booking or the right human.
+ * (chat widget + post-missed-call SMS replies), qualifies them using
+ * vertical-appropriate questions, captures contact, and hands off to
+ * booking or the right human.
+ *
+ * v1 flow shape (all three intents):
+ *   1. Warm acknowledgement of what the visitor said
+ *   2. Vertical-aware qualifying question (what service / urgency / timing)
+ *   3. Contact capture (name + phone + email, parsed from one reply)
+ *   4. Completion: confirm capture, route to booking_link + follow-up SMS
  *
  * Explicit non-scope:
  *   - missed inbound calls / call routing → Noell Front Desk
@@ -39,7 +46,7 @@ export const supportAgent: AgentConfig = {
   },
   greeting: {
     from: "agent",
-    text: "Hi — I'm Noell Support, the new-prospect intake layer for {{businessName}}. I can help you get started. Are you looking to book a free consultation, ask about services, or something else?",
+    text: "Hi — I'm Noell Support, the new-prospect intake layer for {{businessName}}. Looking to book, ask about services, or something else?",
   },
   starterChips: [
     "I'm new — book me in",
@@ -59,12 +66,37 @@ export const supportAgent: AgentConfig = {
       responses: [
         {
           from: "agent",
-          text: "Perfect. Can I grab your name and the best number to reach you? I'll route this to the right booking link for {{businessName}}.",
+          text: "Great — let me grab a couple things so I route you to the right booking link for {{businessName}}.",
         },
       ],
-      nextStage: "qualified",
-      capture: true,
-      route: { kind: "booking_link" },
+      collect: [
+        {
+          key: "qualification",
+          prompt:
+            "First: which service are you looking for, and is there a timing window that works best?",
+          parser: "free_text",
+        },
+        {
+          key: "contact",
+          prompt:
+            "Got it. Share your name and best number (or email) and I'll send the booking link and flag it to the team.",
+          parser: "contact",
+        },
+      ],
+      completion: {
+        responses: [
+          {
+            from: "agent",
+            text: "Thanks {{capturedName}} — captured. I'll text the booking link to {{capturedPhone}} and the team will follow up on \"{{qualification}}\" within the hour.",
+          },
+          {
+            from: "agent",
+            text: "Direct booking link: {{bookingUrl}}",
+          },
+        ],
+        nextStage: "captured",
+        route: { kind: "booking_link" },
+      },
     },
     {
       intent: "services_question",
@@ -72,12 +104,33 @@ export const supportAgent: AgentConfig = {
       responses: [
         {
           from: "agent",
-          text: "Happy to walk you through it. If you share your name and number, I'll text you a service menu and a direct booking link.",
+          text: "Happy to walk you through the services {{businessName}} offers.",
         },
       ],
-      nextStage: "qualified",
-      capture: true,
-      route: { kind: "knowledge_base", sourceKey: "services" },
+      collect: [
+        {
+          key: "interest",
+          prompt:
+            "Which are you curious about — or what outcome are you hoping for? I'll tailor what I share.",
+          parser: "free_text",
+        },
+        {
+          key: "contact",
+          prompt:
+            "Perfect. Share your name and best number and I'll text over the relevant service menu + booking link.",
+          parser: "contact",
+        },
+      ],
+      completion: {
+        responses: [
+          {
+            from: "agent",
+            text: "Thanks {{capturedName}} — I've flagged \"{{interest}}\" for the team. You'll get a text shortly with the service menu and a direct booking link.",
+          },
+        ],
+        nextStage: "captured",
+        route: { kind: "knowledge_base", sourceKey: "services" },
+      },
     },
     {
       intent: "how_it_works",
@@ -85,42 +138,53 @@ export const supportAgent: AgentConfig = {
       responses: [
         {
           from: "agent",
-          text: "Easy: share your name + best number, I route you to the booking link, and you get a confirmation text immediately. No sales theater.",
+          text: "Easy: I collect a couple details, route you to the right booking link, and you get a confirmation immediately.",
         },
       ],
-      nextStage: "qualified",
-      capture: true,
-      route: { kind: "booking_link" },
+      collect: [
+        {
+          key: "contact",
+          prompt:
+            "Share your name + best number and I'll text the direct booking link.",
+          parser: "contact",
+        },
+      ],
+      completion: {
+        responses: [
+          {
+            from: "agent",
+            text: "Captured, {{capturedName}}. Booking link going to {{capturedPhone}} now: {{bookingUrl}}",
+          },
+        ],
+        nextStage: "captured",
+        route: { kind: "booking_link" },
+      },
     },
   ],
   captureResponse: [
     {
       from: "agent",
-      text: "Got it{{capturedName}} — thanks. I've captured your contact and routed this to the team. You'll get a text with booking options shortly. The direct booking link is here: {{bookingUrl}}",
-    },
-    {
-      from: "agent",
-      text: "Anything else I can help with? Otherwise I'll hand off from here.",
+      text: "Got it {{capturedName}} — captured and routed to the team at {{businessName}}. Direct booking: {{bookingUrl}}",
     },
   ],
   fallbackResponse: [
     {
       from: "agent",
-      text: "I'm focused on helping new visitors get to the right place. Can you share your name and best number? I'll route this to the team.",
+      text: "I'm focused on helping new visitors get to the right place for {{businessName}}. If you share your name and best number, I'll route this to the team.",
     },
   ],
   escalationRules: [
     {
       trigger: "human_requested",
       message:
-        "Totally — I'll flag this for the team at {{businessName}}. Can you share your name and best number so they can follow up?",
+        "Of course — I'll flag this for the team at {{businessName}}. Share your name and best number so they can follow up.",
       handoffTarget: { kind: "human", role: "owner" },
     },
     {
       trigger: "unresolved_after_n",
       afterTurns: 2,
       message:
-        "I don't want to keep you guessing — let me hand this to a person on the team. Share your name + best number and they'll reach out.",
+        "I don't want to keep you guessing — let me hand this to a person. Share your name + best number and they'll reach out shortly.",
       handoffTarget: { kind: "human", role: "owner" },
     },
   ],
@@ -130,7 +194,7 @@ export const supportAgent: AgentConfig = {
       label: "Services menu",
       questions: ["what do you offer", "services", "what do you do"],
       answerTemplate:
-        "{{businessName}} offers the services on our site. I can text you a direct menu if you share your number.",
+        "{{businessName}} offers the services on our site. Share your number and I can text a tailored menu.",
     },
     {
       key: "hours",

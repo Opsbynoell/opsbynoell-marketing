@@ -25,6 +25,8 @@ const massage: VerticalConfig = {
     care: ["Rebook my last massage", "Change my appointment", "Where do I park?"],
   },
   reminderCadence: "48h SMS + 2h SMS",
+  dormancyThresholdDays: 75,
+  reviewPlatform: "google",
 };
 
 const medSpa: VerticalConfig = {
@@ -41,6 +43,8 @@ const medSpa: VerticalConfig = {
     care: ["Rebook my treatment", "Post-treatment question", "Reschedule"],
   },
   reminderCadence: "72h email + 24h SMS + 2h SMS",
+  dormancyThresholdDays: 120,
+  reviewPlatform: "google",
 };
 
 const salon: VerticalConfig = {
@@ -57,6 +61,8 @@ const salon: VerticalConfig = {
     care: ["Rebook with my stylist", "Change my appointment", "Product question"],
   },
   reminderCadence: "48h SMS + 2h SMS",
+  dormancyThresholdDays: 60,
+  reviewPlatform: "google",
 };
 
 const dental: VerticalConfig = {
@@ -73,6 +79,8 @@ const dental: VerticalConfig = {
     care: ["Rebook 6-month cleaning", "Insurance update", "Reschedule"],
   },
   reminderCadence: "7d email + 48h SMS + 2h SMS",
+  dormancyThresholdDays: 180,
+  reviewPlatform: "google",
 };
 
 const esthetics: VerticalConfig = {
@@ -89,6 +97,8 @@ const esthetics: VerticalConfig = {
     care: ["Rebook", "Post-treatment question", "Reschedule"],
   },
   reminderCadence: "48h SMS + 2h SMS",
+  dormancyThresholdDays: 75,
+  reviewPlatform: "google",
 };
 
 const generic: VerticalConfig = {
@@ -101,6 +111,8 @@ const generic: VerticalConfig = {
     "Any timing preferences?",
   ],
   reminderCadence: "48h SMS + 2h SMS",
+  dormancyThresholdDays: 90,
+  reviewPlatform: "google",
 };
 
 export const verticals: Record<VerticalKey, VerticalConfig> = {

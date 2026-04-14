@@ -69,7 +69,7 @@ export function NoellChat({ agent, client, vertical, floating = true }: NoellCha
   const starterChips =
     vertical?.starterChipPresets?.[agent.identity.id] ?? agent.starterChips;
 
-  const greeting = interpolateMessage(agent.greeting, client);
+  const greeting = interpolateMessage(agent.greeting, client, {}, vertical);
 
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([greeting]);
@@ -100,7 +100,7 @@ export function NoellChat({ agent, client, vertical, floating = true }: NoellCha
     const visitorMsg: Message = { from: "visitor", text: visitorInput };
     setMessages((prev) => [...prev, visitorMsg]);
 
-    const result = step({ agent, client, state, visitorInput });
+    const result = step({ agent, client, vertical, state, visitorInput });
     pushResponses(result.agentResponses);
     setState(result.nextState);
 

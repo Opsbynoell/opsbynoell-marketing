@@ -15,17 +15,24 @@ All three share one runtime. Per-agent behavior is config, not code.
 
 ```
 src/lib/noell-system/
-├── types.ts                  # All types (AgentConfig, ClientConfig, VerticalConfig, ...)
-├── core.ts                   # Runtime: intent matching, escalation, capture, state machine
+├── types.ts                  # All types (AgentConfig, ClientConfig, VerticalConfig,
+│                             #   AwaitingSlot, IntentCompletion, WorkflowKey,
+│                             #   LocationInfo, KnowledgeBaseEntry,
+│                             #   MissedCallTextbackConfig, ReviewCaptureConfig,
+│                             #   ReactivationConfig, NoellLookups)
+├── core.ts                   # Runtime: intent matching, multi-slot capture,
+│                             #   escalation, token interpolation, step() reducer
 ├── agents/
 │   ├── index.ts              # Registry of all agents
-│   ├── support.ts            # Noell Support config
-│   ├── front-desk.ts         # Noell Front Desk config
-│   └── care.ts               # Noell Care config
+│   ├── support.ts            # Noell Support config (3 multi-turn intents)
+│   ├── front-desk.ts         # Noell Front Desk config (6 operational workflows)
+│   └── care.ts               # Noell Care config (5 existing-client intents)
 ├── clients/
-│   └── default.ts            # Default client (Ops by Noell marketing site)
+│   └── default.ts            # Default client with every operational field populated
 ├── verticals/
-│   └── presets.ts            # Vertical defaults (massage, med_spa, salon, dental, esthetics, generic)
+│   └── presets.ts            # Vertical defaults + dormancy thresholds + review platforms
+├── __tests__/
+│   └── flows.test.ts         # Pure-function turn-by-turn flow tests (5 scenarios)
 └── README.md
 
 src/components/
@@ -92,14 +99,20 @@ Each `AgentConfig` declares:
 
 ## What changes per client (tenant)
 
-`ClientConfig` holds:
+`ClientConfig` holds every piece of operational state an agent needs:
 
 - Business name + identifiers (`clientId`, `businessName`)
 - Vertical key (`massage`, `med_spa`, `salon`, `dental`, `esthetics`, `generic`)
 - Booking URL (the link the agents hand off to)
 - Phone, email, hours, services, team members
-- Brand overrides (if the client wants different accent colors)
-- Webhook endpoints (`onCapture`, `onEscalate`, `onResolved`)
+- `locations[]` — physical addresses + parking + arrival instructions (Care uses these)
+- `knowledgeBase[]` — per-client FAQ/policy entries (Care routes here)
+- `missedCallTextback` — template + SLA seconds (Front Desk)
+- `reviewCapture` — minimum public rating + platform + post-visit template (Front Desk)
+- `reactivation` — dormancy threshold + re-engagement template (Front Desk)
+- `reminderCadence` override
+- `brandOverrides` for accent colors
+- `webhooks` — `onCapture`, `onEscalate`, `onResolved`, `onWorkflow`
 
 ## What changes per vertical
 
@@ -107,12 +120,15 @@ Each `AgentConfig` declares:
 
 - Common services
 - Qualifying questions tuned to that vertical
-- Starter chip presets per agent (`support` / `care`; Front Desk isn't client-facing)
-- Reminder cadence appropriate to the vertical
+- Starter chip presets per agent (`support` / `care`; Front Desk is operator-facing)
+- Reminder cadence
+- Dormancy threshold days (for Reactivation)
+- Preferred review platform
 
 A vertical's presets *override* the agent's default starter chips when
-present. This keeps the agents themselves small and lets new verticals
-slot in without touching agent configs.
+present. The runtime also falls back to the vertical's `reminderCadence` /
+`dormancyThresholdDays` / `reviewPlatform` via `{{token}}` interpolation
+when the client didn't set its own.
 
 ## What still depends on external systems
 
@@ -134,28 +150,61 @@ client installs these integrations must be wired:
 
 ## What is ready now
 
-- ✅ Three fully structured agent configs (Support, Front Desk, Care)
-- ✅ Shared core runtime (intent matching, escalation, capture, interpolation)
-- ✅ Generic chat widget that mounts any agent
-- ✅ Five verticals with presets + a generic fallback
-- ✅ Default client config for the marketing site
-- ✅ Marketing site continues to work (Support is still the live agent at `/`)
-- ✅ Clear separation of concerns: UI has zero business logic, runtime has zero UI
+- ✅ Three agents as **real multi-turn v1 flows**, not one-turn acknowledgements:
+  - **Support**: 3 intents, each a 2–3 turn flow (intent → qualification → contact → route)
+  - **Front Desk**: 6 operational workflows with real slot collection
+    (missed_call_textback, reschedule, send_confirmations, reminders_run,
+    review_capture, reactivation)
+  - **Care**: 5 intents including a 3-slot change_appointment flow, a
+    location-aware directions intent, and knowledge-base-routed service
+    questions
+- ✅ Multi-slot capture primitive (`AwaitingSlot[]` + `IntentCompletion`) in
+  the runtime — turns any intent into a controlled N-turn flow without
+  special-casing
+- ✅ Client + vertical token interpolation (`{{reminderCadence}}`,
+  `{{primaryLocationParking}}`, `{{dormancyThresholdDays}}`, etc.) so
+  responses automatically adapt per tenant and per business type
+- ✅ Five verticals with dormancy thresholds + review platform + reminder
+  cadence defaults
+- ✅ Default client with every operational field populated (locations,
+  knowledgeBase, missedCallTextback, reviewCapture, reactivation)
+- ✅ Workflow routing (`WorkflowKey` enum) — every operational intent emits
+  a typed side-effect for the host app to execute
+- ✅ `NoellLookups` contract — declared interface for external lookups
+  (lastVisit, findAppointment, countReactivationCohort, upcomingAppointments)
+- ✅ Pure-function test harness in `__tests__/flows.test.ts` — 5 scenarios
+  verified turn-by-turn (booking_new, missed_call_textback, reschedule,
+  change_appointment, directions). Passes today.
+- ✅ Marketing site still builds, Support still the live agent at `/`.
 
 ## What still needs to be built for full production use
 
-1. **Phone/SMS integration** — Twilio or equivalent for missed-call text-back and reminder cadences.
-2. **Scheduler integration** — Calendly / Acuity / Vagaro API clients per client's tool.
-3. **CRM write path** — Wire `onCapture` webhook to the client's contact store (GHL, HubSpot, or a Noell dashboard).
-4. **Escalation delivery** — Slack / email / in-app notification so `onEscalate` actually reaches a human.
-5. **Review platform integration** — Google Business Profile API for post-visit capture with filter routing.
-6. **LLM classifier** — Replace `matchIntent` with an intent classifier + entity extractor. Interface stays the same.
-7. **Knowledge retrieval** — Replace inline `answerTemplate` with a per-client knowledge base (FAQ + service notes).
-8. **Reactivation job runner** — Cron / queue that identifies dormant clients and feeds the Front Desk intent.
-9. **Tenant-aware routing** — Multi-client deployment will need a tenant resolver (subdomain or clientId cookie) to pick the right `ClientConfig` at request time.
-10. **Admin UI** — The non-code edit path for operators: edit starter chips, tweak copy, adjust escalation keywords per client. Today those live in the TS configs.
-11. **Observability** — Conversation logs, capture success rate, escalation rate per agent per client. Needed before claiming SLAs.
-12. **Tests** — `core.step` is pure; unit tests for intent matching, capture parsing, escalation should land before the first paid install.
+1. **Phone/SMS integration** — Twilio or equivalent. The `missed_call_textback`
+   intent emits the workflow target + template; the host must send the SMS.
+2. **Scheduler integration** — Calendly / Acuity / Vagaro clients, per client's tool.
+3. **`NoellLookups` implementations** — the contracts are declared; real
+   implementations (reading from GHL / Supabase) are still needed.
+4. **CRM write path** — Wire `onCapture` / `onWorkflow` webhooks to the
+   client's contact store (GHL `chatLeads`, Supabase, etc.).
+5. **Escalation delivery** — Slack / Telegram / email so `onEscalate`
+   reaches a human.
+6. **Review platform integration** — Google Business Profile API for the
+   4-star-and-up route.
+7. **LLM classifier** — Replace `matchIntent` with an intent classifier +
+   entity extractor. Interface stays the same.
+8. **Richer knowledge retrieval** — today the KB is array lookup + token
+   templates. Upgrade path: embedding search over per-client docs.
+9. **Reactivation job runner** — Cron that calls `countReactivationCohort`
+   and fires the campaign via the `onWorkflow` webhook.
+10. **Tenant-aware routing** — Multi-client deployment needs a tenant
+    resolver (subdomain or `clientId` cookie) to pick the right
+    `ClientConfig` per request.
+11. **Admin UI** — Non-code edit path for operators: tweak starter chips,
+    edit templates, adjust escalation keywords per client.
+12. **Observability** — Conversation logs, capture success rate,
+    escalation rate per agent per client.
+13. **Test runner wiring** — The flow tests are pure functions; adding
+    Vitest gives them a proper CI check on every push.
 
 ---
 
