@@ -10,17 +10,17 @@ interface StatCard {
 }
 
 const defaultStats: StatCard[] = [
-  { value: "$960", label: "Revenue", detail: "recovered in 14 days" },
-  { value: "40+", label: "Reviews", detail: "Google reviews in 6 weeks" },
-  { value: "<1", label: "No-shows", detail: "per week, down from 4" },
-  { value: "14d", label: "Live", detail: "to get the system running" },
+  { value: "<8s", label: "Response time", detail: "average time from missed call to auto-text reply" },
+  { value: "40+", label: "Reviews", detail: "added in six weeks with post-visit asks" },
+  { value: "3 hrs", label: "Saved", detail: "each week by removing manual reminder texts" },
+  { value: "14d", label: "Installed", detail: "from audit to live system" },
 ];
 
 export function Features({
-  eyebrow = "Real outcomes",
-  headlineStart = "One system change",
-  headlineAccent = "changes the whole week.",
-  body = "Real numbers from a real service business running the Ops by Noell system.",
+  eyebrow = "Proof",
+  headlineStart = "The fix is operational,",
+  headlineAccent = "not theoretical.",
+  body = "What shifts when response, reminders, and review capture stop living in your head.",
   stats = defaultStats,
   accent = "wine",
 }: {
@@ -52,6 +52,20 @@ export function Features({
           </span>
         </h2>
         <p className="text-charcoal/60 max-w-xl mx-auto">{body}</p>
+      </div>
+
+      <div className="max-w-5xl mx-auto px-4 mb-10">
+        <div className="rounded-[24px] border border-warm-border bg-white/80 backdrop-blur-sm px-6 py-5 md:px-8 md:py-6 shadow-[0px_34px_21px_0px_rgba(28,25,23,0.04),0px_15px_15px_0px_rgba(28,25,23,0.06),0px_4px_8px_0px_rgba(28,25,23,0.05)]">
+          <p className="text-[11px] uppercase tracking-[0.22em] text-charcoal/45 mb-2">
+            One client snapshot
+          </p>
+          <p className="font-serif text-2xl md:text-3xl text-charcoal leading-tight">
+            Four missed calls. Two appointments recovered. One calmer front desk.
+          </p>
+          <p className="mt-3 text-sm text-charcoal/60 max-w-3xl">
+            The point is not a flashy dashboard. It&apos;s that the right follow-up system turns quiet leaks into booked revenue without adding admin to your day.
+          </p>
+        </div>
       </div>
 
       <div

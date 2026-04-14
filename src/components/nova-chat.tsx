@@ -6,15 +6,15 @@ import { IconMessageCircle, IconX, IconSend } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
 type Message = {
-  from: "nova" | "visitor";
+  from: "support" | "visitor";
   text: string;
   timestamp?: string;
 };
 
 const initialConversation: Message[] = [
   {
-    from: "nova",
-    text: "Hi — I'm Nova, the first-response assistant for Ops by Noell. I can help you get started. Are you looking to book a free audit, ask about our systems, or something else?",
+    from: "support",
+    text: "Hi — I'm Noell Support, the first-response assistant for Ops by Noell. I can help you get started. Are you looking to book a free audit, ask about our systems, or something else?",
     timestamp: "now",
   },
 ];
@@ -22,50 +22,50 @@ const initialConversation: Message[] = [
 const starterChips = [
   "I'm missing calls",
   "Book an audit",
-  "What does Nova do?",
+  "What does Noell Support do?",
 ];
 
 // Scripted flow demonstrating the 6 capabilities
 const responseFlow: Record<string, Message[]> = {
   "i'm missing calls": [
     {
-      from: "nova",
+      from: "support",
       text: "That's exactly what our system catches. When a call goes unanswered, we auto-text the prospect in under 10 seconds with a booking link.",
     },
     {
-      from: "nova",
-      text: "To get you a tailored audit, can I grab your name and the best number? I'll route this to Noell for a 15-minute call.",
+      from: "support",
+      text: "To get you a tailored audit, can I grab your name and the best number? I'll route this to Noell for a 30-minute call.",
     },
   ],
   "book an audit": [
     {
-      from: "nova",
-      text: "Perfect. The audit is free, 15 minutes, and you walk away with a map of where leads are leaking — whether you work with us or not.",
+      from: "support",
+      text: "Perfect. The audit is free, 30 minutes, and you walk away with a map of where leads are leaking — whether you work with us or not.",
     },
     {
-      from: "nova",
+      from: "support",
       text: "Share your name + best contact number and I'll route this straight to Noell's calendar.",
     },
   ],
-  "what does nova do?": [
+  "what does noell support do?": [
     {
-      from: "nova",
-      text: "I'm Nova Prospect. I handle first response, qualification, contact capture, routing, and booking-link handoff. Anything I can't resolve I escalate to a human with full context.",
+      from: "support",
+      text: "I'm Noell Support. I handle first response, qualification, contact capture, routing, and booking-link handoff. Anything I can't resolve I escalate to a human with full context.",
     },
     {
-      from: "nova",
-      text: "A full AI front desk is a separate product track — we don't pretend Nova Prospect is that. Want to see an audit of what I'd catch on your site?",
+      from: "support",
+      text: "A full AI front desk is a separate product track — we don't pretend Noell Support is that. Want to see an audit of what I'd catch on your site?",
     },
   ],
 };
 
 const contactCaptureResponse: Message[] = [
   {
-    from: "nova",
+    from: "support",
     text: "Got it — thanks. I've captured your contact and routed this to Noell. You'll get a text with audit times within the hour. Meanwhile, the booking link is here: opsbynoell.com/book",
   },
   {
-    from: "nova",
+    from: "support",
     text: "Anything else I can help with? Otherwise I'll hand off from here.",
   },
 ];
@@ -122,7 +122,7 @@ export function NovaChat() {
       // Generic intro response
       pushResponses([
         {
-          from: "nova",
+          from: "support",
           text: "Got it. To route you to the right place, can I grab your name and best contact number? I'll make sure Noell sees this within the hour.",
         },
       ]);
@@ -130,7 +130,7 @@ export function NovaChat() {
     } else {
       pushResponses([
         {
-          from: "nova",
+          from: "support",
           text: "Understood. I've logged this and you'll hear back soon. In the meantime, feel free to book directly at opsbynoell.com/book.",
         },
       ]);
@@ -151,7 +151,7 @@ export function NovaChat() {
           "shadow-[0px_20px_40px_-10px_rgba(139,111,156,0.45),_0px_8px_16px_-4px_rgba(28,25,23,0.15),_0px_0px_0px_1px_rgba(139,111,156,0.12),_0px_1px_1px_2px_rgba(255,255,255,0.28)_inset]",
           "flex items-center justify-center hover:scale-105 transition-transform"
         )}
-        aria-label={isOpen ? "Close Nova chat" : "Open Nova chat"}
+        aria-label={isOpen ? "Close Noell Support chat" : "Open Noell Support chat"}
       >
         <AnimatePresence mode="wait">
           {isOpen ? (
@@ -202,11 +202,11 @@ export function NovaChat() {
                 </span>
               </div>
               <div className="flex-1">
-                <p className="text-sm font-semibold text-white">Nova</p>
+                <p className="text-sm font-semibold text-white">Noell Support</p>
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.8)]" />
                   <p className="text-[10px] text-white/70">
-                    Prospect Assistant · Online
+                    Prospect Assistant · Replies instantly
                   </p>
                 </div>
               </div>
@@ -236,7 +236,7 @@ export function NovaChat() {
                     <button
                       key={chip}
                       onClick={() => handleChip(chip)}
-                      className="text-xs px-3 py-1.5 rounded-full bg-white border border-warm-border text-charcoal/70 hover:bg-lilac-light hover:border-lilac-dark hover:text-lilac-dark transition-all"
+                      className="text-xs px-3 py-1.5 rounded-full bg-white/92 border border-warm-border text-charcoal/70 hover:bg-lilac-light hover:border-lilac-dark hover:text-lilac-dark transition-all"
                     >
                       {chip}
                     </button>
@@ -265,7 +265,7 @@ export function NovaChat() {
                 </button>
               </div>
               <p className="text-[9px] text-charcoal/40 mt-2 text-center">
-                Nova handles first response, qualification, routing, and human
+                Noell Support handles first response, qualification, routing, and human
                 handoff. Not a full AI front desk.
               </p>
             </div>
@@ -277,18 +277,18 @@ export function NovaChat() {
 }
 
 function MessageBubble({ msg }: { msg: Message }) {
-  const isNova = msg.from === "nova";
+  const isSupport = msg.from === "support";
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
-      className={cn("flex", isNova ? "justify-start" : "justify-end")}
+      className={cn("flex", isSupport ? "justify-start" : "justify-end")}
     >
       <div
         className={cn(
           "max-w-[82%] px-4 py-2.5 text-sm leading-relaxed rounded-[17px]",
-          isNova
+          isSupport
             ? "bg-white border border-warm-border text-charcoal rounded-bl-md shadow-sm"
             : "bg-gradient-to-b from-lilac via-lilac-dark to-[#6b4f80] text-white rounded-br-md shadow-md"
         )}

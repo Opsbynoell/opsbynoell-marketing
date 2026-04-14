@@ -15,7 +15,7 @@ import CTA from "@/components/cta";
 export const metadata: Metadata = {
   title: "Book Your Free Audit — Ops by Noell",
   description:
-    "15 minutes. No pitch, no pressure. See exactly where leads are falling through and what a system could recover.",
+    "30 minutes. No pitch, no pressure. See exactly where leads are falling through and what a system could recover.",
 };
 
 const steps = [
@@ -24,7 +24,7 @@ const steps = [
     number: "01",
     title: "Pick a time",
     detail:
-      "Choose a 15-minute slot on Noell's calendar. You'll get a confirmation text immediately and a reminder the day before.",
+      "Choose a 30-minute slot on Noell's calendar. You'll get a confirmation text immediately and a reminder the day before.",
   },
   {
     icon: <IconClipboardCheck size={24} />,
@@ -55,10 +55,14 @@ const afterSteps = [
   },
   {
     icon: <IconPhoneCall size={18} />,
-    title: "Quick call, clear map",
-    detail: "15 focused minutes with a written follow-up afterward.",
+    title: "Your action plan, in writing",
+    detail: "After the call, you get a written summary of what we found and what to fix — whether you work with us or not.",
   },
 ];
+
+const bookingUrl =
+  process.env.NEXT_PUBLIC_BOOKING_URL ||
+  "https://api.leadconnectorhq.com/widget/booking/ko7eXb5zooItceadiV02";
 
 const bookFaqs = [
   {
@@ -97,17 +101,34 @@ export default function BookPage() {
             operations audit.
           </span>
         </h1>
-        <p className="relative z-20 mt-6 max-w-xl text-center text-charcoal/70 text-base md:text-lg leading-relaxed">
-          15 minutes. No pitch, no pressure. We look at where leads are falling
-          through, how your follow-up works today, and what a system could
-          recover.
+        <p className="relative z-20 mt-6 max-w-2xl text-center text-charcoal/70 text-base md:text-lg leading-relaxed">
+          Most service businesses are losing leads every week to slow follow-up and broken booking flows. In 30 minutes, we&apos;ll show you exactly where yours are going — and what a fix looks like.
         </p>
         <div className="relative z-20 mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-charcoal/50">
           <span>Free &amp; no obligation</span>
           <span>·</span>
-          <span>15 minutes, max</span>
+          <span>30 minutes</span>
           <span>·</span>
           <span>Instant confirmation</span>
+        </div>
+        <div className="relative z-20 mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button href="#booking-widget" variant="primary" className="h-12 px-8 w-full sm:w-auto font-semibold">
+            Pick a time now
+          </Button>
+          <Button href="/noell-support" variant="secondary" className="h-12 px-7 w-full sm:w-auto">
+            See Noell Support
+          </Button>
+        </div>
+      </section>
+
+      <section className="py-8 px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          <blockquote className="font-serif text-xl md:text-2xl italic text-charcoal/80 leading-relaxed">
+            "I thought my booking flow was fine. The audit showed me three places I was losing people every single week."
+          </blockquote>
+          <p className="mt-4 text-xs uppercase tracking-widest text-charcoal/40">
+            — Santa E. · Massage therapist
+          </p>
         </div>
       </section>
 
@@ -121,7 +142,7 @@ export default function BookPage() {
             <h2 className="font-serif text-3xl md:text-5xl font-semibold text-charcoal leading-tight">
               Three steps.{" "}
               <span className="italic bg-gradient-to-b from-wine to-wine-light bg-clip-text text-transparent">
-                Done in 15 minutes.
+                Done in 30 minutes.
               </span>
             </h2>
           </div>
@@ -153,25 +174,58 @@ export default function BookPage() {
       </section>
 
       {/* Booking embed scaffold — template card */}
-      <section className="pb-20 px-4">
+      <section id="booking-widget" className="pb-20 px-4 scroll-mt-28">
         <div className="max-w-4xl mx-auto">
           <div className="rounded-[28px] border border-warm-border bg-white shadow-[0px_61px_24px_0px_rgba(28,25,23,0.00),0px_34px_21px_0px_rgba(28,25,23,0.04),0px_15px_15px_0px_rgba(28,25,23,0.06),0px_4px_8px_0px_rgba(28,25,23,0.08)] overflow-hidden">
-            <div className="px-8 pt-8 pb-4 border-b border-warm-border">
+            <div className="px-6 md:px-8 pt-8 pb-4 border-b border-warm-border">
               <p className="text-[11px] uppercase tracking-[0.2em] text-wine mb-2">
-                Pick a time
+                You&apos;re one step away
               </p>
               <h2 className="font-serif text-2xl md:text-3xl font-semibold text-charcoal">
-                All times shown in your local timezone.
+                Pick a time. Walk away with a clear picture.
               </h2>
+              <p className="mt-2 text-sm text-charcoal/55">
+                30 minutes · Free · All times shown in your local timezone
+              </p>
             </div>
 
-            <div className="p-6 md:p-8">
-              {/* Real embed scaffold — replace src with live GHL/Calendly URL */}
+            <div className="p-4 md:p-8">
+              <div className="md:hidden rounded-2xl border border-warm-border bg-cream px-5 py-6 text-center">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-wine mb-2">
+                  Mobile booking
+                </p>
+                <p className="text-sm text-charcoal/65 leading-relaxed max-w-sm mx-auto">
+                  The fastest path on mobile is to open the booking page directly in its own window.
+                </p>
+                <a
+                  href={bookingUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-5 inline-flex min-w-[220px] items-center justify-center rounded-full bg-wine px-5 py-3 text-sm font-semibold text-cream shadow-sm"
+                >
+                  Open booking page
+                </a>
+              </div>
+
+              <div className="hidden md:flex items-center justify-between gap-4 mb-4 rounded-2xl border border-warm-border bg-cream px-5 py-4">
+                <div>
+                  <p className="text-sm font-semibold text-charcoal">If the embedded calendar stalls, use the direct booking page.</p>
+                  <p className="text-xs text-charcoal/55 mt-1">Same 30-minute audit, cleaner fallback.</p>
+                </div>
+                <a
+                  href={bookingUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-wine px-4 py-2 text-xs font-semibold text-cream shadow-sm whitespace-nowrap"
+                >
+                  Open booking page
+                </a>
+              </div>
+
               <div
-                className="relative rounded-2xl overflow-hidden border border-warm-border bg-cream"
+                className="relative rounded-2xl overflow-hidden border border-warm-border bg-cream hidden md:block"
                 style={{ height: "640px" }}
               >
-                {/* Skeleton + iframe (iframe only loads when NEXT_PUBLIC_BOOKING_URL is set) */}
                 <div className="absolute inset-0 flex items-center justify-center z-0">
                   <div className="flex flex-col items-center gap-3 max-w-sm text-center px-6">
                     <div className="flex items-center gap-2">
@@ -181,20 +235,13 @@ export default function BookPage() {
                       </span>
                     </div>
                     <p className="text-xs text-charcoal/40">
-                      Scheduling widget scaffold. Replace{" "}
-                      <code className="text-wine">
-                        NEXT_PUBLIC_BOOKING_URL
-                      </code>{" "}
-                      in env to wire live GHL/Calendly.
+                      This is the live Ops by Noell booking page for the 30-minute audit. If it does not load inside the page on your device, use the direct open link above.
                     </p>
                   </div>
                 </div>
                 <iframe
                   title="Book an audit"
-                  src={
-                    process.env.NEXT_PUBLIC_BOOKING_URL ||
-                    "about:blank"
-                  }
+                  src={bookingUrl}
                   className="absolute inset-0 w-full h-full z-10"
                   loading="lazy"
                 />
@@ -203,7 +250,7 @@ export default function BookPage() {
           </div>
 
           {/* What happens after */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mt-5 md:mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
             {afterSteps.map((item, i) => (
               <div
                 key={i}
@@ -233,24 +280,22 @@ export default function BookPage() {
         faqs={bookFaqs}
       />
 
-      {/* Soft exit: Nova fallback */}
+      {/* Soft exit: support fallback */}
       <section className="px-4 pb-20">
-        <div className="max-w-3xl mx-auto rounded-[22px] border border-warm-border bg-cream-dark p-8 text-center">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-lilac-dark mb-3 inline-flex items-center gap-2">
+        <div className="max-w-3xl mx-auto rounded-[22px] border border-warm-border bg-cream-dark px-8 py-9 text-center">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-lilac-dark mb-4 inline-flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-lilac-dark" />
-            Not ready to book?
+            Have questions before you commit?
           </p>
-          <h3 className="font-serif text-2xl md:text-3xl font-semibold text-charcoal mb-3">
-            Ask Nova a question first.
+          <h3 className="font-serif text-2xl md:text-3xl font-semibold text-charcoal mb-4">
+            Noell Support can answer them right now.
           </h3>
-          <p className="text-sm text-charcoal/60 max-w-md mx-auto mb-6">
-            Nova is the first-response assistant. Pop open the chat in the
-            bottom-right and ask anything — she routes to Noell when you're
-            ready.
+          <p className="text-sm text-charcoal/60 max-w-md mx-auto mb-7">
+            Not sure if the audit is right for you? Noell Support knows the process inside out. Ask what the call covers, who it&apos;s for, or what happens after — no booking required.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button href="/nova" variant="lilac" className="h-11 px-6">
-              See what Nova does
+            <Button href="/noell-support" variant="lilac" className="h-11 px-6">
+              See Noell Support
             </Button>
             <Button href="/" variant="secondary" className="h-11 px-6">
               Back to home
@@ -259,13 +304,7 @@ export default function BookPage() {
         </div>
       </section>
 
-      <CTA
-        eyebrow="Still thinking"
-        headlineStart="The audit is"
-        headlineAccent="waiting when you are."
-        body="You can always come back. We don't chase, and we don't add you to a list."
-        trustLine="Free · 15 minutes · Instant confirmation"
-      />
+
     </div>
   );
 }

@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 import { Button } from "./button";
 
 const defaultFeatures = [
-  "Dropped no-shows from 4/week to less than 1",
-  "Recovered $960 from missed calls in 14 days",
-  "Captured 40+ new Google reviews in 8 weeks",
+  "Massage: dropped no-shows from 4/week to less than 1",
+  "Med Spa: faster consult follow-up while the lead is still warm",
+  "Home Services: after-hours leads captured instead of lost to the next company",
 ];
 
 const orbitingNodes = [
@@ -65,11 +65,8 @@ export function Testimonials({
                 className={cn("absolute top-4 right-4 opacity-20", accentText)}
                 size={32}
               />
-              <p className="text-charcoal/80 leading-relaxed">
-                Sarah, a massage therapist in Lago Vista, went from digital
-                patchwork to a system that followed up, reminded clients, and
-                protected her calendar. Inside 14 days, the system had paid for
-                itself.
+              <p className="text-charcoal/80 leading-relaxed italic">
+                “I thought my booking flow was fine. The audit showed me three places I was losing people every single week — and once the system was live, the difference was immediate.”
               </p>
               <div className="mt-5 flex items-center gap-3">
                 <div
@@ -78,12 +75,12 @@ export function Testimonials({
                     accentSolid
                   )}
                 >
-                  SM
+                  SE
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-charcoal">Sarah M.</p>
+                  <p className="text-sm font-medium text-charcoal">Santa E.</p>
                   <p className="text-xs text-charcoal/50">
-                    Massage therapist · Lago Vista
+Massage therapist · Client story
                   </p>
                 </div>
               </div>
@@ -117,51 +114,29 @@ export function Testimonials({
             </Button>
           </div>
 
-          {/* Right — orbiting proof nodes */}
-          <div className="relative h-[520px] md:h-[600px] overflow-hidden">
-            <OrbitingIcons
-              centerNode={
-                <div className="p-5 z-20 flex flex-col items-center justify-center rounded-[20px] border-[1.5px] border-warm-border bg-gradient-to-br from-white via-cream to-cream-dark shadow-[0px_123px_35px_0px_rgba(28,25,23,0.00),_0px_79px_32px_0px_rgba(28,25,23,0.02),_0px_44px_27px_0px_rgba(28,25,23,0.06),_0px_20px_20px_0px_rgba(28,25,23,0.09),_0px_5px_11px_0px_rgba(28,25,23,0.10)]">
-                  <p
-                    className={cn(
-                      "text-[10px] uppercase tracking-widest font-medium",
-                      accentText
-                    )}
-                  >
-                    Avg rating
-                  </p>
-                  <p className="font-serif text-4xl font-bold text-charcoal mt-1">
-                    4.9
-                  </p>
-                  <p className="text-[11px] text-charcoal/50 mt-1">
-                    across 40+ reviews
-                  </p>
-                </div>
-              }
-              nodes={orbitingNodes.map((node, i) => (
-                <div
-                  key={i}
-                  className={cn(
-                    "w-[108px] h-[108px] rounded-[22px] bg-white border border-warm-border flex flex-col items-center justify-center p-2",
-                    "shadow-[0px_44px_12px_0px_rgba(28,25,23,0.00),_0px_28px_11px_0px_rgba(28,25,23,0.03),_0px_16px_10px_0px_rgba(28,25,23,0.09),_0px_7px_7px_0px_rgba(28,25,23,0.15),_0px_2px_4px_0px_rgba(28,25,23,0.18)]"
-                  )}
-                >
-                  <div
-                    className={cn(
-                      "w-10 h-10 rounded-full flex items-center justify-center text-xs font-semibold text-white mb-1.5",
-                      accentSolid
-                    )}
-                  >
-                    {node.initials}
-                  </div>
-                  <p className="text-[9px] text-charcoal/80">{node.label}</p>
-                  <p className="text-[9px] text-charcoal/40 mt-0.5">
-                    {node.role}
-                  </p>
-                </div>
-              ))}
-            />
-            <div className="absolute inset-0 z-10 w-full h-full bg-gradient-to-l from-cream via-cream/40 to-transparent pointer-events-none" />
+          {/* Right — clearer proof cluster */}
+          <div className="grid grid-cols-2 gap-4 md:gap-5 items-stretch">
+            {[
+              ["Massage", "4 → <1", "No-shows / week"],
+              ["Med Spa", "<5 min", "Consult follow-up"],
+              ["HVAC", "After-hours", "Lead captured"],
+              ["Reviews", "40+", "in 8 weeks"],
+            ].map(([label, value, detail], i) => (
+              <div
+                key={i}
+                className="rounded-[22px] border border-warm-border bg-white p-5 md:p-6 shadow-[0px_34px_21px_0px_rgba(28,25,23,0.04),0px_15px_15px_0px_rgba(28,25,23,0.06),0px_4px_8px_0px_rgba(28,25,23,0.05)]"
+              >
+                <p className={cn("text-[10px] uppercase tracking-[0.2em] mb-2", accentText)}>{label}</p>
+                <p className="font-serif text-3xl md:text-4xl text-charcoal leading-none">{value}</p>
+                <p className="mt-2 text-sm text-charcoal/55">{detail}</p>
+              </div>
+            ))}
+            <div className="col-span-2 rounded-[22px] border border-warm-border bg-gradient-to-r from-cream to-white p-5 md:p-6 shadow-[0px_20px_16px_-14px_rgba(28,25,23,0.12)]">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-charcoal/45 mb-2">What changed</p>
+              <p className="text-sm md:text-base text-charcoal/70 leading-relaxed">
+                Different verticals leak revenue in different places. The system works because the response, reminders, and follow-through are tuned to the business model instead of forced into one generic flow.
+              </p>
+            </div>
           </div>
         </div>
       </div>

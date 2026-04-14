@@ -8,6 +8,7 @@ interface PricingTier {
   tier: string;
   priceFrom: string;
   cadence: string;
+  setupFee?: string;
   tagline: string;
   features: string[];
   ctaLabel: string;
@@ -19,56 +20,59 @@ interface PricingTier {
 const tiers: PricingTier[] = [
   {
     tier: "Essentials",
-    priceFrom: "$X",
-    cadence: "/mo + setup",
-    tagline: "The foundation for solo practitioners who keep losing leads to missed calls.",
+    priceFrom: "$197",
+    cadence: "/mo",
+    setupFee: "$497 setup",
+    tagline: "The leanest package for businesses that need missed-call recovery, first response, and a cleaner path into booking.",
     features: [
-      "Missed-call recovery auto-text",
-      "Core appointment reminders",
-      "Basic review request flow",
+      "Noell Support first-response layer",
+      "Missed-call text-back",
+      "Website chat response",
+      "Contact capture + smart routing",
+      "Booking-link handoff",
       "One vertical configuration",
-      "Email support",
-      "Cancel anytime",
     ],
     ctaLabel: "Start with Essentials",
     ctaHref: "/book",
-    note: "Pricing confirmed at audit",
+    note: "Best for solo or lean teams that need the opener first",
   },
   {
-    tier: "Full System",
-    priceFrom: "$Y",
-    cadence: "/mo + setup",
-    tagline: "Most practices start here. Everything working together, fully managed.",
+    tier: "Growth",
+    priceFrom: "$797",
+    cadence: "/mo",
+    setupFee: "$997 setup",
+    tagline: "For businesses ready for stronger conversion, cleaner follow-through, and a broader operational layer built on the Noell system.",
     features: [
       "Everything in Essentials",
-      "Nova Prospect chat (first response)",
-      "Advanced reminder cadence",
+      "Full Noell Support coverage",
+      "Noell Front Desk layer",
+      "Advanced reminders + follow-up sequences",
       "Review capture + filter routing",
-      "Cancellation recapture",
-      "Managed install + ongoing ops",
-      "Priority support",
+      "Reactivation workflows",
+      "Smarter booking logic + custom paths",
     ],
-    ctaLabel: "Get the Full System",
+    ctaLabel: "Get the Growth System",
     ctaHref: "/book",
     isHighlighted: true,
-    note: "Most popular · Pricing confirmed at audit",
+    note: "Most popular · the best balance of service coverage and system depth",
   },
   {
     tier: "Custom Ops",
-    priceFrom: "Custom",
-    cadence: "",
-    tagline: "Multi-location, multi-service, or custom routing needs.",
+    priceFrom: "$1,497",
+    cadence: "/mo",
+    setupFee: "$1,497 setup",
+    tagline: "For businesses that want the full build: deeper workflows, more customization, and end-to-end implementation handled for them.",
     features: [
-      "Everything in Full System",
-      "Multi-location architecture",
-      "Custom routing rules",
-      "Dedicated ops partner",
-      "Quarterly system reviews",
-      "White-glove install",
+      "Everything in Growth",
+      "Custom system buildout",
+      "Multi-location or custom routing",
+      "Deeper front-desk workflow support",
+      "Dedicated implementation support",
+      "White-glove install + ongoing optimization",
     ],
     ctaLabel: "Book a scoping call",
     ctaHref: "/book",
-    note: "Quoted at audit",
+    note: "Best for owners who want it built right and handed over running",
   },
 ];
 
@@ -97,6 +101,11 @@ const PricingCard = ({ tier }: { tier: PricingTier }) => {
               </span>
             )}
           </div>
+          {tier.setupFee && (
+            <p className="mt-1 text-xs uppercase tracking-[0.16em] text-charcoal/45">
+              {tier.setupFee}
+            </p>
+          )}
           <p className="mt-2 text-sm text-charcoal/60 leading-relaxed">
             {tier.tagline}
           </p>
@@ -146,13 +155,12 @@ export default function Pricing() {
           Packages
         </p>
         <h2 className="font-serif text-3xl md:text-5xl font-semibold text-charcoal mb-4">
-          One <span className="italic text-wine">honest</span> system.
+One <span className="italic text-wine">system.</span>
           <br className="hidden md:block" />
           Three ways to run it.
         </h2>
-        <p className="text-charcoal/60 max-w-xl mx-auto">
-          No tier exists to upsell you. Start where you are, grow into what you
-          need. Every package is fully managed — you do not install it yourself.
+        <p className="text-charcoal/60 max-w-2xl mx-auto">
+The packages stay simple. What changes is how much Noell Support coverage, Noell Front Desk depth, and implementation support you want running behind the scenes for your business.
         </p>
       </div>
       <div className="grid md:grid-cols-3 gap-5 items-start">
@@ -160,8 +168,8 @@ export default function Pricing() {
           <PricingCard key={tier.tier} tier={tier} />
         ))}
       </div>
-      <p className="text-center text-xs text-charcoal/40 mt-10">
-        Setup fee covers install, migrations, copywriting, and first 30 days of managed ops.
+      <p className="text-center text-xs text-charcoal/40 mt-10 max-w-2xl mx-auto">
+Your audit is where we confirm fit, map the install clearly, and make sure the right package is doing the right job. No bait pricing, no mystery scope.
       </p>
     </div>
   );

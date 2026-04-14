@@ -9,10 +9,10 @@ export default function CTA({
   eyebrow = "The first step",
   headlineStart = "See exactly where",
   headlineAccent = "leads are falling through.",
-  body = "No pitch. No pressure. A 15-minute audit that gives you a clear map of what's leaking — whether you work with us or not.",
+  body = "No pitch. No pressure. A 30-minute audit that gives you a clear map of what's leaking — whether you work with us or not.",
   primaryCta = { label: "Book Your Free Audit", href: "/book" },
-  secondaryCta = { label: "Talk to Nova first", href: "/nova" },
-  trustLine = "Free 15-minute audit · No contracts required · Live in 14 days",
+  secondaryCta = { label: "See Noell Support", href: "/noell-support" },
+  trustLine = "Free 30-minute audit · No contracts required · Live in 14 days",
   accent = "wine",
 }: {
   eyebrow?: string;
@@ -35,10 +35,7 @@ export default function CTA({
   return (
     <section className="w-full px-4 my-16 md:my-24">
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        initial={false}
         className={cn(
           "relative max-w-6xl mx-auto rounded-[32px] px-8 py-20 md:px-16 md:py-24 overflow-hidden",
           gradientBg

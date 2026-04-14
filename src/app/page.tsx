@@ -29,7 +29,7 @@ export default function Home() {
       {/* Pricing — honest packages */}
       <Pricing />
 
-      {/* Proof — Sarah case study */}
+      {/* Proof — case study */}
       <Testimonials />
 
       {/* FAQ */}

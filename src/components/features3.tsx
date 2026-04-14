@@ -22,10 +22,10 @@ const defaultCapabilities: SystemCapability[] = [
     number: "01",
     title: "Missed-call recovery",
     description:
-      "When a call goes unanswered, an automatic text arrives in seconds with a booking link and the earliest availability.",
+      "When a call goes unanswered, an automatic text goes out in seconds with the right next step, so interest does not die in the gap.",
     points: [
       "Auto-text in under 10 seconds",
-      "Booking link included",
+      "Booking or reply path included",
       "Human handoff when needed",
     ],
   },
@@ -34,11 +34,11 @@ const defaultCapabilities: SystemCapability[] = [
     number: "02",
     title: "Automated reminders",
     description:
-      "Every appointment is confirmed and reminded on the right channel at the right time. No more manual texts the night before.",
+      "Confirmations and reminders go out on the right cadence so your day is not spent sending last-minute texts and chasing replies.",
     points: [
-      "Multi-channel confirmations",
+      "Confirmation + reminder flow",
       "Smart reminder cadence",
-      "Cancellation recapture",
+      "Less manual chasing",
     ],
   },
   {
@@ -46,11 +46,11 @@ const defaultCapabilities: SystemCapability[] = [
     number: "03",
     title: "Review capture",
     description:
-      "After each appointment, happy clients get a gentle nudge to leave a Google review. Your reputation compounds automatically.",
+      "After each appointment, happy clients get a clean follow-up ask so reviews keep building even when you are already on to the next client.",
     points: [
       "Post-visit review requests",
       "Filter + routing logic",
-      "Reputation dashboard",
+      "Compounding social proof",
     ],
   },
 ];
@@ -59,7 +59,7 @@ export function Features3({
   eyebrow = "Relief",
   headlineStart = "What changes",
   headlineAccent = "when the system takes over.",
-  body = "Three plays, running quietly in the background, that protect your calendar and compound your reputation week after week.",
+  body = "Three quiet operational plays that protect your calendar, save admin time, and keep good clients moving without you micromanaging every touchpoint.",
   capabilities = defaultCapabilities,
   accent = "wine",
 }: {
@@ -107,10 +107,7 @@ export function Features3({
           {capabilities.map((cap, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
+              initial={false}
               className={cn(
                 "relative rounded-[22px] border border-warm-border bg-white",
                 "p-7 md:p-8",

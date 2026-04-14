@@ -12,23 +12,36 @@ import React, { useRef, useState } from "react";
 import { Button } from "./button";
 import { Logo } from "./logo";
 
+interface NavbarItem {
+  name: string;
+  link: string;
+  nova?: boolean;
+  children?: { name: string; link: string; note?: string }[];
+}
+
 interface NavbarProps {
-  navItems: {
-    name: string;
-    link: string;
-    nova?: boolean;
-  }[];
+  navItems: NavbarItem[];
   visible: boolean;
 }
+
+const verticalItems = [
+  { name: "Med Spas", link: "/verticals/med-spas", note: "Consult conversion and follow-up" },
+  { name: "Salons", link: "/verticals/salons", note: "Sharper booking and rebooking path" },
+  { name: "Massage Therapy", link: "/verticals/massage", note: "Calm, trust-first booking flow" },
+  { name: "Dental Offices", link: "/verticals/dental", note: "Trust-first scheduling page" },
+  { name: "HVAC", link: "/verticals/hvac", note: "Urgent-call, grounded service tone" },
+  { name: "Home Services", link: "/verticals/home-services", note: "Broader service-led ad page" },
+  { name: "Pool Services", link: "/verticals/pool-services", note: "Recurring-service and reactivation focus" },
+];
 
 export const Navbar = () => {
   const navItems = [
     { name: "Home", link: "/" },
     { name: "Systems", link: "/#systems" },
-    { name: "Verticals", link: "/#verticals" },
+    { name: "Verticals", link: "/verticals", children: verticalItems },
     { name: "Pricing", link: "/#pricing" },
-    { name: "Nova", link: "/nova", nova: true },
-    { name: "About", link: "/#about" },
+    { name: "Noell Support", link: "/noell-support", nova: true },
+    { name: "Book", link: "/book" },
   ];
 
   const ref = useRef<HTMLDivElement>(null);
@@ -99,6 +112,7 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-lilac-dark" />
               )}
               <span className="relative z-10">{navItem.name}</span>
+              {navItem.children && <span className="relative z-10 text-[10px] text-charcoal/45">▾</span>}
               {hoveredIndex === idx && (
                 <motion.div
                   layoutId="menu-hover"
@@ -115,6 +129,22 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
                 />
               )}
             </Link>
+            {navItem.children && hoveredIndex === idx && (
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[360px] rounded-[22px] border border-warm-border/70 bg-cream/95 backdrop-blur-xl shadow-[0px_24px_60px_-18px_rgba(28,25,23,0.18)] p-3">
+                <div className="space-y-1">
+                  {navItem.children.map((child) => (
+                    <Link
+                      key={child.link}
+                      href={child.link}
+                      className="block rounded-[16px] px-4 py-3 hover:bg-white transition-colors"
+                    >
+                      <p className="text-sm font-medium text-charcoal">{child.name}</p>
+                      {child.note && <p className="mt-1 text-xs text-charcoal/55">{child.note}</p>}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.div>
         ))}
       </motion.div>
@@ -208,6 +238,21 @@ const MobileNav = ({ navItems, visible }: NavbarProps) => {
                   )}
                   <span className="block">{navItem.name}</span>
                 </Link>
+                {navItem.children && (
+                  <div className="mt-3 ml-4 space-y-2 border-l border-warm-border pl-4">
+                    {navItem.children.map((child) => (
+                      <Link
+                        key={child.link}
+                        href={child.link}
+                        onClick={() => setOpen(false)}
+                        className="block"
+                      >
+                        <p className="text-sm text-charcoal/80">{child.name}</p>
+                        {child.note && <p className="text-xs text-charcoal/50 mt-0.5">{child.note}</p>}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             ))}
             <Button

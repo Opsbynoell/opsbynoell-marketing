@@ -18,7 +18,7 @@ const defaultFaqs: FaqItem[] = [
   {
     question: "Do I need to replace my current booking tool?",
     answer:
-      "No. We integrate with the major scheduling platforms (GoHighLevel, Calendly, Acuity, Vagaro, and similar). The Ops by Noell system layers on top to handle missed-call recovery, reminders, and review capture.",
+      "No. We integrate with the major scheduling platforms you may already use, including Calendly, Acuity, Vagaro, and similar tools. The Ops by Noell system layers on top to handle missed-call recovery, reminders, and review capture.",
   },
   {
     question: "What does \"managed\" actually mean?",
@@ -26,9 +26,9 @@ const defaultFaqs: FaqItem[] = [
       "We monitor the automations weekly, tune the copy and cadence, handle escalations, and give you a simple monthly report. You don't touch the dashboard unless you want to.",
   },
   {
-    question: "Is Nova Prospect really an AI receptionist?",
+    question: "Is Noell Support really an AI receptionist?",
     answer:
-      "No, and we are careful about that. Nova Prospect handles first response, qualification, contact capture, routing, and booking-link handoff — then escalates to you. A full AI front desk is a separate product track.",
+      "No, and we are careful about that. Noell Support handles first response, qualification, contact capture, routing, and booking-link handoff — then escalates to you. A full AI front desk is a separate product track.",
   },
   {
     question: "What if it does not work for my business?",
@@ -52,7 +52,7 @@ export function FAQ({
   faqs?: FaqItem[];
   accent?: "wine" | "lilac";
 }) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndexes, setOpenIndexes] = useState<number[]>([]);
 
   const accentText = accent === "wine" ? "text-wine" : "text-lilac-dark";
   const accentGrad =
@@ -93,13 +93,19 @@ export function FAQ({
               className="rounded-[17px] border border-warm-border bg-gradient-to-b from-white via-cream to-white shadow-[0px_61px_24px_0px_rgba(28,25,23,0.00),_0px_34px_21px_0px_rgba(28,25,23,0.04),_0px_15px_15px_0px_rgba(28,25,23,0.06),_0px_4px_8px_0px_rgba(28,25,23,0.08)] overflow-hidden"
             >
               <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                onClick={() =>
+                  setOpenIndexes((current) =>
+                    current.includes(index)
+                      ? current.filter((i) => i !== index)
+                      : [...current, index]
+                  )
+                }
                 className="w-full px-6 py-5 flex items-center gap-3 text-left"
               >
                 <motion.div
                   initial={false}
-                  animate={{ rotate: openIndex === index ? 45 : 0 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  animate={{ rotate: openIndexes.includes(index) ? 45 : 0 }}
+                  transition={{ duration: 0.18 }}
                 >
                   <IconPlus size={20} className={accentText} />
                 </motion.div>
@@ -107,43 +113,15 @@ export function FAQ({
                   {faq.question}
                 </span>
               </button>
-              <AnimatePresence mode="sync">
-                {openIndex === index && (
-                  <motion.div
-                    key={`content-${index}`}
-                    initial="collapsed"
-                    animate="open"
-                    exit="collapsed"
-                    variants={{
-                      open: {
-                        height: "auto",
-                        opacity: 1,
-                        transition: {
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 40,
-                        },
-                      },
-                      collapsed: {
-                        height: 0,
-                        opacity: 0,
-                        transition: {
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 40,
-                        },
-                      },
-                    }}
-                    className="px-6 overflow-hidden"
-                  >
-                    <div className="pb-5 pl-8">
-                      <p className="text-charcoal/70 leading-relaxed text-sm md:text-base">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {openIndexes.includes(index) && (
+                <div className="px-6 overflow-hidden">
+                  <div className="pb-5 pl-8">
+                    <p className="text-charcoal/70 leading-relaxed text-sm md:text-base">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>

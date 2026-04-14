@@ -10,20 +10,28 @@ export function Footer() {
   const pages = [
     { title: "Home", href: "/" },
     { title: "Systems", href: "/#systems" },
-    { title: "Verticals", href: "/#verticals" },
     { title: "Pricing", href: "/#pricing" },
-    { title: "About", href: "/#about" },
+    { title: "Book", href: "/book" },
   ];
 
   const products = [
-    { title: "Nova Prospect", href: "/nova" },
-    { title: "Book an Audit", href: "/book" },
+    { title: "Noell Support", href: "/noell-support" },
+    { title: "Noell Front Desk", href: "/noell-front-desk" },
+    { title: "Book Your Audit", href: "/book" },
+    { title: "Med Spas", href: "/verticals/med-spas" },
+    { title: "Salons", href: "/verticals/salons" },
+    { title: "Massage Therapy", href: "/verticals/massage" },
+    { title: "Dental Offices", href: "/verticals/dental" },
+    { title: "HVAC", href: "/verticals/hvac" },
+    { title: "Home Services", href: "/verticals/home-services" },
+    { title: "Pool Services", href: "/verticals/pool-services" },
+    { title: "Estheticians", href: "/verticals/estheticians" },
   ];
 
   const legal = [
-    { title: "Privacy Policy", href: "#" },
-    { title: "Terms of Service", href: "#" },
-    { title: "Cookie Policy", href: "#" },
+    { title: "Privacy Policy", href: "/legal/privacy" },
+    { title: "Terms of Service", href: "/legal/terms" },
+    { title: "Cookie Policy", href: "/legal/cookies" },
   ];
 
   return (
@@ -59,7 +67,7 @@ export function Footer() {
 
             <div className="space-y-5">
               <h3 className="text-[11px] uppercase tracking-widest text-charcoal/40">
-                Product
+                Verticals + Product
               </h3>
               <ul className="space-y-3">
                 {products.map((item, idx) => (
@@ -68,7 +76,7 @@ export function Footer() {
                       href={item.href}
                       className="text-sm text-charcoal/70 hover:text-charcoal flex items-center gap-1.5"
                     >
-                      {item.title === "Nova Prospect" && (
+                      {(item.title === "Noell Support" || item.title === "Noell Front Desk") && (
                         <span className="inline-block w-1.5 h-1.5 rounded-full bg-lilac-dark" />
                       )}
                       {item.title}
@@ -103,26 +111,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Ops by Noell. Quiet operations for
             service businesses.
           </p>
-          <div className="flex gap-4 mt-4 md:mt-0">
-            <Link
-              href="#"
-              className="text-charcoal/50 hover:text-charcoal transition-colors"
-            >
-              <IconBrandInstagram size={18} />
-            </Link>
-            <Link
-              href="#"
-              className="text-charcoal/50 hover:text-charcoal transition-colors"
-            >
-              <IconBrandLinkedin size={18} />
-            </Link>
-            <Link
-              href="#"
-              className="text-charcoal/50 hover:text-charcoal transition-colors"
-            >
-              <IconBrandFacebook size={18} />
-            </Link>
-          </div>
+
         </div>
       </div>
     </footer>

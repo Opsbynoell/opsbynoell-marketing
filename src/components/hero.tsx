@@ -57,9 +57,7 @@ export function Hero({
       )}
     >
       <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
+        initial={false}
         className="relative z-20 text-[11px] uppercase tracking-[0.25em] text-charcoal/60 mb-6"
       >
         {eyebrow}
@@ -68,9 +66,7 @@ export function Hero({
       <div className="text-balance relative z-20 mx-auto mb-4 max-w-5xl text-center font-serif text-4xl font-semibold tracking-tight text-charcoal md:text-6xl lg:text-7xl">
         <Balancer>
           <motion.h1
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            initial={false}
             className={cn(
               "inline-block bg-gradient-to-b from-charcoal to-[rgba(28,25,23,0.85)]",
               "bg-clip-text text-transparent"
@@ -84,9 +80,7 @@ export function Hero({
             </span>
           </motion.h1>
           <motion.h1
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            initial={false}
             className={cn(
               "inline-block bg-gradient-to-b from-charcoal to-[rgba(28,25,23,0.85)]",
               "bg-clip-text text-transparent py-2"
@@ -103,9 +97,7 @@ export function Hero({
       </div>
 
       <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.5 }}
+        initial={false}
         className="relative z-20 mx-auto mt-4 max-w-2xl px-4 text-center text-base/7 text-charcoal/70"
       >
         {body}
@@ -113,19 +105,22 @@ export function Hero({
 
       {footnote && (
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.6 }}
+          initial={false}
           className="relative z-20 mx-auto mt-3 max-w-xl px-4 text-center text-sm text-charcoal/50"
         >
           {footnote}
         </motion.p>
       )}
 
+      <motion.p
+        initial={false}
+        className="relative z-20 mx-auto mt-2 max-w-2xl px-4 text-center text-sm text-charcoal/60"
+      >
+        The Noell system includes <span className="font-medium text-charcoal">Noell Support</span> for first response and <span className="font-medium text-charcoal">Noell Front Desk</span> for deeper follow-through and workflow support.
+      </motion.p>
+
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.7 }}
+        initial={false}
         className="mb-8 mt-8 z-10 sm:mb-10 flex w-full flex-col items-center justify-center gap-3 px-4 sm:flex-row md:mb-16"
       >
         <Button
@@ -146,13 +141,21 @@ export function Hero({
 
       <div className="pt-[2rem] w-full min-h-[21rem] relative">
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          initial={false}
           className="absolute top-0 left-0 right-0 z-10 flex justify-center pb-8"
         >
           <IphoneMockup>{mockScreen ?? <DefaultMockScreen />}</IphoneMockup>
         </motion.div>
+        <div className="absolute inset-x-0 top-8 z-20 hidden xl:flex justify-end pr-10 pointer-events-none">
+          <div className="w-[280px] rounded-[20px] border border-white/60 bg-white/88 backdrop-blur-md shadow-[0px_24px_60px_-18px_rgba(28,25,23,0.18)] p-4 text-left">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2 h-2 rounded-full bg-green-500" />
+              <span className="text-[11px] uppercase tracking-[0.18em] text-charcoal/45">Avg. response time</span>
+            </div>
+            <p className="font-serif text-3xl leading-none text-charcoal">8s</p>
+            <p className="mt-2 text-xs leading-relaxed text-charcoal/60">From missed call to first reply, while the business keeps working.</p>
+          </div>
+        </div>
         <BackgroundShape variant={variant} />
       </div>
     </div>
@@ -243,7 +246,7 @@ function DefaultMockScreen() {
             <p className="text-[10px] uppercase tracking-widest text-wine/70 font-medium">
               Missed-call recovery
             </p>
-            <p className="text-sm text-charcoal font-medium mt-0.5">Sarah M.</p>
+            <p className="text-sm text-charcoal font-medium mt-0.5">Jessica T.</p>
             <p className="text-[11px] text-charcoal/50">Auto-text sent · 8s</p>
           </div>
           <span className="text-[10px] px-2 py-0.5 rounded-full bg-blush text-wine">
@@ -251,8 +254,7 @@ function DefaultMockScreen() {
           </span>
         </div>
         <div className="mt-2 bg-cream-dark rounded-lg p-2 text-[11px] text-charcoal/80 leading-snug">
-          "Hi Sarah — sorry I missed you. I can get you in Saturday 2pm or 3pm.
-          Which works?"
+          "Hi Jessica — sorry I missed you. I can get you booked this Thursday or Friday. Which works better?"
         </div>
       </div>
 
@@ -276,7 +278,7 @@ function DefaultMockScreen() {
               Saturday · 2:00 PM
             </p>
             <p className="text-[11px] text-charcoal/50">
-              Deep tissue · 60 min
+              Facial · 50 min
             </p>
           </div>
           <span className="text-[10px] px-2 py-0.5 rounded-full bg-wine text-cream">

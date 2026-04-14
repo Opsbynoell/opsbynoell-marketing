@@ -49,20 +49,20 @@ export function Features2({
   return (
     <section
       id="systems"
-      className="w-full max-w-7xl mx-auto rounded-3xl bg-charcoal px-6 py-20 md:py-28 my-10 md:my-20"
+      className="w-full max-w-7xl mx-auto rounded-3xl bg-charcoal px-6 py-16 md:py-20 my-10 md:my-16"
     >
-      <div className="text-center mb-14 max-w-3xl mx-auto">
+      <div className="text-center mb-10 max-w-3xl mx-auto">
         <p className="text-[11px] uppercase tracking-[0.25em] text-cream/40 mb-4">
           {eyebrow}
         </p>
-        <h2 className="font-serif text-3xl md:text-5xl font-semibold text-cream leading-tight">
+        <h2 className="font-serif text-4xl md:text-6xl font-semibold text-cream leading-[1.02] tracking-tight">
           {headlineStart}{" "}
           <span className="italic text-wine-light">{headlineAccent}</span>
         </h2>
-        <p className="mt-5 text-cream/50 max-w-xl mx-auto">{body}</p>
+        <p className="mt-6 text-cream/55 max-w-2xl mx-auto text-base leading-relaxed">{body}</p>
       </div>
 
-      <div className="max-w-3xl mx-auto space-y-3">
+      <div className="max-w-4xl mx-auto space-y-3">
         {painPoints.map((point, index) => (
           <motion.div
             key={index}
@@ -84,7 +84,7 @@ export function Features2({
                 <h3 className="text-lg font-semibold text-cream mb-1.5">
                   {point.title}
                 </h3>
-                <p className="text-sm text-cream/50 leading-relaxed">
+                <p className="text-[15px] text-cream/55 leading-relaxed max-w-2xl">
                   {point.description}
                 </p>
               </div>
@@ -93,8 +93,8 @@ export function Features2({
         ))}
       </div>
 
-      <div className="max-w-3xl mx-auto mt-8">
-        <div className="rounded-[17px] bg-wine/25 border border-wine/35 px-6 py-4 text-center">
+      <div className="max-w-4xl mx-auto mt-6 grid md:grid-cols-[1fr_auto] gap-4 items-center">
+        <div className="rounded-[17px] bg-wine/25 border border-wine/35 px-6 py-5 text-center md:text-left">
           <p className="text-sm text-cream">
             {closingLine.split(/(fixable without hiring anyone\.)/).map((part, i) =>
               part === "fixable without hiring anyone." ? (
@@ -108,6 +108,11 @@ export function Features2({
               )
             )}
           </p>
+        </div>
+        <div className="rounded-[17px] border border-white/10 bg-white/[0.05] px-5 py-4 text-center min-w-[180px]">
+          <p className="text-[10px] uppercase tracking-[0.22em] text-cream/45 mb-1">What it costs</p>
+          <p className="font-serif text-3xl text-cream leading-none">Minutes</p>
+          <p className="mt-2 text-xs text-cream/55">to fix what currently leaks all week</p>
         </div>
       </div>
     </section>
