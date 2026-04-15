@@ -51,14 +51,32 @@ export function Features2({
       className="w-full max-w-7xl mx-auto rounded-3xl bg-charcoal px-6 py-20 md:py-28 my-10 md:my-20"
     >
       <div className="text-center mb-14 max-w-3xl mx-auto">
-        <p className="text-[11px] uppercase tracking-[0.25em] text-cream/40 mb-4">
-          {eyebrow}
-        </p>
+        <div className="inline-flex items-center gap-2 mb-4">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-wine-light" />
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-cream/50">
+            {eyebrow}
+          </p>
+        </div>
         <h2 className="font-serif text-3xl md:text-5xl font-semibold text-cream leading-tight">
           {headlineStart}{" "}
           <span className="italic text-wine-light">{headlineAccent}</span>
         </h2>
         <p className="mt-5 text-cream/50 max-w-xl mx-auto">{body}</p>
+
+        {/* 85% visual callout: the operational diagnosis number */}
+        <div className="mt-8 inline-flex items-stretch rounded-[14px] border border-wine/40 bg-wine/15 overflow-hidden">
+          <div className="px-5 md:px-6 py-3 md:py-4 border-r border-wine/30 flex items-center">
+            <span className="font-serif text-3xl md:text-4xl font-bold text-cream">
+              85%
+            </span>
+          </div>
+          <div className="px-5 md:px-6 py-3 md:py-4 flex items-center text-left">
+            <p className="text-xs md:text-sm text-cream/85 leading-snug max-w-xs">
+              of callers who cannot reach a service business do not leave a
+              voicemail. They call the next name on the list.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="max-w-3xl mx-auto space-y-3">

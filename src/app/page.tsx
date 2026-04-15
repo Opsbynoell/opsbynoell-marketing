@@ -1,49 +1,62 @@
 import { Hero } from "@/components/hero";
-import { LogoCloud } from "@/components/logos-cloud";
 import { Features } from "@/components/features";
-import { Features2 } from "@/components/features2";
 import { FounderQuote } from "@/components/founder-quote";
+import { BridgeMetaphor } from "@/components/bridge-metaphor";
+import { Features2 } from "@/components/features2";
+import { LogoCloud } from "@/components/logos-cloud";
+import { Testimonials } from "@/components/testimonials";
 import { Systems } from "@/components/systems";
+import { NoellSupportSpotlight } from "@/components/noell-support-spotlight";
 import { Features3 } from "@/components/features3";
 import Pricing from "@/components/pricing";
-import { Testimonials } from "@/components/testimonials";
 import { FAQ } from "@/components/faq";
 import CTA from "@/components/cta";
 
 export default function Home() {
   return (
     <div>
-      {/* Recognition */}
+      {/* 1. Hero (Recognition) */}
       <Hero />
 
-      {/* Founder presence, trust microcopy */}
-      <FounderQuote />
-
-      {/* Trust, who it's for */}
-      <LogoCloud />
-
-      {/* Proof, operational stats */}
+      {/* 2. Social proof bar, credibility numbers */}
       <Features />
 
-      {/* Tension, the real problem */}
+      {/* 3. Founder presence */}
+      <FounderQuote />
+
+      {/* 4. The Bridge metaphor, nostalgia thesis */}
+      <BridgeMetaphor />
+
+      {/* 5. Problem, Pain (with 85% stat callout) */}
       <Features2 />
 
-      {/* The Noell system, 3-agent product section */}
-      <Systems />
+      {/* 6. Who This Is For, vertical identity cards */}
+      <LogoCloud />
 
-      {/* Relief, what changes */}
-      <Features3 />
-
-      {/* Pricing, honest packages */}
-      <Pricing />
-
-      {/* Proof, case study */}
+      {/* 7. Case Study, moved up before the Agent Roster */}
       <Testimonials />
 
-      {/* FAQ */}
+      {/* 8. Agent Roster, three Noell agents as a buddy list */}
+      <Systems />
+
+      {/* 9. Noell Support Spotlight, honest positioning */}
+      <NoellSupportSpotlight />
+
+      {/* 10. How It Works, three-step process (Features3 reframed) */}
+      <Features3
+        eyebrow="How it works"
+        headlineStart="Three moves"
+        headlineAccent="that close the gap."
+        body="Not a 40-feature list. Three touchpoints, running quietly, that move the numbers every week."
+      />
+
+      {/* 11. Pricing */}
+      <Pricing />
+
+      {/* 12. FAQ */}
       <FAQ />
 
-      {/* Action */}
+      {/* 13. Dark CTA (Action) */}
       <CTA />
     </div>
   );

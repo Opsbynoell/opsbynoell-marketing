@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { IconMessageCircle, IconX, IconSend } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
@@ -71,6 +72,7 @@ const contactCaptureResponse: Message[] = [
 ];
 
 export function NovaChat() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>(initialConversation);
   const [inputValue, setInputValue] = useState("");
@@ -79,6 +81,16 @@ export function NovaChat() {
     "intro"
   );
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Auto-open only on /noell-support. The widget is present globally but stays
+  // closed until the visitor clicks it, except on the Noell Support spotlight
+  // page where seeing the widget in action is the whole point.
+  useEffect(() => {
+    if (pathname === "/noell-support") {
+      const t = setTimeout(() => setIsOpen(true), 1400);
+      return () => clearTimeout(t);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     if (scrollRef.current) {
