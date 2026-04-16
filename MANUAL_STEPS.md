@@ -90,39 +90,38 @@ Or push any commit to trigger an automatic deploy.
 
 ---
 
-## Step 5 — Supabase: Apply multi-tenant admin migration
+## Step 5 — Supabase: Apply multi-tenant admin migrations
 
-Run in the SQL editor:
+Run these two scripts in order in the SQL editor.
 
-```
-supabase/migrations/0002_multi_tenant_admin.sql
-```
+**5a.** `supabase/migrations/0002_multi_tenant_admin.sql`
+Adds `is_super_admin` to the users table and fixes the `sms_provider` constraint for `ghl_whatsapp`. Already applied — safe to re-run (idempotent).
 
-This adds `email`, `password_hash`, `is_super_admin` columns to `users`, creates the `user_clients` join table, and fixes the `sms_provider` check constraint to include `ghl_whatsapp`.
+**5b.** `supabase/migrations/0003_admin_users_table.sql`
+Creates `public.admin_users` (separate from Supabase Auth) and recreates `user_clients` with the correct FK.
 
-**Verify:**
+**Verify after 5b:**
 ```sql
-SELECT column_name FROM information_schema.columns
-WHERE table_name = 'users' AND column_name IN ('email','password_hash','is_super_admin');
--- Should return 3 rows
-
 SELECT table_name FROM information_schema.tables
-WHERE table_schema = 'public' AND table_name = 'user_clients';
--- Should return 1 row
+WHERE table_schema = 'public'
+  AND table_name IN ('admin_users', 'user_clients');
+-- Should return 2 rows
+
+SELECT column_name FROM information_schema.columns
+WHERE table_name = 'admin_users';
+-- Should show: id, email, password_hash, is_super_admin, created_at, updated_at
 ```
 
 ---
 
 ## Step 6 — Supabase: Seed admin users
 
-Before running, replace `santa@healinghandsbysanta.com` in the seed with Santa's real email address:
-
 ```
 supabase/seeds/0002_admin_users.sql
 ```
 
 This creates:
-- **Nikki** (`nikkidowdell@gmail.com`) — super admin, sees all clients
+- **Nikki** (`hello@opsbynoell.com`) — super admin, sees all clients
 - **Santa** (`santa@healinghandsbysanta.com`) — scoped to `client_id = 'santa'`
 
 Temp passwords:
@@ -132,6 +131,13 @@ Temp passwords:
 | Santa | `HealingHands2026!` |
 
 **Change these immediately after first login** via the Users page (`/admin/users`).
+
+**Verify:**
+```sql
+SELECT email, is_super_admin FROM admin_users;
+SELECT u.email, uc.client_id FROM admin_users u
+  JOIN user_clients uc ON uc.user_id = u.id;
+```
 
 ---
 

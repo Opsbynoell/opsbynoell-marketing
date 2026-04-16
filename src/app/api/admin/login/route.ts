@@ -12,8 +12,8 @@ export const dynamic = "force-dynamic";
 
 interface UserRow {
   id: string;
-  email: string | null;
-  password_hash: string | null;
+  email: string;
+  password_hash: string;
   is_super_admin: boolean;
 }
 
@@ -43,7 +43,7 @@ export async function POST(req: Request): Promise<Response> {
 
     try {
       const rows = await sbSelect<UserRow>(
-        "users",
+        "admin_users",
         { email: `eq.${email.toLowerCase()}` },
         { limit: 1 }
       );

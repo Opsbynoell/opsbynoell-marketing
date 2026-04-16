@@ -38,7 +38,7 @@ export async function GET(req: NextRequest): Promise<Response> {
   }
 
   const usersRes = await fetch(
-    `${restUrl("users")}?select=id,email,is_super_admin,created_at&email=not.is.null&order=created_at.asc`,
+    `${restUrl("admin_users")}?select=id,email,is_super_admin,created_at&email=not.is.null&order=created_at.asc`,
     { headers: supabaseHeaders(), cache: "no-store" }
   );
   if (!usersRes.ok) {
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest): Promise<Response> {
 
   const passwordHash = await hashPassword(password);
 
-  const createRes = await fetch(restUrl("users"), {
+  const createRes = await fetch(restUrl("admin_users"), {
     method: "POST",
     headers: { ...supabaseHeaders(), Prefer: "return=representation" },
     body: JSON.stringify({

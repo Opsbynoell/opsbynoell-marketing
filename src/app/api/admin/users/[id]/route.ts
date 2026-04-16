@@ -62,7 +62,7 @@ export async function PATCH(
   }
 
   if (Object.keys(patch).length > 0) {
-    const patchRes = await fetch(`${restUrl("users")}?id=eq.${id}`, {
+    const patchRes = await fetch(`${restUrl("admin_users")}?id=eq.${id}`, {
       method: "PATCH",
       headers: { ...supabaseHeaders(), Prefer: "return=minimal" },
       body: JSON.stringify(patch),
@@ -113,7 +113,7 @@ export async function DELETE(
     );
   }
 
-  const delRes = await fetch(`${restUrl("users")}?id=eq.${id}`, {
+  const delRes = await fetch(`${restUrl("admin_users")}?id=eq.${id}`, {
     method: "DELETE",
     headers: { ...supabaseHeaders(), Prefer: "return=minimal" },
   });
