@@ -105,7 +105,7 @@ async function fetchSessions(
 
 export async function GET(req: NextRequest): Promise<Response> {
   const token = req.cookies.get(COOKIE_NAME)?.value;
-  if (!verifyToken(token)) {
+  if (!(await verifyToken(token))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

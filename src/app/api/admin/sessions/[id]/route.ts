@@ -40,7 +40,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ): Promise<Response> {
   const token = req.cookies.get(COOKIE_NAME)?.value;
-  if (!verifyToken(token)) {
+  if (!(await verifyToken(token))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
