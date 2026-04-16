@@ -155,7 +155,7 @@ export function Hero({
   );
 }
 
-function BackgroundShape({ variant = "wine" }: { variant?: "wine" | "lilac" }) {
+function BackgroundShape({ variant = "wine" }: { variant?: "wine" | "lilac" | "sage" }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const sizes = isMobile
     ? { outer: 800, middle: 600, inner: 400 }
