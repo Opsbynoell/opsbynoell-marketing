@@ -52,7 +52,19 @@ export function FAQ({
   faqs?: FaqItem[];
   accent?: "wine" | "lilac";
 }) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openSet, setOpenSet] = useState<Set<number>>(new Set([0]));
+
+  function toggle(index: number) {
+    setOpenSet((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  }
 
   const accentText = accent === "wine" ? "text-wine" : "text-lilac-dark";
   const accentGrad =
@@ -93,12 +105,12 @@ export function FAQ({
               className="rounded-[17px] border border-warm-border bg-gradient-to-b from-white via-cream to-white shadow-[0px_61px_24px_0px_rgba(28,25,23,0.00),_0px_34px_21px_0px_rgba(28,25,23,0.04),_0px_15px_15px_0px_rgba(28,25,23,0.06),_0px_4px_8px_0px_rgba(28,25,23,0.08)] overflow-hidden"
             >
               <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                onClick={() => toggle(index)}
                 className="w-full px-6 py-5 flex items-center gap-3 text-left"
               >
                 <motion.div
                   initial={false}
-                  animate={{ rotate: openIndex === index ? 45 : 0 }}
+                  animate={{ rotate: openSet.has(index) ? 45 : 0 }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
                   <IconPlus size={20} className={accentText} />
@@ -108,7 +120,7 @@ export function FAQ({
                 </span>
               </button>
               <AnimatePresence mode="sync">
-                {openIndex === index && (
+                {openSet.has(index) && (
                   <motion.div
                     key={`content-${index}`}
                     initial="collapsed"

@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { IconMenu2, IconX, IconChevronDown } from "@tabler/icons-react";
 import {
   motion,
   AnimatePresence,
@@ -11,6 +11,15 @@ import Link from "next/link";
 import React, { useRef, useState } from "react";
 import { Button } from "./button";
 import { Logo } from "./logo";
+
+const VERTICAL_LINKS = [
+  { name: "Dental Offices", href: "/verticals/dental" },
+  { name: "Med Spas", href: "/verticals/med-spas" },
+  { name: "Salons", href: "/verticals/salons" },
+  { name: "Massage Therapy", href: "/verticals/massage" },
+  { name: "Estheticians", href: "/verticals/estheticians" },
+  { name: "HVAC", href: "/verticals/hvac" },
+];
 
 interface NavbarProps {
   navItems: {
@@ -58,10 +67,14 @@ export const Navbar = () => {
 
 const DesktopNav = ({ navItems, visible }: NavbarProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [verticalsOpen, setVerticalsOpen] = useState(false);
 
   return (
     <motion.div
-      onMouseLeave={() => setHoveredIndex(null)}
+      onMouseLeave={() => {
+        setHoveredIndex(null);
+        setVerticalsOpen(false);
+      }}
       animate={{
         width: visible ? "60%" : "85%",
         backgroundColor: visible
@@ -85,38 +98,117 @@ const DesktopNav = ({ navItems, visible }: NavbarProps) => {
         className="lg:flex flex-row flex-1 items-center justify-center space-x-1 text-sm"
         animate={{ scale: 1, justifyContent: visible ? "flex-end" : "center" }}
       >
-        {navItems.map((navItem, idx) => (
-          <motion.div
-            key={`nav-item-${idx}`}
-            onHoverStart={() => setHoveredIndex(idx)}
-            className="relative"
-          >
-            <Link
-              className="text-charcoal/80 hover:text-charcoal relative px-3 py-1.5 transition-colors flex items-center gap-1.5"
-              href={navItem.link}
+        {navItems.map((navItem, idx) => {
+          const isVerticals = navItem.name === "Verticals";
+          return (
+            <motion.div
+              key={`nav-item-${idx}`}
+              onHoverStart={() => {
+                setHoveredIndex(idx);
+                if (isVerticals) setVerticalsOpen(true);
+              }}
+              onHoverEnd={() => {
+                if (isVerticals) {
+                  // keep open briefly so user can move cursor to dropdown
+                }
+              }}
+              className="relative"
             >
-              {navItem.isAccent && (
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-lilac-dark" />
+              {isVerticals ? (
+                <button
+                  className="text-charcoal/80 hover:text-charcoal relative px-3 py-1.5 transition-colors flex items-center gap-1"
+                  onClick={() => setVerticalsOpen((v) => !v)}
+                >
+                  <span className="relative z-10">{navItem.name}</span>
+                  <IconChevronDown
+                    size={13}
+                    className={cn(
+                      "transition-transform duration-200",
+                      verticalsOpen ? "rotate-180" : ""
+                    )}
+                  />
+                  {hoveredIndex === idx && (
+                    <motion.div
+                      layoutId="menu-hover"
+                      className="absolute inset-0 rounded-full"
+                      initial={{ opacity: 0 }}
+                      animate={{
+                        opacity: 1,
+                        background:
+                          "linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(240,224,214,0.35) 100%)",
+                        boxShadow: "0 4px 15px rgba(28,25,23,0.06)",
+                      }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.05 }}
+                    />
+                  )}
+                </button>
+              ) : (
+                <Link
+                  className="text-charcoal/80 hover:text-charcoal relative px-3 py-1.5 transition-colors flex items-center gap-1.5"
+                  href={navItem.link}
+                >
+                  {navItem.isAccent && (
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-lilac-dark" />
+                  )}
+                  <span className="relative z-10">{navItem.name}</span>
+                  {hoveredIndex === idx && (
+                    <motion.div
+                      layoutId="menu-hover"
+                      className="absolute inset-0 rounded-full"
+                      initial={{ opacity: 0 }}
+                      animate={{
+                        opacity: 1,
+                        background:
+                          "linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(240,224,214,0.35) 100%)",
+                        boxShadow: "0 4px 15px rgba(28,25,23,0.06)",
+                      }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.05 }}
+                    />
+                  )}
+                </Link>
               )}
-              <span className="relative z-10">{navItem.name}</span>
-              {hoveredIndex === idx && (
-                <motion.div
-                  layoutId="menu-hover"
-                  className="absolute inset-0 rounded-full"
-                  initial={{ opacity: 0 }}
-                  animate={{
-                    opacity: 1,
-                    background:
-                      "linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(240,224,214,0.35) 100%)",
-                    boxShadow: "0 4px 15px rgba(28,25,23,0.06)",
-                  }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.05 }}
-                />
+
+              {/* Verticals dropdown */}
+              {isVerticals && (
+                <AnimatePresence>
+                  {verticalsOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                      transition={{ duration: 0.15, ease: "easeOut" }}
+                      onMouseEnter={() => setVerticalsOpen(true)}
+                      onMouseLeave={() => setVerticalsOpen(false)}
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-52 rounded-2xl border border-warm-border bg-white/95 backdrop-blur-xl shadow-[0_20px_40px_-8px_rgba(28,25,23,0.12)] p-2 z-50"
+                    >
+                      {VERTICAL_LINKS.map((v) => (
+                        <Link
+                          key={v.href}
+                          href={v.href}
+                          onClick={() => setVerticalsOpen(false)}
+                          className="block px-3 py-2 text-sm text-charcoal/70 hover:text-charcoal hover:bg-cream rounded-xl transition-colors"
+                        >
+                          {v.name}
+                        </Link>
+                      ))}
+                      <div className="mt-1 pt-1 border-t border-warm-border">
+                        <Link
+                          href="/verticals"
+                          onClick={() => setVerticalsOpen(false)}
+                          className="block px-3 py-2 text-xs text-wine/70 hover:text-wine hover:bg-blush rounded-xl transition-colors font-medium"
+                        >
+                          View all verticals &rarr;
+                        </Link>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               )}
-            </Link>
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </motion.div>
 
       <AnimatePresence mode="popLayout" initial={false}>
