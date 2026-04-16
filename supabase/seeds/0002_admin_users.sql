@@ -45,7 +45,7 @@ INSERT INTO public.users (
   is_super_admin
 )
 VALUES (
-  'EMAIL_PLACEHOLDER',
+  'santa@healinghandsbysanta.com',
   'pbkdf2:100000:SHA-256:5791da67a9b77b5ebe5f78973cfccfbc:9380380cbc4a103cffd36da7e748e032f70b86ff666d2e9123d29ff6f96d9077',
   false
 )
@@ -57,7 +57,7 @@ ON CONFLICT (email) DO UPDATE SET
 INSERT INTO public.user_clients (user_id, client_id)
 SELECT u.id, 'santa'
 FROM public.users u
-WHERE u.email = 'EMAIL_PLACEHOLDER'
+WHERE u.email = 'santa@healinghandsbysanta.com'
 ON CONFLICT (user_id, client_id) DO NOTHING;
 
 

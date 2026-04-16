@@ -8,7 +8,7 @@
 --
 -- PLACEHOLDERS — must be updated before go-live (marked with PLACEHOLDER):
 --   PHONE_PLACEHOLDER              → Santa's real phone number
---   EMAIL_PLACEHOLDER              → Santa's real email address
+--   santa@healinghandsbysanta.com              → Santa's real email address
 --   BOOKING_URL_PLACEHOLDER        → GHL calendar booking link for Santa
 --   REVIEW_URL_PLACEHOLDER         → Google Business review link
 --   TELEGRAM_CHAT_ID_PLACEHOLDER   → Santa's Telegram chat ID for alerts
@@ -69,7 +69,7 @@ VALUES (
   'Healing Hands by Santa',
   'massage',
   'PHONE_PLACEHOLDER',
-  'EMAIL_PLACEHOLDER',
+  'santa@healinghandsbysanta.com',
   '{"support": true, "frontDesk": true, "care": true}'::jsonb,
 
   -- Support system prompt
@@ -137,7 +137,7 @@ Your job is to warmly greet new visitors, answer questions about services and bo
     "role": "Licensed Massage Therapist & Reiki Practitioner",
     "bio": "25 years of experience. Specializes in Swedish massage, deep tissue, hot stone, and Reiki energy healing. Practices out of Divine Healing Chiropractic in Laguna Niguel, CA.",
     "phone": "PHONE_PLACEHOLDER",
-    "email": "EMAIL_PLACEHOLDER"
+    "email": "santa@healinghandsbysanta.com"
   }]'::jsonb,
 
   -- Escalation rules

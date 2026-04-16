@@ -45,7 +45,7 @@ Before running, fill in the placeholders at the top of the file:
 | Placeholder | Replace with |
 |---|---|
 | `PHONE_PLACEHOLDER` | Santa's real phone number |
-| `EMAIL_PLACEHOLDER` | Santa's real email |
+| `santa@healinghandsbysanta.com` | Santa's real email |
 | `BOOKING_URL_PLACEHOLDER` | GHL calendar booking URL for Santa |
 | `REVIEW_URL_PLACEHOLDER` | Google Business review link |
 | `TELEGRAM_CHAT_ID_PLACEHOLDER` | Santa's Telegram chat ID for alert routing |
@@ -115,7 +115,7 @@ WHERE table_schema = 'public' AND table_name = 'user_clients';
 
 ## Step 6 — Supabase: Seed admin users
 
-Before running, replace `EMAIL_PLACEHOLDER` in the seed with Santa's real email address:
+Before running, replace `santa@healinghandsbysanta.com` in the seed with Santa's real email address:
 
 ```
 supabase/seeds/0002_admin_users.sql
@@ -123,7 +123,7 @@ supabase/seeds/0002_admin_users.sql
 
 This creates:
 - **Nikki** (`nikkidowdell@gmail.com`) — super admin, sees all clients
-- **Santa** (`EMAIL_PLACEHOLDER`) — scoped to `client_id = 'santa'`
+- **Santa** (`santa@healinghandsbysanta.com`) — scoped to `client_id = 'santa'`
 
 Temp passwords:
 | User | Temp password |
