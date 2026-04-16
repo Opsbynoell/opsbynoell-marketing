@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { AgentRouter } from "@/components/agent-router";
+import { ConditionalShell } from "@/components/conditional-shell";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -66,16 +64,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-cream">
-        <Navbar />
-        <main className="flex-1 pt-4">{children}</main>
-        <Footer />
-        {/*
-          Agent router — picks the right widget per path.
-          /noell-front-desk → Front Desk demo
-          /noell-care       → Care demo
-          everything else   → Noell Support
-        */}
-        <AgentRouter />
+        <ConditionalShell>{children}</ConditionalShell>
       </body>
     </html>
   );
