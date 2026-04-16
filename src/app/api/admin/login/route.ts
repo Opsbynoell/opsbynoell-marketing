@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import {
   checkLegacyPassword,
   createToken,
-  verifyPassword,
   COOKIE_NAME,
 } from "@/lib/admin-auth";
+import { verifyPassword } from "@/lib/admin-password";
 import { sbSelect } from "@/lib/agents/supabase";
 
 export const runtime = "nodejs";

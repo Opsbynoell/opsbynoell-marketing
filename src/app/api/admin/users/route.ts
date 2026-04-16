@@ -4,7 +4,8 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { verifyToken, hashPassword, COOKIE_NAME } from "@/lib/admin-auth";
+import { verifyToken, COOKIE_NAME } from "@/lib/admin-auth";
+import { hashPassword } from "@/lib/admin-password";
 import { env } from "@/lib/agents/env";
 
 export const runtime = "nodejs";

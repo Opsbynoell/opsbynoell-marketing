@@ -1,37 +1,25 @@
 /**
- * Admin session auth helpers — multi-tenant edition.
+ * Admin session auth helpers.
  *
- * Uses the Web Crypto API (crypto.subtle) throughout — compatible with
- * both Edge Runtime (middleware) and Node.js >= 18 (API routes).
+ * Intentionally minimal — this file is imported by src/proxy.ts (Edge Runtime).
+ * ONLY token creation and verification live here. Password hashing lives in
+ * admin-password.ts (Node.js only, never imported by proxy).
  *
- * Token format: base64url(JSON payload).base64url(HMAC-SHA256 signature)
+ * Uses the Web Crypto API (crypto.subtle) throughout.
+ * Uses TextEncoder / TextDecoder for base64url — NO escape() / unescape(),
+ * which are NOT available in Vercel Edge Runtime.
+ *
+ * Token format:  base64url(JSON payload).base64url(HMAC-SHA256 signature)
  *
  * Payload shape:
- *   {
- *     userId: string;
- *     email: string;
- *     isSuperAdmin: boolean;
- *     accessibleClients: string[];   // populated from user_clients join table
- *     exp: number;                   // Unix ms expiry
- *   }
- *
- * Middleware reads user metadata from the cookie without a DB round-trip.
- * API routes receive that metadata via x-admin-* request headers injected
- * by middleware.
- *
- * Password hashing: PBKDF2-SHA-256, 100 000 iterations.
- * Hash format stored in DB:  pbkdf2:100000:SHA-256:<salt_hex>:<hash_hex>
- *
- * Legacy fallback: if the users table lookup fails, checkLegacyPassword()
- * compares against the ADMIN_PASSWORD env var (plain-text) for backward
- * compatibility during the migration cutover.
+ *   { userId, email, isSuperAdmin, accessibleClients[], exp }
  *
  * Required env vars:
- *   ADMIN_SECRET     — 32+ char secret for signing session tokens
- *   ADMIN_PASSWORD   — (legacy) plain-text password for old single-user login
+ *   ADMIN_SECRET  — 32+ char secret for signing tokens
+ *   ADMIN_PASSWORD — (legacy) plain-text fallback password
  */
 
-const COOKIE_NAME = "admin_session";
+export const COOKIE_NAME = "admin_session";
 const TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 export interface AdminTokenPayload {
@@ -43,7 +31,7 @@ export interface AdminTokenPayload {
 }
 
 // ----------------------------------------------------------------
-// Base64url helpers (Edge + Node.js compatible)
+// Base64url — Edge Runtime safe (TextEncoder / TextDecoder only)
 // ----------------------------------------------------------------
 
 function toBase64url(buf: ArrayBuffer): string {
@@ -54,7 +42,11 @@ function toBase64url(buf: ArrayBuffer): string {
 }
 
 function strToBase64url(str: string): string {
-  return btoa(unescape(encodeURIComponent(str)))
+  // TextEncoder gives UTF-8 bytes; convert to binary string for btoa
+  const bytes = new TextEncoder().encode(str);
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary)
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=/g, "");
@@ -64,26 +56,14 @@ function base64urlToStr(b64: string): string {
   const padded = b64.replace(/-/g, "+").replace(/_/g, "/");
   const pad = padded.length % 4;
   const padded2 = pad ? padded + "=".repeat(4 - pad) : padded;
-  return decodeURIComponent(escape(atob(padded2)));
-}
-
-function hexToBytes(hex: string): Uint8Array<ArrayBuffer> {
-  const buffer = new ArrayBuffer(hex.length / 2);
-  const bytes = new Uint8Array(buffer);
-  for (let i = 0; i < hex.length; i += 2) {
-    bytes[i / 2] = parseInt(hex.slice(i, i + 2), 16);
-  }
-  return bytes;
-}
-
-function bytesToHex(buf: ArrayBuffer): string {
-  return Array.from(new Uint8Array(buf))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
+  const binary = atob(padded2);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
 }
 
 // ----------------------------------------------------------------
-// HMAC signing (token auth)
+// HMAC signing
 // ----------------------------------------------------------------
 
 function getSecret(): string {
@@ -112,10 +92,7 @@ async function hmacSign(secret: string, data: string): Promise<string> {
 export async function createToken(
   payload: Omit<AdminTokenPayload, "exp">
 ): Promise<string> {
-  const full: AdminTokenPayload = {
-    ...payload,
-    exp: Date.now() + TOKEN_TTL_MS,
-  };
+  const full: AdminTokenPayload = { ...payload, exp: Date.now() + TOKEN_TTL_MS };
   const encoded = strToBase64url(JSON.stringify(full));
   const sig = await hmacSign(getSecret(), encoded);
   return `${encoded}.${sig}`;
@@ -125,9 +102,10 @@ export async function verifyToken(
   token: string | undefined
 ): Promise<AdminTokenPayload | null> {
   if (!token) return null;
-  const parts = token.split(".");
-  if (parts.length !== 2) return null;
-  const [encoded, sig] = parts;
+  const dot = token.lastIndexOf(".");
+  if (dot < 1) return null;
+  const encoded = token.slice(0, dot);
+  const sig = token.slice(dot + 1);
   try {
     const expected = await hmacSign(getSecret(), encoded);
     if (expected !== sig) return null;
@@ -140,85 +118,11 @@ export async function verifyToken(
 }
 
 // ----------------------------------------------------------------
-// PBKDF2 password hashing
-// ----------------------------------------------------------------
-
-/**
- * Hash a plaintext password.
- * Returns: `pbkdf2:100000:SHA-256:<salt_hex>:<hash_hex>`
- */
-export async function hashPassword(password: string): Promise<string> {
-  const enc = new TextEncoder();
-  const saltBuffer = new ArrayBuffer(16);
-  const salt = new Uint8Array(saltBuffer);
-  crypto.getRandomValues(salt);
-  const keyMaterial = await crypto.subtle.importKey(
-    "raw",
-    enc.encode(password),
-    "PBKDF2",
-    false,
-    ["deriveBits"]
-  );
-  const bits = await crypto.subtle.deriveBits(
-    { name: "PBKDF2", salt, iterations: 100_000, hash: "SHA-256" },
-    keyMaterial,
-    256
-  );
-  const saltHex = bytesToHex(salt.buffer);
-  const hashHex = bytesToHex(bits);
-  return `pbkdf2:100000:SHA-256:${saltHex}:${hashHex}`;
-}
-
-/**
- * Verify a plaintext password against a stored hash string.
- */
-export async function verifyPassword(
-  password: string,
-  stored: string
-): Promise<boolean> {
-  const parts = stored.split(":");
-  if (parts.length !== 5 || parts[0] !== "pbkdf2") return false;
-  const [, iterStr, hashAlgo, saltHex, expectedHex] = parts;
-  const iterations = parseInt(iterStr, 10);
-  if (!iterations || hashAlgo !== "SHA-256") return false;
-
-  const enc = new TextEncoder();
-  const salt = hexToBytes(saltHex);
-  const keyMaterial = await crypto.subtle.importKey(
-    "raw",
-    enc.encode(password),
-    "PBKDF2",
-    false,
-    ["deriveBits"]
-  );
-  const bits = await crypto.subtle.deriveBits(
-    { name: "PBKDF2", salt, iterations, hash: "SHA-256" },
-    keyMaterial,
-    256
-  );
-  const candidateHex = bytesToHex(bits);
-
-  // Constant-time compare
-  if (candidateHex.length !== expectedHex.length) return false;
-  let diff = 0;
-  for (let i = 0; i < candidateHex.length; i++) {
-    diff |= candidateHex.charCodeAt(i) ^ expectedHex.charCodeAt(i);
-  }
-  return diff === 0;
-}
-
-// ----------------------------------------------------------------
 // Legacy plain-text password fallback
 // ----------------------------------------------------------------
 
-/**
- * Compares input against the ADMIN_PASSWORD env var.
- * Used only during the transition period before all users are migrated to DB.
- */
 export function checkLegacyPassword(input: string): boolean {
   const pw = process.env.ADMIN_PASSWORD;
   if (!pw) return false;
   return input === pw;
 }
-
-export { COOKIE_NAME };
