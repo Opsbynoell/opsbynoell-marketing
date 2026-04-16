@@ -143,7 +143,7 @@ Navigate to:
 https://www.opsbynoell.com/admin/login
 ```
 
-1. Log in with `nikkidowdell@gmail.com` + `NoellAdmin2026!`
+1. Log in with `hello@opsbynoell.com` + `NoellAdmin2026!`
 2. Should land on the inbox showing all three agent tabs
 3. Super admin badge + email should appear in the header top-right
 4. "Users" link in the header → opens `/admin/users`

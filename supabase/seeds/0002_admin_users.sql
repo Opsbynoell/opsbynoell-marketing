@@ -24,7 +24,7 @@ INSERT INTO public.users (
   is_super_admin
 )
 VALUES (
-  'nikkidowdell@gmail.com',
+  'hello@opsbynoell.com',
   'pbkdf2:100000:SHA-256:9f2674ea16901828058c5a623d49fa3a:5cfacb5f2bc0d99d49e78484472badce8e7df234eefcc33050816e9448993233',
   true
 )

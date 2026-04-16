@@ -101,7 +101,7 @@ export async function POST(req: Request): Promise<Response> {
   if (!email && checkLegacyPassword(password)) {
     const token = await createToken({
       userId: "legacy",
-      email: "admin@opsbynoell.com",
+      email: "hello@opsbynoell.com",
       isSuperAdmin: true,
       accessibleClients: [],
     });
