@@ -69,6 +69,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1 pt-4">{children}</main>
         <Footer />
+        {/* Noell Support chat widget — live on every page, auto-opens on /noell-support */}
         <NoellSupportChat />
       </body>
     </html>

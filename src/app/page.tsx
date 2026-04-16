@@ -1,7 +1,6 @@
 import { Hero } from "@/components/hero";
 import { Features } from "@/components/features";
 import { FounderQuote } from "@/components/founder-quote";
-import { BridgeMetaphor } from "@/components/bridge-metaphor";
 import { Features2 } from "@/components/features2";
 import { LogoCloud } from "@/components/logos-cloud";
 import { Testimonials } from "@/components/testimonials";
@@ -24,10 +23,7 @@ export default function Home() {
       {/* 3. Founder presence */}
       <FounderQuote />
 
-      {/* 4. The Bridge metaphor, nostalgia thesis */}
-      <BridgeMetaphor />
-
-      {/* 5. Problem, Pain (with 85% stat callout) */}
+      {/* 4. Problem, Pain (with 85% stat callout) */}
       <Features2 />
 
       {/* 6. Who This Is For, vertical identity cards */}
