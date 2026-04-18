@@ -66,7 +66,7 @@ export function Testimonials({
                 size={32}
               />
               <p className="text-charcoal/80 leading-relaxed">
-                Santa, a massage therapist in Lago Vista, went from digital
+                Santa, a massage therapist in Laguna Niguel, went from digital
                 patchwork to a system that followed up, reminded clients, and
                 protected her calendar. Inside 14 days, the system had paid for
                 itself.
@@ -83,7 +83,7 @@ export function Testimonials({
                 <div>
                   <p className="text-sm font-medium text-charcoal">Santa E.</p>
                   <p className="text-xs text-charcoal/50">
-                    Massage therapist · Lago Vista
+                    Massage therapist · Laguna Niguel
                   </p>
                 </div>
               </div>
