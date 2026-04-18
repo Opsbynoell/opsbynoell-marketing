@@ -67,7 +67,7 @@ export function FAQ({
   faqs?: FaqItem[];
   accent?: "wine" | "lilac";
 }) {
-  const [openSet, setOpenSet] = useState<Set<number>>(new Set([0, 1]));
+  const [openSet, setOpenSet] = useState<Set<number>>(new Set([0]));
 
   function toggle(index: number) {
     setOpenSet((prev) => {
