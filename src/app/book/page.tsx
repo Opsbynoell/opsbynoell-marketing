@@ -92,22 +92,22 @@ export default function BookPage() {
       <BookExitIntent />
 
       {/* Hero */}
-      <section className="relative flex max-w-7xl rounded-b-3xl my-2 md:my-10 mx-auto flex-col items-center justify-center pt-24 md:pt-32 pb-12 md:pb-16 overflow-hidden px-4 md:px-8 bg-gradient-to-t from-[rgba(107,45,62,0.50)] via-[rgba(240,224,214,0.70)] to-[rgba(250,246,241,1)]">
-        <p className="relative z-20 text-[11px] uppercase tracking-[0.25em] text-charcoal/60 mb-6">
+      <section className="relative flex max-w-7xl rounded-b-3xl my-2 md:my-4 mx-auto flex-col items-center justify-center pt-20 md:pt-24 pb-6 md:pb-8 overflow-hidden px-4 md:px-8 bg-gradient-to-t from-[rgba(107,45,62,0.50)] via-[rgba(240,224,214,0.70)] to-[rgba(250,246,241,1)]">
+        <p className="relative z-20 text-[11px] uppercase tracking-[0.25em] text-charcoal/60 mb-4">
           The first step
         </p>
-        <h1 className="relative z-20 max-w-4xl text-center font-serif text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-charcoal">
+        <h1 className="relative z-20 max-w-4xl text-center font-serif text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-charcoal">
           Your free{" "}
           <span className="italic bg-gradient-to-b from-wine-light to-wine bg-clip-text text-transparent">
             operations audit.
           </span>
         </h1>
-        <p className="relative z-20 mt-6 max-w-xl text-center text-charcoal/70 text-base md:text-lg leading-relaxed">
+        <p className="relative z-20 mt-4 max-w-xl text-center text-charcoal/70 text-sm md:text-base leading-relaxed">
           30 minutes. No pitch, no pressure. We look at where leads are falling
           through, how your follow-up works today, and what a system could
           recover.
         </p>
-        <div className="relative z-20 mt-6 flex flex-wrap items-center justify-center gap-2">
+        <div className="relative z-20 mt-4 flex flex-wrap items-center justify-center gap-2">
           {[
             "Free & no obligation",
             "30 minutes, focused",
@@ -124,19 +124,19 @@ export default function BookPage() {
       </section>
 
       {/* Booking embed, eager-loaded, space reserved to avoid CLS */}
-      <section className="pt-4 pb-10 px-4">
+      <section className="pt-2 pb-8 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="rounded-[28px] border border-warm-border bg-white shadow-[0px_61px_24px_0px_rgba(28,25,23,0.00),0px_34px_21px_0px_rgba(28,25,23,0.04),0px_15px_15px_0px_rgba(28,25,23,0.06),0px_4px_8px_0px_rgba(28,25,23,0.08)] overflow-hidden">
-            <div className="px-8 pt-8 pb-4 border-b border-warm-border">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-wine mb-2">
+            <div className="px-6 md:px-8 pt-4 pb-3 border-b border-warm-border flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-wine">
                 Pick a time
               </p>
-              <h2 className="font-serif text-2xl md:text-3xl font-semibold text-charcoal">
-                All times shown in your local timezone.
-              </h2>
+              <p className="text-xs text-charcoal/60">
+                Times shown in your local timezone.
+              </p>
             </div>
 
-            <div className="p-6 md:p-8 min-h-[520px]">
+            <div className="p-4 md:p-6 min-h-[520px]">
               <BookingEmbed />
             </div>
 
