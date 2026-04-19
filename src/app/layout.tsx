@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ConditionalShell } from "@/components/conditional-shell";
+import { MetaPixel } from "@/components/meta-pixel";
 import { organizationSchema } from "@/lib/schema";
 import "./globals.css";
 
@@ -71,6 +72,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-cream">
+        <MetaPixel />
         <ConditionalShell>{children}</ConditionalShell>
       </body>
     </html>
