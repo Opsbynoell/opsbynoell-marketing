@@ -190,7 +190,7 @@ export default function NoellSupportPage() {
       <section id="capabilities" className="py-20 md:py-28 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14 max-w-3xl mx-auto">
-            <p className="text-[11px] uppercase tracking-[0.25em] text-lilac-dark mb-4">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-muted-strong mb-4">
               What Noell Support does
             </p>
             <h2 className="font-serif text-3xl md:text-5xl font-semibold text-charcoal leading-tight">

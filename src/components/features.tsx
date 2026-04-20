@@ -39,7 +39,7 @@ export function Features({
   return (
     <div className="w-full py-20 relative">
       <div className="text-center mb-12 px-4">
-        <p className="text-[11px] uppercase tracking-[0.25em] text-charcoal/50 mb-4">
+        <p className="text-[11px] uppercase tracking-[0.25em] text-muted-strong mb-4">
           {eyebrow}
         </p>
         <h2 className="font-serif text-3xl md:text-5xl font-semibold text-charcoal mb-4 max-w-3xl mx-auto">

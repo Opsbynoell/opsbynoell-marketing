@@ -68,7 +68,7 @@ export function LogoCloud() {
         <div className="text-center mb-12 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 mb-4">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500" />
-            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-charcoal/60">
+            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted-strong">
               who this is for
             </p>
           </div>

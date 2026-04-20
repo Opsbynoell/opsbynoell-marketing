@@ -95,7 +95,7 @@ export default function BookPage() {
 
       {/* Hero */}
       <section className="relative flex max-w-7xl rounded-b-3xl my-2 md:my-4 mx-auto flex-col items-center justify-center pt-20 md:pt-24 pb-6 md:pb-8 overflow-hidden px-4 md:px-8 bg-gradient-to-t from-[rgba(107,45,62,0.50)] via-[rgba(240,224,214,0.70)] to-[rgba(250,246,241,1)]">
-        <p className="relative z-20 text-[11px] uppercase tracking-[0.25em] text-charcoal/60 mb-4">
+        <p className="relative z-20 text-[11px] uppercase tracking-[0.25em] text-muted-strong mb-4">
           The first step
         </p>
         <h1 className="relative z-20 max-w-4xl text-center font-serif text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-charcoal">
@@ -117,7 +117,7 @@ export default function BookPage() {
           ].map((chip) => (
             <span
               key={chip}
-              className="inline-flex items-center rounded-full border border-warm-border bg-white/70 px-3 py-1.5 text-xs text-charcoal/70"
+              className="inline-flex items-center rounded-full border border-wine/30 bg-white px-3 py-1.5 text-xs text-wine"
             >
               {chip}
             </span>
@@ -241,7 +241,7 @@ export default function BookPage() {
       {/* Soft exit: Noell Support fallback */}
       <section className="px-4 pb-20">
         <div className="max-w-3xl mx-auto rounded-[22px] border border-warm-border bg-cream-dark p-8 text-center">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-lilac-dark mb-3 inline-flex items-center gap-2">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-muted-strong mb-3 inline-flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-lilac-dark" />
             Not ready to book?
           </p>

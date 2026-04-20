@@ -24,6 +24,12 @@
   --color-warm-gray: #78716C;
   --color-warm-border: #E7DFD6;
 
+  /* Readable-gray tokens for muted text on cream backgrounds (WCAG AA). */
+  --color-muted-strong: #5A4A50;
+  --color-muted-medium: #6E5E64;
+  /* For reassurance copy on dark wine backgrounds (passes 4.5:1 on wine). */
+  --color-on-dark-soft: rgba(255, 255, 255, 0.82);
+
   /* Fonts: three registers, display, body, system */
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "Courier New", ui-monospace, "Cascadia Mono", "Segoe UI Mono", monospace;

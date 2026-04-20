@@ -53,7 +53,9 @@ export function Hero({
 
   const accentGradient = {
     wine: "bg-gradient-to-b from-[rgba(139,77,94,1)] to-[rgba(107,45,62,1)]",
-    lilac: "bg-gradient-to-b from-[rgba(196,181,206,1)] to-[rgba(139,111,156,1)]",
+    // Lilac variant uses Wine for the italic accent so it passes AA on the
+    // blush/lilac hero gradient (the pale-lilac color fails ~1.5:1).
+    lilac: "bg-gradient-to-b from-[rgba(139,77,94,1)] to-[rgba(107,45,62,1)]",
     sage: "bg-gradient-to-b from-[rgba(122,156,121,1)] to-[rgba(79,107,78,1)]",
   };
 
@@ -69,7 +71,7 @@ export function Hero({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
-        className="relative z-20 text-[11px] uppercase tracking-[0.25em] text-charcoal/60 mb-6"
+        className="relative z-20 text-[11px] uppercase tracking-[0.25em] text-muted-strong mb-6"
       >
         {eyebrow}
       </motion.p>
@@ -165,7 +167,7 @@ export function Hero({
       </motion.div>
 
       {priceSignal && (
-        <div className="relative z-20 -mt-4 mb-6 text-center text-xs text-charcoal/60">
+        <div className="relative z-20 -mt-4 mb-6 text-center text-xs text-muted-strong">
           {priceSignal}
         </div>
       )}

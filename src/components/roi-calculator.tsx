@@ -51,7 +51,7 @@ export function ROICalculator() {
       </div>
       <div className="border-t border-warm-border pt-6 space-y-3">
         <div>
-          <div className="text-xs uppercase tracking-widest text-charcoal/60">
+          <div className="text-xs uppercase tracking-widest text-muted-strong">
             Monthly recoverable revenue
           </div>
           <div className="font-serif text-3xl md:text-4xl text-charcoal mt-1">
@@ -65,7 +65,7 @@ export function ROICalculator() {
           Growth ($797/mo) pays for itself in {formatPayback(paybackMonthsGrowth)}.
         </div>
       </div>
-      <div className="text-xs text-charcoal/50 mt-6 leading-relaxed">
+      <div className="text-xs text-muted-medium mt-6 leading-relaxed">
         Conservative model. Assumes 40% recovery rate on missed calls. Your
         actual recovery depends on call volume, timing, and offer.
       </div>
