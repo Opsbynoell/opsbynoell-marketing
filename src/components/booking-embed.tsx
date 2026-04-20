@@ -35,8 +35,8 @@ export function BookingEmbed() {
           className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-cream text-charcoal px-6 text-center"
         >
           <div className="flex items-center gap-2 mb-5">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-charcoal/60">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#2E7D5B] animate-pulse" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted-strong">
               noell front desk / scheduler
             </span>
           </div>
@@ -46,7 +46,7 @@ export function BookingEmbed() {
             <LoadingDots />
           </p>
 
-          <p className="mt-5 font-mono text-[11px] uppercase tracking-widest text-charcoal/40">
+          <p className="mt-5 font-mono text-[11px] uppercase tracking-widest text-muted-strong">
             holding your spot while we fetch the calendar
           </p>
 
@@ -90,8 +90,8 @@ function BookingFallback() {
     <div className="rounded-2xl border border-warm-border bg-gradient-to-b from-cream to-white p-8 md:p-12">
       <div className="max-w-lg mx-auto text-center">
         <div className="inline-flex items-center gap-2 mb-5">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500" />
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-wine">
+          <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted-strong">
             direct booking / by hand
           </p>
         </div>
@@ -125,10 +125,10 @@ function BookingFallback() {
           </Link>
         </div>
 
-        <p className="mt-8 font-mono text-[10px] uppercase tracking-widest text-charcoal/40">
+        <p className="mt-8 font-mono text-[10px] uppercase tracking-widest text-muted-strong">
           why no instant calendar?
         </p>
-        <p className="mt-2 text-xs text-charcoal/50 leading-relaxed max-w-md mx-auto">
+        <p className="mt-2 text-xs text-muted-medium leading-relaxed max-w-md mx-auto">
           Audits are booked by hand right now. It keeps the quality bar high.
           Instant self-serve returns when capacity allows.
         </p>

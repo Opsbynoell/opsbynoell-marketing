@@ -49,7 +49,7 @@ export function Testimonials({
               </div>
               <div>
                 <p className="text-sm font-medium text-charcoal">Santa E.</p>
-                <p className="text-xs text-charcoal/50">
+                <p className="text-xs text-muted-medium">
                   Massage therapist · Laguna Niguel, CA
                 </p>
               </div>

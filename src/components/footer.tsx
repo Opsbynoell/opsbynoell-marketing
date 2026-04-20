@@ -49,7 +49,7 @@ export function Footer() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
             <div className="space-y-5">
-              <h3 className="text-[11px] uppercase tracking-widest text-charcoal/40">
+              <h3 className="text-[11px] uppercase tracking-widest text-muted-strong">
                 Pages
               </h3>
               <ul className="space-y-3">
@@ -67,7 +67,7 @@ export function Footer() {
             </div>
 
             <div className="space-y-5">
-              <h3 className="text-[11px] uppercase tracking-widest text-charcoal/40">
+              <h3 className="text-[11px] uppercase tracking-widest text-muted-strong">
                 The Noell system
               </h3>
               <ul className="space-y-3">
@@ -85,7 +85,7 @@ export function Footer() {
             </div>
 
             <div className="space-y-5">
-              <h3 className="text-[11px] uppercase tracking-widest text-charcoal/40">
+              <h3 className="text-[11px] uppercase tracking-widest text-muted-strong">
                 Verticals
               </h3>
               <ul className="space-y-3">
@@ -103,7 +103,7 @@ export function Footer() {
             </div>
 
             <div className="space-y-5">
-              <h3 className="text-[11px] uppercase tracking-widest text-charcoal/40">
+              <h3 className="text-[11px] uppercase tracking-widest text-muted-strong">
                 Legal
               </h3>
               <ul className="space-y-3">
@@ -123,11 +123,11 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-12 mt-12 border-t border-warm-border gap-3">
-          <p className="text-xs text-charcoal/50">
+          <p className="text-xs text-muted-strong">
             &copy; {new Date().getFullYear()} Ops by Noell. Quiet operations for
             service businesses.
           </p>
-          <p className="text-xs text-charcoal/40">
+          <p className="text-xs text-muted-strong">
             Built for service businesses. Managed end-to-end.
           </p>
         </div>

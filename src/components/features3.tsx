@@ -71,6 +71,8 @@ export function Features3({
   accent?: "wine" | "lilac";
 }) {
   const accentText = accent === "wine" ? "text-wine" : "text-lilac-dark";
+  // Eyebrow needs extra contrast on cream; lilac-dark fails AA, so use muted-strong for the lilac variant.
+  const eyebrowColor = accent === "wine" ? "text-wine" : "text-muted-strong";
   const accentBg = accent === "wine" ? "bg-wine/10" : "bg-lilac-dark/10";
   const accentGrad =
     accent === "wine"
@@ -84,7 +86,7 @@ export function Features3({
           <p
             className={cn(
               "text-[11px] uppercase tracking-[0.25em] mb-4",
-              accentText
+              eyebrowColor
             )}
           >
             {eyebrow}
