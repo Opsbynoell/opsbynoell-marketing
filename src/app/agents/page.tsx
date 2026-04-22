@@ -313,6 +313,9 @@ export default function AgentsPage() {
             >
               Claim your founding spot
             </AgentsFoundingCta>
+            <p className="mt-4 text-sm text-charcoal/75 leading-relaxed">
+              Locks $197/mo for 24 months. Only 10 spots — closes June 30, 2026.
+            </p>
           </div>
         </div>
       </section>

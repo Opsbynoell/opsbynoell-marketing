@@ -3,11 +3,12 @@
 import React from "react";
 import { Button } from "./button";
 import { trackMetaEvent } from "@/lib/meta-pixel-track";
+import { FOUNDER_CHECKOUT_URL } from "@/lib/stripe-links";
 
 type Variant = "primary" | "wine" | "secondary";
 
 export function AgentsFoundingCta({
-  href = "/book",
+  href = FOUNDER_CHECKOUT_URL,
   className,
   children,
   variant = "primary",

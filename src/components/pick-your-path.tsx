@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { IconCheck } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
+import { FOUNDER_CHECKOUT_URL } from "@/lib/stripe-links";
 
 type CardProps = {
   eyebrow: string;
@@ -31,7 +32,7 @@ const cards: CardProps[] = [
     banner: "Founding rate: $197/mo (through June 30)",
     priceLine: "$297/mo",
     ctaLabel: "Start the agents",
-    ctaHref: "/agents",
+    ctaHref: FOUNDER_CHECKOUT_URL,
   },
   {
     eyebrow: "Done-for-you · 14-day install",
@@ -103,17 +104,31 @@ function Card({ card }: { card: CardProps }) {
         >
           {card.priceLine}
         </p>
-        <Link
-          href={card.ctaHref}
-          className={cn(
+        {(() => {
+          const ctaClass = cn(
             "inline-flex w-full items-center justify-center rounded-[8px] h-12 px-6 text-sm font-medium transition-colors tap-target",
             card.highlighted
               ? "bg-[linear-gradient(181deg,_#8B4D5E_18.12%,_#5A1F30_99.57%)] text-white shadow-[0px_4px_8px_0px_rgba(90,31,48,0.18),_0px_2px_4px_0px_rgba(90,31,48,0.12),0px_0px_0px_1px_rgba(90,31,48,0.12),_0px_1px_1px_2px_rgba(255,255,255,0.28)_inset,0px_-1px_5px_2px_rgba(255,255,255,0.20)_inset]"
               : "bg-white border border-warm-border text-charcoal hover:bg-cream"
-          )}
-        >
-          {card.ctaLabel}
-        </Link>
+          );
+          if (/^https?:\/\//.test(card.ctaHref)) {
+            return (
+              <a
+                href={card.ctaHref}
+                className={ctaClass}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {card.ctaLabel}
+              </a>
+            );
+          }
+          return (
+            <Link href={card.ctaHref} className={ctaClass}>
+              {card.ctaLabel}
+            </Link>
+          );
+        })()}
       </div>
     </div>
   );

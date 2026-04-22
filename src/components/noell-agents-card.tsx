@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { IconCheck } from "@tabler/icons-react";
 import { Button } from "./button";
+import { FOUNDER_CHECKOUT_URL } from "@/lib/stripe-links";
 
 const LEFT_ITEMS = [
   "Noell Support (website chat)",
@@ -54,10 +55,13 @@ export function NoellAgentsCard() {
               </p>
               <p className="mt-1 text-sm text-charcoal/60">No setup fee</p>
               <div className="mt-6">
-                <Button href="/agents" variant="primary" className="h-11 px-6">
+                <Button href={FOUNDER_CHECKOUT_URL} variant="primary" className="h-11 px-6">
                   Start the agents
                 </Button>
               </div>
+              <p className="mt-3 text-sm text-charcoal/75 leading-relaxed">
+                Locks $197/mo for 24 months. Only 10 spots — closes June 30, 2026.
+              </p>
             </div>
 
             {/* Two-column included list */}
