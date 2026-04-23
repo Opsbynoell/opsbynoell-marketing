@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -122,6 +123,15 @@ function AdminLoginForm() {
             >
               {loading ? "Signing in..." : "Sign in"}
             </button>
+
+            <div className="text-center pt-1">
+              <Link
+                href="/admin/forgot-password"
+                className="text-xs text-charcoal/60 hover:text-charcoal underline underline-offset-2"
+              >
+                Forgot password?
+              </Link>
+            </div>
           </form>
         </div>
 
