@@ -1,21 +1,38 @@
-import type { Metadata } from "next";
 import { Hero } from "@/components/hero";
 import { Testimonials } from "@/components/testimonials";
 import { Systems } from "@/components/systems";
 import CTA from "@/components/cta";
 import { PickYourPath } from "@/components/pick-your-path";
 import { FullSystemFeatures } from "@/components/full-system-features";
+import { PredictiveIntelligence } from "@/components/predictive-intelligence";
+import { JsonLd } from "@/components/json-ld";
+import { pageMetadata } from "@/lib/seo";
+import { servicePageSchema } from "@/lib/schema";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
+  path: "/",
   title:
-    "Ops by Noell | AI Agents + Full Operations Platform for Service Businesses",
+    "Ops by Noell | Done-for-You AI Front Desk for Service Businesses",
   description:
-    "Three AI agents, or the full white-labeled operations platform. Built for dental, med spas, salons, massage, estheticians, and HVAC. Live in 14 days.",
-};
+    "Three AI agents, or the full managed operations layer. Built for dental, med spas, salons, massage, estheticians, and HVAC. Live in 14 days.",
+  ogTitle:
+    "By the time you call back, they've already booked somewhere else.",
+  ogDescription:
+    "Done-for-you AI operations for local service businesses. Never miss a call, text, confirmation, or reschedule.",
+});
 
 export default function Home() {
   return (
     <div>
+      <JsonLd
+        data={servicePageSchema({
+          name: "The Noell System — Done-for-You AI Front Desk",
+          description:
+            "A done-for-you AI front desk and operations layer for service businesses. Three managed agents cover new-prospect intake, calls and scheduling, and existing-client support.",
+          path: "/",
+        })}
+        id="home-service"
+      />
       {/* 1. Hero */}
       <Hero
         headlineLine1Start="Three agents. One system."
@@ -44,7 +61,10 @@ export default function Home() {
       {/* 4. What's in the full system — feature grid */}
       <FullSystemFeatures />
 
-      {/* 5. Proof — one strong testimonial */}
+      {/* 5. What's next — Predictive Customer Intelligence */}
+      <PredictiveIntelligence />
+
+      {/* 6. Proof — one strong testimonial */}
       <Testimonials />
 
       {/* 6. Final CTA band */}

@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import {
   IconHeart,
@@ -10,19 +9,27 @@ import { Hero } from "@/components/hero";
 import { Features } from "@/components/features";
 import { Features3 } from "@/components/features3";
 import { VerticalCaseStudyPlaceholder } from "@/components/vertical-case-study";
-import { localBusinessSchema } from "@/lib/schema";
+import {
+  breadcrumbSchema,
+  faqPageSchema,
+  localBusinessSchema,
+  servicePageSchema,
+} from "@/lib/schema";
 import { FAQ } from "@/components/faq";
 import { VerticalPricingSection } from "@/components/pricing";
 import { VerticalAgentsCallout } from "@/components/vertical-agents-callout";
+import { PredictiveIntelligenceVerticalExample } from "@/components/predictive-intelligence";
 import CTA from "@/components/cta";
 import { cn } from "@/lib/utils";
+import { JsonLd } from "@/components/json-ld";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title:
-    "Ops by Noell for Estheticians | AI Front Desk for Licensed Estheticians and Skincare Studios",
+export const metadata = pageMetadata({
+  path: "/verticals/estheticians",
+  title: "AI Front Desk for Estheticians",
   description:
     "Retention-first, never pushy. Ops by Noell protects treatment plan adherence, keeps skincare routines on cadence, and holds your membership pipeline without making the tone shift into sales.",
-};
+});
 
 const estheticianStats = [
   {
@@ -192,13 +199,24 @@ const estheticianScreen = (
 export default function EstheticiansVerticalPage() {
   return (
     <div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            localBusinessSchema("esthetician studios")
-          ),
-        }}
+      <JsonLd
+        data={[
+          servicePageSchema({
+            name: "AI front desk for estheticians",
+            description:
+              "Done-for-you AI front desk for licensed estheticians and skincare studios. Retention-first cadence that protects treatment plan adherence.",
+            path: "/verticals/estheticians",
+            vertical: "esthetician studios",
+          }),
+          localBusinessSchema("esthetician studios"),
+          faqPageSchema(estheticianFaqs),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Verticals", path: "/verticals" },
+            { name: "Estheticians", path: "/verticals/estheticians" },
+          ]),
+        ]}
+        id="vertical-estheticians"
       />
       <Hero
         eyebrow="Ops by Noell for Estheticians"
@@ -284,6 +302,8 @@ export default function EstheticiansVerticalPage() {
         body="Not a feature list. The three plays that hold a skincare client to the plan without forcing the tone."
         capabilities={estheticianCapabilities}
       />
+
+      <PredictiveIntelligenceVerticalExample vertical="estheticians" />
 
       <VerticalPricingSection
         vertical="estheticians"
