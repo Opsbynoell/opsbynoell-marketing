@@ -21,3 +21,20 @@ After setting these, also update in Supabase:
 - `clients.phone` for slug=opsbynoell → set to TWILIO_FROM_NUMBER
 - `clients.locations[0].phone` → same
 - `clients.escalation_rules.qualifiedLead.smsTo` → Nikki's personal cell in E.164
+
+### Twilio inbound webhooks (optional)
+
+Set these only if you wire a client's inbound SMS directly to Twilio
+(instead of going through a GHL workflow). Used to validate the
+`X-Twilio-Signature` header — the URL must match exactly what is
+configured in the Twilio Messaging Service "A message comes in" field.
+
+- `TWILIO_INBOUND_PUBLIC_URL` — owner-reply route public URL, e.g.
+  `https://www.opsbynoell.com/api/twilio/inbound-sms`
+- `TWILIO_INBOUND_VISITOR_PUBLIC_URL` — visitor inbound route public
+  URL, e.g.
+  `https://www.opsbynoell.com/api/twilio/inbound-visitor-sms`.
+  Falls back to `TWILIO_INBOUND_PUBLIC_URL` if unset (single-URL installs).
+
+See [`docs/inbound-visitor-sms.md`](./inbound-visitor-sms.md) for the
+full setup (Messaging Service → Integration webhook).
