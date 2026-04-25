@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { IconMessageCircle, IconX, IconSend } from "@tabler/icons-react";
@@ -26,52 +26,50 @@ const starterChips = [
   "What does Noell Support do?",
 ];
 
-// Scripted flow demonstrating the 6 capabilities
-const responseFlow: Record<string, Message[]> = {
-  "i'm missing calls": [
-    {
-      from: "agent",
-      text: "That's exactly what the Noell system catches. When a call goes unanswered, we auto-text the prospect in under 10 seconds with a booking link.",
-    },
-    {
-      from: "agent",
-      text: "To get you a tailored audit, can I grab your name and the best number? I'll route this to Noell for a 30-minute call.",
-    },
-  ],
-  "book an audit": [
-    {
-      from: "agent",
-      text: "Perfect. The audit is free, 30 minutes, and you walk away with a map of where leads are leaking, whether you work with us or not.",
-    },
-    {
-      from: "agent",
-      text: "Share your name + best contact number and I'll route this straight to Noell's calendar.",
-    },
-  ],
-  "what does noell support do?": [
-    {
-      from: "agent",
-      text: "I'm Noell Support. I handle first response, qualification, contact capture, routing, and booking-link handoff. Anything I can't resolve I escalate to a human with full context.",
-    },
-    {
-      from: "agent",
-      text: "Noell Front Desk is the separate operations layer that handles calls, scheduling, reminders, and reactivation. Want to see an audit of what the Noell system would catch on your site?",
-    },
-  ],
-};
-
-const contactCaptureResponse: Message[] = [
-  {
-    from: "agent",
-    text: "Got it, thanks. I've captured your contact and routed this to Noell. You'll get a text with audit times within the hour. Meanwhile, the booking link is here: www.opsbynoell.com/book",
-  },
-  {
-    from: "agent",
-    text: "Anything else I can help with? Otherwise I'll hand off from here.",
-  },
-];
-
 const DISMISS_KEY = "noell-support-dismissed";
+const SESSION_KEY = "noell-support-session-id";
+const CLIENT_ID = "opsbynoell";
+
+// Lightweight phone capture so the agent can recognize/escalate properly.
+// Pulled from sessionStorage and mirrored back to it once we have it.
+const VISITOR_NAME_KEY = "noell-support-visitor-name";
+const VISITOR_PHONE_KEY = "noell-support-visitor-phone";
+
+function loadVisitor(): { name?: string; phone?: string } {
+  if (typeof window === "undefined") return {};
+  return {
+    name: sessionStorage.getItem(VISITOR_NAME_KEY) ?? undefined,
+    phone: sessionStorage.getItem(VISITOR_PHONE_KEY) ?? undefined,
+  };
+}
+
+function saveVisitor(v: { name?: string; phone?: string }) {
+  if (typeof window === "undefined") return;
+  if (v.name) sessionStorage.setItem(VISITOR_NAME_KEY, v.name);
+  if (v.phone) sessionStorage.setItem(VISITOR_PHONE_KEY, v.phone);
+}
+
+// Heuristic phone/name extraction from free-text. The agent itself does
+// the qualifying — this is just so we can attach what we can detect to
+// the API payload for contact lookup + escalation alerts.
+function extractContact(text: string): { name?: string; phone?: string } {
+  const out: { name?: string; phone?: string } = {};
+  const phoneMatch = text.match(
+    /(\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}/
+  );
+  if (phoneMatch) {
+    const digits = phoneMatch[0].replace(/\D/g, "");
+    if (digits.length === 10) out.phone = `+1${digits}`;
+    else if (digits.length === 11 && digits.startsWith("1"))
+      out.phone = `+${digits}`;
+  }
+  // "my name is X" / "I'm X" / "this is X"
+  const nameMatch = text.match(
+    /\b(?:my name is|i'?m|this is|name'?s)\s+([A-Z][a-zA-Z'-]{1,20}(?:\s+[A-Z][a-zA-Z'-]{1,20})?)/i
+  );
+  if (nameMatch) out.name = nameMatch[1];
+  return out;
+}
 
 export function NoellSupportChat() {
   const pathname = usePathname();
@@ -82,14 +80,21 @@ export function NoellSupportChat() {
   const [messages, setMessages] = useState<Message[]>(initialConversation);
   const [inputValue, setInputValue] = useState("");
   const [typing, setTyping] = useState(false);
-  const [stage, setStage] = useState<"intro" | "qualified" | "captured">(
-    "intro"
-  );
+  const [sending, setSending] = useState(false);
+  const sessionIdRef = useRef<string | null>(null);
+  const visitorRef = useRef<{ name?: string; phone?: string }>({});
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   });
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Restore session + visitor info on mount so refreshes don't lose context.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    sessionIdRef.current = sessionStorage.getItem(SESSION_KEY);
+    visitorRef.current = loadVisitor();
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -108,9 +113,6 @@ export function NoellSupportChat() {
     if (typeof window === "undefined") return;
     if (sessionStorage.getItem(DISMISS_KEY)) return;
 
-    // On the Noell Support spotlight page, seeing the widget in action is the
-    // whole point. Keep a short delay so the page can render first, but still
-    // respect session dismissal (guarded above).
     if (isSupportPage) {
       const t = setTimeout(() => {
         if (sessionStorage.getItem(DISMISS_KEY)) return;
@@ -135,8 +137,6 @@ export function NoellSupportChat() {
 
     const onScroll = () => {
       if (scrolledPastHero) return;
-      // "Past the hero" ~ one viewport of scroll. Use 85% of innerHeight so
-      // tall mobile viewports don't require a full page-length swipe.
       if (window.scrollY >= window.innerHeight * 0.85) {
         scrolledPastHero = true;
         openIfReady();
@@ -165,53 +165,82 @@ export function NoellSupportChat() {
     }
   }, [messages, typing]);
 
-  const pushResponses = (responses: Message[]) => {
-    responses.forEach((response, i) => {
-      setTimeout(() => {
-        setTyping(true);
-        setTimeout(() => {
-          setTyping(false);
-          setMessages((prev) => [...prev, response]);
-        }, 600);
-      }, 700 * (i + 1));
-    });
-  };
+  const sendToAgent = useCallback(async (visitorText: string) => {
+    // Extract contact info we can detect from this turn.
+    const detected = extractContact(visitorText);
+    visitorRef.current = {
+      name: visitorRef.current.name ?? detected.name,
+      phone: visitorRef.current.phone ?? detected.phone,
+    };
+    saveVisitor(visitorRef.current);
+
+    setSending(true);
+    setTyping(true);
+    try {
+      const res = await fetch("/api/support/message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          clientId: CLIENT_ID,
+          sessionId: sessionIdRef.current ?? undefined,
+          agent: "support",
+          channel: "chat",
+          from: {
+            name: visitorRef.current.name,
+            phone: visitorRef.current.phone,
+          },
+          message: visitorText,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`API ${res.status}`);
+      }
+      const data = (await res.json()) as {
+        sessionId: string;
+        reply: string;
+        escalated?: boolean;
+      };
+      if (data.sessionId) {
+        sessionIdRef.current = data.sessionId;
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem(SESSION_KEY, data.sessionId);
+        }
+      }
+      setTyping(false);
+      setMessages((prev) => [
+        ...prev,
+        { from: "agent", text: data.reply },
+      ]);
+    } catch {
+      setTyping(false);
+      setMessages((prev) => [
+        ...prev,
+        {
+          from: "agent",
+          text:
+            "I'm having trouble reaching the team right now. You can text Noell directly or book a time at https://www.opsbynoell.com/book and we'll follow up.",
+        },
+      ]);
+    } finally {
+      setSending(false);
+    }
+  }, []);
 
   const handleChip = (chip: string) => {
+    if (sending) return;
     const userMsg: Message = { from: "visitor", text: chip };
     setMessages((prev) => [...prev, userMsg]);
-    const flow = responseFlow[chip.toLowerCase()];
-    if (flow) {
-      pushResponses(flow);
-      setStage("qualified");
-    }
+    void sendToAgent(chip);
   };
 
   const handleSend = () => {
-    if (!inputValue.trim()) return;
-    const userMsg: Message = { from: "visitor", text: inputValue };
+    const value = inputValue.trim();
+    if (!value || sending) return;
+    const userMsg: Message = { from: "visitor", text: value };
     setMessages((prev) => [...prev, userMsg]);
     setInputValue("");
-
-    if (stage === "qualified") {
-      pushResponses(contactCaptureResponse);
-      setStage("captured");
-    } else if (stage === "intro") {
-      pushResponses([
-        {
-          from: "agent",
-          text: "Got it. To route you to the right place, can I grab your name and best contact number? I'll make sure Noell sees this within the hour.",
-        },
-      ]);
-      setStage("qualified");
-    } else {
-      pushResponses([
-        {
-          from: "agent",
-          text: "Understood. I've logged this and you'll hear back soon. In the meantime, feel free to book directly at opsbynoell.com/book.",
-        },
-      ]);
-    }
+    void sendToAgent(value);
   };
 
   const handleClose = () => {
@@ -357,7 +386,7 @@ export function NoellSupportChat() {
               {typing && <TypingIndicator />}
 
               {/* Starter chips */}
-              {messages.length === 1 && (
+              {messages.length === 1 && !sending && (
                 <div className="pt-2 flex flex-wrap gap-2">
                   {starterChips.map((chip) => (
                     <button
@@ -381,11 +410,13 @@ export function NoellSupportChat() {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
                   placeholder="Type a message..."
-                  className="flex-1 h-10 px-3.5 text-sm bg-cream-dark rounded-[10px] border border-warm-border focus:outline-none focus:border-lilac-dark/60 focus:bg-white text-charcoal placeholder:text-charcoal/40"
+                  disabled={sending}
+                  className="flex-1 h-10 px-3.5 text-sm bg-cream-dark rounded-[10px] border border-warm-border focus:outline-none focus:border-lilac-dark/60 focus:bg-white text-charcoal placeholder:text-charcoal/40 disabled:opacity-60"
                 />
                 <button
                   onClick={handleSend}
-                  className="w-10 h-10 rounded-[10px] bg-gradient-to-b from-lilac via-lilac-dark to-[#6b4f80] text-white flex items-center justify-center hover:scale-105 transition-transform shadow-md"
+                  disabled={sending || !inputValue.trim()}
+                  className="w-10 h-10 rounded-[10px] bg-gradient-to-b from-lilac via-lilac-dark to-[#6b4f80] text-white flex items-center justify-center hover:scale-105 transition-transform shadow-md disabled:opacity-50 disabled:hover:scale-100"
                   aria-label="Send"
                 >
                   <IconSend size={15} />
@@ -411,6 +442,49 @@ export function NoellSupportChat() {
   );
 }
 
+// Render a string with auto-linkified URLs. Detects http(s)://, www., and
+// bare opsbynoell.com/<path> so the agent's responses always produce
+// clickable links even if the model omits the protocol.
+function renderWithLinks(text: string): React.ReactNode[] {
+  // Order matters: the bare-domain pattern must match AFTER the explicit
+  // ones so we don't double-capture. We do it in a single pass by alternation.
+  const pattern =
+    /(https?:\/\/[^\s)>\]]+|www\.[^\s)>\]]+|opsbynoell\.com\/[^\s)>\]]*)/gi;
+  const parts: React.ReactNode[] = [];
+  let lastIdx = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+  while ((match = pattern.exec(text)) !== null) {
+    if (match.index > lastIdx) {
+      parts.push(text.slice(lastIdx, match.index));
+    }
+    let raw = match[0];
+    // Strip a trailing punctuation char that's almost certainly sentence
+    // punctuation, not part of the URL.
+    let trailing = "";
+    while (raw.length > 0 && /[.,;:!?)]$/.test(raw)) {
+      trailing = raw.slice(-1) + trailing;
+      raw = raw.slice(0, -1);
+    }
+    const href = raw.startsWith("http") ? raw : `https://${raw}`;
+    parts.push(
+      <a
+        key={`l${key++}`}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline text-lilac-dark hover:text-[#6b4f80] break-all"
+      >
+        {raw}
+      </a>
+    );
+    if (trailing) parts.push(trailing);
+    lastIdx = match.index + match[0].length;
+  }
+  if (lastIdx < text.length) parts.push(text.slice(lastIdx));
+  return parts;
+}
+
 function MessageBubble({
   msg,
   prefersReducedMotion,
@@ -428,13 +502,13 @@ function MessageBubble({
     >
       <div
         className={cn(
-          "max-w-[82%] px-4 py-2.5 text-sm leading-relaxed rounded-[17px]",
+          "max-w-[82%] px-4 py-2.5 text-sm leading-relaxed rounded-[17px] whitespace-pre-wrap",
           isAgent
             ? "bg-white border border-warm-border text-charcoal rounded-bl-md shadow-sm"
             : "bg-gradient-to-b from-lilac via-lilac-dark to-[#6b4f80] text-white rounded-br-md shadow-md"
         )}
       >
-        {msg.text}
+        {isAgent ? renderWithLinks(msg.text) : msg.text}
       </div>
     </motion.div>
   );
