@@ -31,12 +31,12 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { createHmac, timingSafeEqual } from "node:crypto";
 import { env } from "@/lib/agents/env";
 import {
   extractInboundPayload,
   handleInboundSms,
 } from "@/lib/agents/inbound-sms-handler";
+import { validateTwilioSignature } from "@/lib/agents/twilio-signature";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -49,31 +49,6 @@ const twimlResponse = (status = 200): Response =>
     status,
     headers: { "Content-Type": "text/xml; charset=utf-8" },
   });
-
-/**
- * Validate Twilio's request signature.
- *
- * Algorithm: HMAC-SHA1 of `url + sorted(key+value).join("")`, base64 encoded,
- * compared in constant time against `X-Twilio-Signature`.
- */
-function validateTwilioSignature(
-  authToken: string,
-  url: string,
-  params: URLSearchParams,
-  headerSig: string | null
-): boolean {
-  if (!headerSig) return false;
-  const sortedKeys = [...params.keys()].sort();
-  let data = url;
-  for (const k of sortedKeys) {
-    data += k + (params.get(k) ?? "");
-  }
-  const expected = createHmac("sha1", authToken).update(data).digest("base64");
-  const a = Buffer.from(expected);
-  const b = Buffer.from(headerSig);
-  if (a.length !== b.length) return false;
-  return timingSafeEqual(a, b);
-}
 
 export async function POST(req: NextRequest): Promise<Response> {
   const authToken = env.twilioAuthToken();

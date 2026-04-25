@@ -1,18 +1,29 @@
 # Inbound Visitor-SMS Bridge
 
-When a lead or customer texts a client's LC Phone number, this bridge:
+When a lead or customer texts a client's number, this bridge:
 
-1. Receives the inbound via a GHL webhook
-2. Resolves which client owns the destination LC Phone
+1. Receives the inbound via a webhook (GHL **or** Twilio — see below)
+2. Resolves which client owns the destination number
 3. Stores the message in `front_desk_messages` and generates a reply via
    the shared runner (escalation rules, Telegram alert, owner SMS alert
    still fire normally)
 4. Sends the bot's reply back to the visitor over the client's
-   configured messaging integration (GHL SMS, GHL WhatsApp, or generic)
+   configured messaging integration (GHL SMS, GHL WhatsApp, or Twilio)
 
 This is distinct from [`docs/two-way-sms.md`](./two-way-sms.md), which
 handles the **owner's** reply to an alert SMS, not new inbound from
 leads.
+
+Two transports are supported in parallel:
+
+| Transport | Endpoint | Auth | When to use |
+|---|---|---|---|
+| GHL workflow | `POST /api/ghl/inbound-visitor-sms` | `?secret=GHL_WEBHOOK_SECRET` | Client's number is an LC Phone and inbound routes through a GHL / LeadConnector workflow |
+| Twilio direct | `POST /api/twilio/inbound-visitor-sms` | `X-Twilio-Signature` HMAC | Client's number is an A2P 10DLC number owned by Twilio and wired straight to the Messaging Service webhook |
+
+Both endpoints share the same downstream handler, client-resolution
+chain, loop guard, and outbound reply path — only the wire format and
+auth differ.
 
 ---
 
@@ -228,3 +239,104 @@ live tests — do not pound the production inbox with curl runs.
 | `{ok:true,replySent:false,replyError:"empty_reply"}` | Bot returned no text (human_takeover or model refusal) |
 | Bot replies show up in inbox but visitor never receives them | Outbound SMS integration mis-configured — check `sms_provider` + `sms_config` on the `clients` row |
 | Webhook fires in a loop | Direction filter missing — add `Direction = Inbound` to the workflow trigger |
+
+---
+
+## Twilio direct transport (alternative to GHL workflow)
+
+When the client's inbound SMS is wired directly to Twilio (A2P 10DLC
+sender pool owned by Twilio, not LeadConnector), point the Messaging
+Service's **"A message comes in"** webhook at:
+
+```
+POST https://www.opsbynoell.com/api/twilio/inbound-visitor-sms
+Content-Type: application/x-www-form-urlencoded
+```
+
+Twilio authenticates itself with the `X-Twilio-Signature` header
+(HMAC-SHA1 of `url + sorted(key+value).join("")`, base64 encoded).
+No `?secret=` query param is used; invalid signatures are rejected
+with an empty TwiML 200 so Twilio does not retry-storm.
+
+### Env vars (Vercel)
+
+- `TWILIO_AUTH_TOKEN` — signing token for the Twilio account that owns
+  the Messaging Service (already required for outbound sends)
+- `TWILIO_INBOUND_VISITOR_PUBLIC_URL` — the exact public URL Twilio is
+  configured to call, with no query string. Set this to the canonical
+  production URL so preview deploys do not silently fail signature
+  validation, e.g.
+  `https://www.opsbynoell.com/api/twilio/inbound-visitor-sms`.
+  Falls back to `TWILIO_INBOUND_PUBLIC_URL` if unset (for installs that
+  only use one number and already have that var in place).
+
+### Messaging Service configuration
+
+Twilio Console → **Messaging → Services → <your service>**:
+
+1. **Sender Pool** → add the A2P-registered number(s) the client uses
+   for inbound.
+2. **Integration** → *Send a webhook*
+   - URL: `https://www.opsbynoell.com/api/twilio/inbound-visitor-sms`
+   - Method: `HTTP POST`
+3. **Opt-Out Management** — leave Twilio's defaults in place. Opt-out
+   keywords (STOP / HELP) are handled by Twilio before our webhook
+   fires; we never see those messages.
+
+### Client resolution
+
+Same priority chain as the GHL transport:
+
+| Priority | Twilio field | Lookup |
+|---|---|---|
+| 1 | `To` → `toPhone` | `clients.sms_config->>fromNumber` |
+| 2 | — | *(no locationId on Twilio payloads)* |
+| 3 | *(fallback)* | exactly one active client with `sms_config.fromNumber` |
+
+Each client's `clients.sms_config.fromNumber` **must** match the
+A2P-registered Twilio number in E.164 (e.g. `+19499973915`). If you
+move a client's inbound from LC Phone to a Twilio number, update
+`sms_config.fromNumber` first — otherwise the webhook will either
+`no_client_for_to_phone` or silently route to the wrong tenant.
+
+### Response
+
+Twilio webhooks only care about HTTP status; we always return an empty
+TwiML `<Response/>` body so Twilio does not auto-reply. The bot's
+reply is sent back to the visitor through the Twilio REST API by the
+outbound code path (same as the GHL transport), **not** via TwiML
+`<Message>` — this keeps send-observability, MessagingService sticky
+sender behavior, and sessionId linkage identical across transports.
+
+### Loop safety
+
+1. **Signature validation.** Only Twilio can trigger the webhook.
+2. **Server-side loop guard** (shared with the GHL route). If the
+   inbound `From` equals the client's own `sms_config.fromNumber`, we
+   refuse to reply — protects against a mis-wired Messaging Service
+   that loops outbound sends back into the inbound webhook.
+
+### Manual test plan
+
+1. Confirm `clients.sms_config.fromNumber` matches the A2P Twilio
+   number for the target client.
+2. From a mobile device that is NOT the Twilio number, text the
+   Twilio number.
+3. Expected:
+   - Bot reply arrives on the visitor's phone within a few seconds.
+   - A row lands in `front_desk_sessions` with
+     `trigger_type = 'inbound_text'` and `channel = 'sms'`.
+   - The Twilio Console → Messaging → Logs entry shows the webhook
+     returning HTTP 200 with a `text/xml` body.
+4. Tamper test: flip one char in `TWILIO_AUTH_TOKEN` locally and
+   re-send via the Twilio "Request Inspector" replay — the server
+   should log `Rejected — invalid signature` and still return 200 TwiML.
+
+### Troubleshooting (Twilio-specific)
+
+| Symptom | Likely cause |
+|---|---|
+| Twilio logs show repeated 200s but no reply arrives | Signature failed — `TWILIO_INBOUND_VISITOR_PUBLIC_URL` does not match the URL configured in the Messaging Service, or `TWILIO_AUTH_TOKEN` is wrong |
+| `no_client_for_to_phone` in server logs | `clients.sms_config.fromNumber` is not set to the A2P Twilio number |
+| Bot replies show up in internal inbox but visitor never receives them | `smsProvider` is not `twilio` / `generic`, or `TWILIO_MESSAGING_SERVICE_SID` / `TWILIO_FROM_NUMBER` is unset for outbound |
+| Visitor gets TWO replies (one truncated) | Messaging Service has "Enable Auto-Reply" turned on — disable it; the bot reply is sent via REST API, not TwiML |
