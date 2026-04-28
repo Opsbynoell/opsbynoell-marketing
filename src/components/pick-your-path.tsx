@@ -24,15 +24,15 @@ const cards: CardProps[] = [
     oneLiner:
       "Three AI agents. Works alongside the booking tool you already use.",
     bullets: [
-      "Noell Support — 24/7 website chat + lead qualification",
-      "Noell Front Desk — calls, scheduling, confirmations, reminders",
-      "Noell Care — rebooking + existing-client support",
+      "Noell Support. Website chat and lead qualification, twenty-four hours a day.",
+      "Noell Front Desk. Calls, scheduling, confirmations, and reminders.",
+      "Noell Care. Rebooking and existing-client support.",
       "Works with any booking tool",
       "Light onboarding, live in under a week",
     ],
     banner: "Founding rate: $197/mo (through June 30)",
     priceLine: "$297/mo",
-    ctaLabel: "Start the agents",
+    ctaLabel: "Activate the agents",
     ctaHref: "/agents",
   },
   {
@@ -49,7 +49,7 @@ const cards: CardProps[] = [
       "Ongoing updates, no maintenance on your end",
     ],
     priceLine: "From $197/mo to $1,497/mo + setup",
-    ctaLabel: "Book a free audit",
+    ctaLabel: "Book a working call",
     ctaHref: "/book",
     highlighted: true,
   },
@@ -149,7 +149,7 @@ export function PickYourPath() {
           </h2>
           <p className="mt-5 text-charcoal/75 max-w-2xl mx-auto leading-relaxed">
             Run only the AI layer on top of what you already have. Or let us
-            install the entire operation end-to-end — platform, automations,
+            install the entire operation end to end. Platform, automations,
             agents, and managed updates.
           </p>
         </div>
