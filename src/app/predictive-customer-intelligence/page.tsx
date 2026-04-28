@@ -70,21 +70,21 @@ const solutions = [
     n: "01",
     title: "Predicts churn before it happens",
     body:
-      "Every active client gets a ghost-risk score, updated continuously. You see who's drifting before they're gone — with a one-click outreach sequence ready to deploy.",
+      "Every active client gets a ghost-risk score, updated continuously. You see who's drifting before they're gone, with a one-click outreach sequence ready to deploy.",
     status: "status: monitoring · always-on",
   },
   {
     n: "02",
     title: "Resurrects dead leads on autopilot",
     body:
-      "Stale leads get re-scored as new signals come in. When one heats back up, you know — and the agents can re-engage them while they're warm.",
+      "Stale leads get re-scored as new signals come in. When one heats back up, you know, and the agents can re-engage them while they're warm.",
     status: "status: triggered on signal",
   },
   {
     n: "03",
     title: "Closes the rebooking loop",
     body:
-      "A missed rebooking gets caught within 24 hours. The right follow-up — text, email, or live agent — fires automatically based on what converts for your business.",
+      "A missed rebooking gets caught within 24 hours. The right follow-up (text, email, or live agent) fires automatically based on what converts for your business.",
     status: "status: runs after every visit",
   },
 ];
@@ -95,7 +95,7 @@ const deployments = [
     label: "intelligence + agents",
     title: "Recover what's already in your funnel.",
     body:
-      "The intelligence layer watches your existing clients and leads. Noell Agents handle the outreach — calls, texts, chat, rebookings — the moment a signal fires. Best for businesses with strong inbound and gaps in the follow-through.",
+      "The intelligence layer watches your existing clients and leads. Noell Agents handle the outreach (calls, texts, chat, rebookings) the moment a signal fires. Best for businesses with strong inbound and gaps in the follow-through.",
     bullets: [
       "Ghost-risk monitoring on every active client",
       "Dead lead resurrection sequences",
@@ -110,7 +110,7 @@ const deployments = [
     label: "intelligence + system",
     title: "Run the whole front of your business on one platform.",
     body:
-      "The intelligence layer is built into a fully managed operations platform — CRM, calendars, marketing, agents, reporting — installed and managed by our team. Best for businesses ready to consolidate off five different tools.",
+      "The intelligence layer is built into a fully managed operations platform (CRM, calendars, marketing, agents, reporting) installed and managed by our team. Best for businesses ready to consolidate off five different tools.",
     bullets: [
       "Full white-labeled operations platform",
       "Three AI agents included (Growth tier and up)",
@@ -125,7 +125,7 @@ const deployments = [
     label: "intelligence + media",
     title: "Buy ads with your own customer data, not Facebook's guess.",
     body:
-      "Most agencies running ads for service businesses have no idea who their client's best customers actually are. The intelligence layer does — every active client is already scored by LTV and behavior. That data drives the targeting.",
+      "Most agencies running ads for service businesses have no idea who their client's best customers actually are. The intelligence layer does. Every active client is already scored by LTV and behavior. That data drives the targeting.",
     bullets: [
       "Lookalike audiences built from your real high-LTV cohorts",
       "Retargeting your ghost-risk list before they leave",
@@ -149,7 +149,7 @@ const steps = [
     n: "02",
     title: "Predict",
     body:
-      "Within 48 hours, your first Revenue Signal Report: every account at risk, every lead worth re-engaging, every rebooking you're missing — ranked by dollar impact.",
+      "Within 48 hours, your first Revenue Signal Report: every account at risk, every lead worth re-engaging, every rebooking you're missing, ranked by dollar impact.",
   },
   {
     n: "03",
@@ -164,26 +164,26 @@ const pciFaqs: FaqItem[] = [
     id: "pci-booking-software",
     question: "Will this work with my booking software?",
     answer:
-      "Yes for almost everyone. We integrate with GoHighLevel, Mindbody, Boulevard, Vagaro, Jane, and most major CRMs. If you're on something custom, we'll tell you in the first 10 minutes whether we can connect.",
+      "Yes for almost everyone. We build the intelligence layer around the booking system you already use, including Boulevard, Mangomint, Vagaro, Mindbody, Square Appointments, Acuity, Jane, Dentrix, Eaglesoft, Open Dental, and Curve. If you're on something custom, we'll tell you in the first 10 minutes whether we can connect.",
   },
   {
     id: "pci-vs-reports",
     question:
       "How is this different from the reports my booking software gives me?",
     answer:
-      "Your booking software tells you what happened. Predictive Customer Intelligence tells you what's about to happen — and gives you a window to act on it.",
+      "Your booking software tells you what happened. Predictive Customer Intelligence tells you what's about to happen, and gives you a window to act on it.",
   },
   {
     id: "pci-three-deployments",
     question: "Do I have to use all three deployments?",
     answer:
-      "No. Most businesses start with one — usually Intelligence + Agents to fix the leaks they already have — and add deployments as they grow. The intelligence layer is the same underneath, so deployments stack cleanly.",
+      "No. Most businesses start with one (usually Intelligence + Agents to fix the leaks they already have) and add deployments as they grow. The intelligence layer is the same underneath, so deployments stack cleanly.",
   },
   {
     id: "pci-media-vs-agency",
     question: "How is the media buying different from a normal ad agency?",
     answer:
-      "A normal agency runs Facebook's targeting. We run targeting built from your actual customer data — who books, who comes back, who refers, who has the highest lifetime value. That's the difference between guessing and knowing.",
+      "A normal agency runs Facebook's targeting. We run targeting built from your actual customer data: who books, who comes back, who refers, who has the highest lifetime value. That's the difference between guessing and knowing.",
   },
   {
     id: "pci-data-safe",
@@ -294,7 +294,7 @@ function ProblemSection() {
           <p className="mt-5 text-charcoal/75 max-w-2xl mx-auto leading-relaxed">
             Most service businesses lose 15 to 30 percent of revenue to signals
             their software never surfaces. Not because the work isn&rsquo;t
-            getting done — because the patterns aren&rsquo;t getting caught.
+            getting done, because the patterns aren&rsquo;t getting caught.
           </p>
         </div>
 
@@ -561,7 +561,7 @@ export default function PredictiveCustomerIntelligencePage() {
         eyebrow="The first step"
         headlineStart="Start with a"
         headlineAccent="free 30-minute audit."
-        body="No pitch. No pressure. A clear map of where leads, clients, and rebookings are falling through — whether you work with us or not."
+        body="No pitch. No pressure. A clear map of where leads, clients, and rebookings are falling through, whether you work with us or not."
         trustLine="Free · 30 minutes · Live in 14 days"
         primaryCta={{ label: "Get Your Free Audit", href: "/book" }}
         secondaryCta={null}
