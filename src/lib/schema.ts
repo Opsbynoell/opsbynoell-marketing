@@ -70,6 +70,26 @@ export function localBusinessSchema(vertical: string) {
   };
 }
 
+export function homepageLocalBusinessSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${SITE_URL}/#localbusiness`,
+    name: "Ops by Noell",
+    url: SITE_URL,
+    email: "hello@opsbynoell.com",
+    address: ORG_ADDRESS,
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: "Orange County, California",
+    },
+    priceRange: "$197\u2013$1,497/mo",
+    description:
+      "Done-for-you AI front desk and managed operations for service businesses \u2014 dental, med spas, salons, massage, estheticians, and HVAC.",
+    sameAs: [] as string[],
+  };
+}
+
 export type BreadcrumbItem = { name: string; path: string };
 
 export function breadcrumbSchema(items: BreadcrumbItem[]) {

@@ -98,11 +98,11 @@ export function BookExitIntent() {
           id="book-exit-title"
           className="font-serif text-2xl md:text-3xl font-semibold text-charcoal mb-3 leading-snug"
         >
-          Not the right time?
+          Want the audit framework as a PDF?
         </h3>
         <p className="text-sm text-charcoal/70 leading-relaxed mb-6">
-          Get the audit worksheet via email. Same questions we ask on the call,
-          yours to run on your own.
+          Same questions we work through on the call, yours to run on your own
+          before we talk.
         </p>
 
         {state === "sent" ? (
@@ -128,7 +128,7 @@ export function BookExitIntent() {
               disabled={state === "sending"}
               className="rounded-full bg-wine text-cream text-sm font-medium px-5 py-3 tap-target hover:bg-wine-dark transition-colors disabled:opacity-60"
             >
-              {state === "sending" ? "Sending..." : "Send me the worksheet"}
+              {state === "sending" ? "Sending..." : "Send me the audit framework"}
             </button>
             {state === "error" && (
               <p className="text-xs text-wine">

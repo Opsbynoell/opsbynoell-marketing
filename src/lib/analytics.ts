@@ -82,6 +82,7 @@ export type SourceSection =
   | "booking_fallback"
   | "booking_embed"
   | "audit_request_soft_exit"
+  | "book_request_form"
   | "founding_cta"
   | "proof"
   | "offer"
@@ -112,6 +113,8 @@ export const ConversionEvents = {
   VERTICAL_CARD_CLICK: "vertical_card_click",
   /** A Noell Agent ($197/mo) founding-member CTA click. */
   AGENTS_FOUNDING_CTA_CLICK: "agents_founding_cta_click",
+  /** Working-call request form submitted on /book. */
+  AUDIT_REQUEST_SUBMITTED: "audit_request_submitted",
 } as const;
 
 export type ConversionEventName =

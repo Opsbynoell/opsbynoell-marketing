@@ -75,6 +75,10 @@ Add all of these. Set scope to **Production + Preview + Development** unless not
 | `ADMIN_PASSWORD` | *(choose a strong password)* | Used to log into /admin |
 | `ADMIN_SECRET` | *(choose a random 32+ char secret)* | Used to sign admin session tokens |
 | `GHL_API_KEY` | *(GoHighLevel API key)* | Used for GHL integration routes |
+| ~~`NEXT_PUBLIC_BOOKING_URL`~~ | **DEFERRED.** Not used. `/book` is manual-scheduling only until a real scheduler is verified end to end. | The /book page now ships a request-a-working-call form (writes to `book_requests` in Supabase, notifies via Resend). Do not set this var. |
+
+**~~How to find `NEXT_PUBLIC_BOOKING_URL`~~ (deferred):**  
+GHL → Calendars → [Audit calendar] → Share → Embed code → copy the iframe `src` URL (the widget URL, not the API endpoint). It will look like `https://api.leadconnectorhq.com/widget/booking/...` or similar. Do **not** paste the full `<iframe>` tag — only the URL inside the `src` attribute.
 
 ---
 

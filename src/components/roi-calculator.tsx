@@ -26,43 +26,56 @@ export function ROICalculator() {
       <div className="grid md:grid-cols-2 gap-6 mb-8">
         <label className="block">
           <span className="text-sm text-charcoal/70">
-            Missed calls per week
+            Missed calls per week:{" "}
+            <span className="font-medium text-charcoal">{missedCalls}</span>
           </span>
           <input
-            type="number"
+            type="range"
             min={0}
+            max={50}
             value={missedCalls}
-            onChange={(e) => setMissedCalls(Number(e.target.value) || 0)}
-            className="mt-2 w-full rounded-lg border border-warm-border bg-cream px-3 py-3 tap-target text-charcoal focus:outline-none focus:border-wine/60 focus:bg-white"
+            onChange={(e) => setMissedCalls(Number(e.target.value))}
+            className="mt-3 w-full accent-wine cursor-pointer"
           />
+          <div className="flex justify-between text-[10px] text-charcoal/40 mt-1">
+            <span>0</span>
+            <span>50</span>
+          </div>
         </label>
         <label className="block">
           <span className="text-sm text-charcoal/70">
-            Average ticket value ($)
+            Average ticket value:{" "}
+            <span className="font-medium text-charcoal">${avgTicket}</span>
           </span>
           <input
-            type="number"
-            min={0}
+            type="range"
+            min={25}
+            max={1000}
+            step={25}
             value={avgTicket}
-            onChange={(e) => setAvgTicket(Number(e.target.value) || 0)}
-            className="mt-2 w-full rounded-lg border border-warm-border bg-cream px-3 py-3 tap-target text-charcoal focus:outline-none focus:border-wine/60 focus:bg-white"
+            onChange={(e) => setAvgTicket(Number(e.target.value))}
+            className="mt-3 w-full accent-wine cursor-pointer"
           />
+          <div className="flex justify-between text-[10px] text-charcoal/40 mt-1">
+            <span>$25</span>
+            <span>$1,000</span>
+          </div>
         </label>
       </div>
       <div className="border-t border-warm-border pt-6 space-y-3">
         <div>
           <div className="text-xs uppercase tracking-widest text-muted-strong">
-            Monthly recoverable revenue
+            You&apos;re likely losing
           </div>
-          <div className="font-serif text-3xl md:text-4xl text-charcoal mt-1">
-            $
-            {monthly.toLocaleString("en-US", { maximumFractionDigits: 0 })}
+          <div className="font-serif text-3xl md:text-4xl text-wine mt-1">
+            ${monthly.toLocaleString("en-US", { maximumFractionDigits: 0 })}
+            <span className="font-sans text-base font-normal text-charcoal/60 ml-2">/month</span>
           </div>
         </div>
         <div className="text-sm text-charcoal/75 leading-relaxed">
-          Essentials ($197/mo) pays for itself in {formatPayback(paybackMonthsEssentials)}.
+          Essentials pays for itself in {formatPayback(paybackMonthsEssentials)}.
           <br />
-          Growth ($797/mo) pays for itself in {formatPayback(paybackMonthsGrowth)}.
+          Growth pays for itself in {formatPayback(paybackMonthsGrowth)}.
         </div>
       </div>
       <div className="text-xs text-muted-medium mt-6 leading-relaxed">
