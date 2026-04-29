@@ -11,12 +11,12 @@ import {
 
 export default function CTA({
   eyebrow = "The first step",
-  headlineStart = "See exactly where",
-  headlineAccent = "leads are falling through.",
-  body = "No pitch. No pressure. A 30-minute audit that gives you a clear map of what's leaking, whether you work with us or not.",
+  headlineStart = "Start with a",
+  headlineAccent = "working call.",
+  body = "We walk your front desk and show you where warm intent is cooling off. Twenty focused minutes. Personally scheduled.",
   primaryCta = { label: "Book Your Free Audit", href: "/book" },
   secondaryCta = { label: "Talk to Noell Support first", href: "/noell-support" },
-  trustLine = "Free 30-minute audit · No contracts required · Live in 14 days",
+  trustLine = "No pitch. No pressure. If it’s not a fit, we’ll say so.",
   accent = "wine",
   sourcePage,
   sourceSection = "final_cta",

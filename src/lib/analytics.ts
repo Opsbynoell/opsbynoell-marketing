@@ -46,6 +46,7 @@ export type SourcePage =
   | "verticals_massage"
   | "verticals_estheticians"
   | "verticals_hvac"
+  | "verticals_chiro"
   | "compare_index"
   | "compare_my_ai_front_desk"
   | "compare_podium"

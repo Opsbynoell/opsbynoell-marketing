@@ -15,6 +15,7 @@ type PricingSourcePage =
   | "verticals_massage"
   | "verticals_estheticians"
   | "verticals_hvac"
+  | "verticals_chiro"
   | "systems";
 
 function trackTierClick(tier: TierId, sourcePage: PricingSourcePage) {

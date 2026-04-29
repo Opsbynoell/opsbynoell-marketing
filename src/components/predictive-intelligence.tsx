@@ -109,7 +109,8 @@ type Vertical =
   | "salons"
   | "massage"
   | "estheticians"
-  | "hvac";
+  | "hvac"
+  | "chiropractic";
 
 const EXAMPLES: Record<Vertical, { title: string; detail: string }[]> = {
   dental: [
@@ -195,6 +196,23 @@ const EXAMPLES: Record<Vertical, { title: string; detail: string }[]> = {
       title: "Seasonal skincare windows",
       detail:
         "The right moment to re-engage skincare routines gets surfaced by season, not by a broadcast.",
+    },
+  ],
+  chiropractic: [
+    {
+      title: "Patient due for maintenance visit",
+      detail:
+        "Detects care plan completion patterns. Sends reactivation at the 60-day mark before the patient books elsewhere.",
+    },
+    {
+      title: "New patient call likely",
+      detail:
+        "Surfaces patients who searched but didn’t book. Triggers follow-up within the 5-minute conversion window.",
+    },
+    {
+      title: "No-show risk rising",
+      detail:
+        "Flags appointments with low confirmation signal. Sends an extra reminder before the slot is lost.",
     },
   ],
   hvac: [
