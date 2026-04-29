@@ -21,14 +21,12 @@ import {
 
 export const metadata = pageMetadata({
   path: "/",
-  title:
-    "Ops by Noell. The done-for-you AI front desk for service businesses.",
+  title: "AI Front Desk for Local Service Businesses — Ops by Noell",
   description:
-    "The done-for-you AI front desk for local service businesses. Built, installed, and managed around the booking system you already use, so missed calls, consults, reminders, reviews, and reactivation keep moving.",
-  ogTitle:
-    "The done-for-you AI front desk that keeps the front of your business moving.",
+    "Done-for-you AI front desk for massage therapists, dental practices, med spas, and local service businesses. Missed-call recovery, booking automation, client reactivation — installed in 14 days.",
+  ogTitle: "Ops by Noell — AI Front Desk That Keeps Your Business Moving",
   ogDescription:
-    "Built, installed, and managed around the booking system you already use. Designed for dental, med spa, salon, massage, esthetician, and HVAC businesses.",
+    "$960 recovered in 14 days. 75% fewer no-shows. We build the front desk layer your business needs.",
 });
 
 const homepageFaqs: FaqItem[] = [
@@ -87,15 +85,15 @@ export default function Home() {
 
       {/* 1. Hero */}
       <Hero
-        headlineLine1Start="The done-for-you AI front desk that keeps"
-        headlineLine1Accent="the front of your business"
-        headlineLine2Start=""
-        headlineLine2Accent="moving."
+        headlineLine1Start="You’re losing clients between"
+        headlineLine1Accent="appointments."
+        headlineLine2Start="We build the systems"
+        headlineLine2Accent="that stop that."
         headlineLine2Smaller={false}
-        body="Warm intent cools off quietly. We put a done-for-you AI front desk around the booking system you already use, so missed calls, consults, reminders, reviews, and reactivation keep moving while you do the work you are good at."
+        body="Every missed call, every no-show, every slow follow-up is revenue walking out the door. We build done-for-you AI front desks for massage therapists, dental practices, med spas, and local service businesses — installed in 14 days, running in the background while you do the work you’re actually good at."
         footnote="Done for you. Built around booking workflows in tools like Boulevard, Mangomint, Vagaro, Mindbody, Square Appointments, Acuity, Jane, Dentrix, Eaglesoft, Open Dental, and Curve."
-        primaryCta={{ label: "Book a working call", href: "/book" }}
-        secondaryCta={{ label: "See what we install", href: "/systems" }}
+        primaryCta={{ label: "See What You’re Losing", href: "/resources/revenue-calculator" }}
+        secondaryCta={{ label: "Book a Free Audit", href: "/book" }}
         showProofBar={false}
       />
 
