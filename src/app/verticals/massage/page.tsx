@@ -133,9 +133,9 @@ const massageFaqs = [
       "Most Ops by Noell installs are solo practitioners or two-to-three-person teams. The Essentials package is built exactly for this: missed-call text-back, appointment confirmations, and one review request sequence. If you have more than eight to ten sessions a week, the system pays for itself from missed-call recovery alone.",
   },
   {
-    question: "Does it work with Square, Acuity, Vagaro, or Jane?",
+    question: "Does it work with my booking software?",
     answer:
-      "Yes. We layer on top of the booking tools solo and small-team massage therapists actually use (Square Appointments, Acuity, Vagaro, Jane, Mindbody, and a handful of others). You keep using what you know. The system reads your availability and pushes confirmed bookings back.",
+      "Yes. We layer on top of the booking tools solo and small-team massage therapists actually use. You keep using what you know. The system reads your availability and pushes confirmed bookings back. Tell us what you run on your audit call and we will confirm fit.",
   },
   {
     question: "Will my clients be able to tell it is automated?",
@@ -223,7 +223,7 @@ export default function MassageVerticalPage() {
         headlineLine2Start="Phone"
         headlineLine2Accent="ringing off the hook."
         body="A done-for-you AI front desk for solo and small-team massage practices. Missed calls caught in seconds, reminders that keep no-shows low, and quiet reactivation that fills slow weeks before they show up on the calendar."
-        footnote="Built for solo massage therapists and small teams running Square Appointments, Acuity, Vagaro, Jane, or Mindbody."
+        footnote="Built for solo massage therapists and small teams running any major booking platform."
         primaryCta={{ label: "Get Your Free Massage Audit", href: "/book" }}
         secondaryCta={{
           label: "See how it handles the missed call",

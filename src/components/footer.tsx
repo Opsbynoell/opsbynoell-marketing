@@ -133,6 +133,18 @@ export function Footer() {
             Built for service businesses. Managed end-to-end.
           </p>
         </div>
+        <div className="pt-6 mt-6 border-t border-warm-border/60">
+          <p className="text-[11px] leading-relaxed text-muted-strong/80 max-w-4xl">
+            Ops by Noell is an independent service provider. We are not
+            affiliated with, endorsed by, or a certified partner of any
+            third-party booking, scheduling, practice management, electronic
+            health record, or field service management platform. All
+            third-party product names, logos, and brands referenced on this
+            site are the property of their respective owners. Reference to a
+            third-party platform is descriptive only and does not imply any
+            sponsorship, partnership, or endorsement.
+          </p>
+        </div>
       </div>
     </footer>
   );

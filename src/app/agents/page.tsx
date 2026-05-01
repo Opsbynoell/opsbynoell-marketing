@@ -108,7 +108,7 @@ const agentsFaqs: FaqItem[] = [
     group: "agents",
     question: "What booking tools do you work with?",
     answer:
-      "Any of them. Noell Agents is designed to sit alongside your existing booking tool, not replace it — Dentrix, Open Dental, Curve, Mindbody, Vagaro, Boulevard, Booker, ServiceTitan, Housecall Pro, Jobber, Calendly, Acuity, and similar. Deep two-way PMS integration (read availability, write confirmed bookings back) is part of The Noell System, not the agents-only tier.",
+      "Any of them. Noell Agents is designed to sit alongside your existing booking or practice management tool, not replace it — across dental, salon and spa, wellness, home services, and general scheduling platforms. Deep two-way integration (read availability, write confirmed bookings back) is part of The Noell System, not the agents-only tier. Tell us what you use on your intro call and we will confirm fit.",
   },
   {
     id: "agents_post_founder_rate",

@@ -75,7 +75,7 @@ const careFaqs = [
   {
     question: "Does Noell Care book appointments?",
     answer:
-      "Care captures the intent conversationally and hands off to Noell Front Desk's scheduling path, which pushes the booking to whatever calendar you already use (Calendly, Acuity, Vagaro, or your practice management system). One system, two roles — Care handles the conversation, Front Desk handles the calendar.",
+      "Care captures the intent conversationally and hands off to Noell Front Desk's scheduling path, which pushes the booking to whatever calendar or practice management system you already use. One system, two roles — Care handles the conversation, Front Desk handles the calendar.",
   },
   {
     question: "What happens if Care cannot answer something?",

@@ -2,21 +2,6 @@ import { NextResponse } from "next/server";
 import { sbInsert } from "@/lib/agents/supabase";
 import { sendAgentEmailAlert } from "@/lib/agents/email-alert";
 
-const ALLOWED_BOOKING_SYSTEMS = new Set([
-  "Boulevard",
-  "Mangomint",
-  "Vagaro",
-  "Mindbody",
-  "Square Appointments",
-  "Acuity",
-  "Jane",
-  "Dentrix",
-  "Eaglesoft",
-  "Open Dental",
-  "Curve",
-  "Other",
-]);
-
 interface BookRequestRow {
   id: string;
   created_at: string;
@@ -52,7 +37,7 @@ export async function POST(request: Request) {
   const business = clean(body.business, 200);
   const phone = clean(body.phone, 60);
   const email = clean(body.email, 200);
-  const bookingSystem = clean(body.booking_system, 60);
+  const bookingSystem = clean(body.booking_system, 120);
   const leakDescription = clean(body.leak_description, 500);
 
   if (
@@ -74,13 +59,6 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
-  if (!ALLOWED_BOOKING_SYSTEMS.has(bookingSystem)) {
-    return NextResponse.json(
-      { ok: false, error: "Invalid booking system." },
-      { status: 400 }
-    );
-  }
-
   // 1. Persist to Supabase. Source of truth for working-call requests.
   let inserted: BookRequestRow | null = null;
   try {

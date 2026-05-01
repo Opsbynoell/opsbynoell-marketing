@@ -141,7 +141,7 @@ const medSpaFaqs = [
   {
     question: "How does this work with my existing booking software?",
     answer:
-      "It layers on top. We read availability from your current scheduler (Boulevard, Mangomint, Vagaro, Mindbody, Square, and others) and push confirmed bookings back in. Your clinical records, pricing tiers, and package structure stay exactly where they are.",
+      "It layers on top. We read availability from your current scheduler and push confirmed bookings back in. Your clinical records, pricing tiers, and package structure stay exactly where they are. Tell us what you run on your audit call and we will confirm fit.",
   },
   {
     question: "Does it handle inquiries from Instagram and paid ads?",
@@ -226,7 +226,7 @@ export default function MedSpasVerticalPage() {
         headlineLine2Start="So do your"
         headlineLine2Accent="consult bookings."
         body="A done-for-you AI front desk for aesthetic and wellness practices. Every inquiry gets a brand-voice reply in under ninety seconds. Your consult calendar fills without the tone shifting into hard sell."
-        footnote="Built for injectables, laser, aesthetic, and wellness practices running Boulevard, Mangomint, Vagaro, Mindbody, or Square."
+        footnote="Built for injectables, laser, aesthetic, and wellness practices running any major booking platform."
         primaryCta={{ label: "Get Your Free Med Spa Audit", href: "/book" }}
         secondaryCta={{ label: "See how it protects the tone", href: "#med-spa-concerns" }}
         mockScreen={medSpaScreen}

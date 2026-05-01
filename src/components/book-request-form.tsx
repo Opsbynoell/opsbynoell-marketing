@@ -3,21 +3,6 @@
 import { useState } from "react";
 import { trackConversion, ConversionEvents } from "@/lib/analytics";
 
-const BOOKING_SYSTEMS = [
-  "Boulevard",
-  "Mangomint",
-  "Vagaro",
-  "Mindbody",
-  "Square Appointments",
-  "Acuity",
-  "Jane",
-  "Dentrix",
-  "Eaglesoft",
-  "Open Dental",
-  "Curve",
-  "Other",
-] as const;
-
 type FormState = "idle" | "submitting" | "sent" | "error";
 
 interface BookRequestFormProps {
@@ -157,22 +142,18 @@ export function BookRequestForm({ className }: BookRequestFormProps) {
         </div>
 
         <label className="block mt-5">
-          <span className="block text-sm text-charcoal/80 mb-2">Current booking system</span>
-          <select
+          <span className="block text-sm text-charcoal/80 mb-2">
+            Current booking or practice management software
+          </span>
+          <input
+            type="text"
             required
             value={bookingSystem}
             onChange={(e) => setBookingSystem(e.target.value)}
+            placeholder="What you use to manage appointments"
+            maxLength={120}
             className="w-full rounded-lg border border-warm-border bg-cream px-3 py-3 tap-target text-charcoal focus:outline-none focus:border-wine/60 focus:bg-white"
-          >
-            <option value="" disabled>
-              Select your system
-            </option>
-            {BOOKING_SYSTEMS.map((sys) => (
-              <option key={sys} value={sys}>
-                {sys}
-              </option>
-            ))}
-          </select>
+          />
         </label>
 
         <label className="block mt-5">

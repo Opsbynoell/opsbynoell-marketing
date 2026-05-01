@@ -164,7 +164,7 @@ const pciFaqs: FaqItem[] = [
     id: "pci-booking-software",
     question: "Will this work with my booking software?",
     answer:
-      "Yes for almost everyone. We build the intelligence layer around the booking system you already use, including Boulevard, Mangomint, Vagaro, Mindbody, Square Appointments, Acuity, Jane, Dentrix, Eaglesoft, Open Dental, and Curve. If you're on something custom, we'll tell you in the first 10 minutes whether we can connect.",
+      "Yes for almost everyone. We build the intelligence layer around the booking and practice management software you already use across salons, spas, dental, wellness, and service businesses. If you're on something custom, we'll tell you in the first 10 minutes whether we can connect.",
   },
   {
     id: "pci-vs-reports",

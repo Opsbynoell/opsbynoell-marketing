@@ -146,7 +146,7 @@ const pricingFaqs: FaqItem[] = [
     group: "logistics",
     question: "Do I need to replace my current booking tool?",
     answer:
-      "No. The Noell system layers on top of what you already run — Dentrix, Dentrix Ascend, Eaglesoft, Open Dental, Curve, Denticon for dental; Mindbody, Vagaro, Boulevard, Booker for salons and spas; ServiceTitan, Housecall Pro, Jobber for HVAC. Your team keeps the tool they trained on. We layer the communication and scheduling automation on top. On Essentials, the system works alongside your tool via SMS; on Growth and Custom Ops, it integrates directly (reads availability, writes confirmed bookings back).",
+      "No. The Noell system layers on top of the booking, practice management, and field service software you already run — across dental, salon and spa, wellness, and home services. Your team keeps the tool they trained on. We layer the communication and scheduling automation on top. On Essentials, the system works alongside your tool via SMS; on Growth and Custom Ops, it integrates directly (reads availability, writes confirmed bookings back). Tell us what you use on your audit call and we will confirm fit.",
   },
   {
     id: "logistics_managed_meaning",

@@ -138,9 +138,9 @@ const hvacFaqs = [
       "Noell Support covers after-hours. A no-heat call at 11pm gets classified as emergency, routed to your on-call tech with the address and symptom, and the customer gets a confirmation that someone is on the way. The answering-service gap closes.",
   },
   {
-    question: "Does it work with ServiceTitan, Housecall Pro, or FieldEdge?",
+    question: "Does it work with my field service management software?",
     answer:
-      "Yes. We layer on top of the FSM platforms residential HVAC contractors actually use: ServiceTitan, Housecall Pro, FieldEdge, Jobber, and similar. Your dispatch board and tech records stay where they are. We handle the communication and classification layer on top.",
+      "Yes. We layer on top of the field service management platforms residential HVAC contractors actually use. Your dispatch board and tech records stay where they are. We handle the communication and classification layer on top. Tell us what you run on your audit call and we will confirm fit.",
   },
   {
     question: "How does it handle seasonal surge?",
@@ -229,7 +229,7 @@ export default function HvacVerticalPage() {
         headlineLine2Start="do not belong"
         headlineLine2Accent="in the same queue."
         body="A done-for-you AI front desk for residential HVAC contractors. Every inbound call triaged by service type, emergency routing to the on-call tech in seconds, and seasonal surge absorbed without putting callers on hold."
-        footnote="Built for residential HVAC contractors running ServiceTitan, Housecall Pro, FieldEdge, or Jobber."
+        footnote="Built for residential HVAC contractors running any major field service management platform."
         primaryCta={{ label: "Get Your Free HVAC Audit", href: "/book" }}
         secondaryCta={{
           label: "See how it triages the call",

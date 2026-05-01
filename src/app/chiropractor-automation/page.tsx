@@ -136,7 +136,7 @@ const chiroCapabilities = [
     icon: <IconStethoscope size={20} />,
     number: "06",
     title: "EHR-compatible",
-    description: "Layers on top of ChiroTouch, Jane, Cliniko, Genesis, or any practice management system. No migration, no rip-and-replace.",
+    description: "Layers on top of the chiropractic EHR or practice management system you already use. No migration, no rip-and-replace.",
     points: ["No EHR migration required", "Works alongside your billing system", "14-day install"],
   },
 ];
@@ -146,7 +146,7 @@ const chiroFaqs = [
     id: "chiro-works-with-ehr",
     question: "Does this work with my current EHR or practice management software?",
     answer:
-      "Yes. We install the AI front desk around your existing EHR — ChiroTouch, Jane, Cliniko, Genesis, and most others. Your patient records, billing, and clinical workflows stay exactly where they are. We handle the front desk layer.",
+      "Yes. We install the AI front desk around your existing chiropractic EHR or practice management system. Your patient records, billing, and clinical workflows stay exactly where they are. We handle the front desk layer.",
   },
   {
     id: "chiro-hipaa",
@@ -208,7 +208,7 @@ export default function ChiropractorAutomationPage() {
         headlineLine2Start="Your system should"
         headlineLine2Accent="answer every time."
         body="A done-for-you AI front desk for chiropractic practices. Missed new-patient calls recovered in under 60 seconds, automated reminders that cut no-shows, and quiet reactivation that brings lapsed patients back — without adding staff."
-        footnote="Works with ChiroTouch, Jane, Cliniko, Genesis, and most chiropractic EHR and practice management systems."
+        footnote="Works with most chiropractic EHR and practice management systems. Tell us what you run on your intro call and we will confirm fit."
         primaryCta={{ label: "Book a Free Chiropractic Audit", href: "/book" }}
         secondaryCta={{
           label: "See how it handles new patient calls",

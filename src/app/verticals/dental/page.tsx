@@ -72,7 +72,7 @@ const dentalConcerns: DentalConcern[] = [
     tag: "PMS integration",
     title: "It layers on top of your PMS. You do not replace anything.",
     worry:
-      "Most dental offices are running Dentrix, Eaglesoft, Open Dental, or Curve. Rip-and-replace is a non-starter and you have already invested years of clinical data, templates, and staff training into your current system.",
+      "Most dental offices are running an established practice management system. Rip-and-replace is a non-starter and you have already invested years of clinical data, templates, and staff training into your current system.",
     answer:
       "The Noell system sits in front of your PMS. We read availability out of your practice management software, push confirmed bookings back in, and leave your clinical workflow alone. Your hygiene schedule, perio tracking, and insurance routing stay exactly where they are.",
   },
@@ -105,13 +105,13 @@ const dentalConcerns: DentalConcern[] = [
   },
 ];
 
-const pmsSystems = [
-  "Dentrix",
-  "Dentrix Ascend",
-  "Eaglesoft",
-  "Open Dental",
-  "Curve Dental",
-  "Denticon",
+const pmsCategories = [
+  { label: "Server-based PMS", caption: "on-premise" },
+  { label: "Cloud PMS", caption: "browser-based" },
+  { label: "Multi-location DSO platforms", caption: "enterprise" },
+  { label: "Imaging-integrated PMS", caption: "clinical-stack" },
+  { label: "Insurance-first PMS", caption: "billing-stack" },
+  { label: "Custom & legacy systems", caption: "case-by-case" },
 ];
 
 const dentalCapabilities = [
@@ -155,9 +155,9 @@ const dentalCapabilities = [
 
 const dentalFaqs = [
   {
-    question: "Does this replace Dentrix or Eaglesoft?",
+    question: "Does this replace my dental practice management system?",
     answer:
-      "No. The Noell system layers on top of your existing PMS. Dentrix, Dentrix Ascend, Eaglesoft, Open Dental, Curve, and Denticon are all supported. Your clinical charting, perio tracking, insurance, and treatment plans stay in your PMS. We handle the communication layer and the scheduling touchpoints.",
+      "No. The Noell system layers on top of your existing PMS. Your clinical charting, perio tracking, insurance, and treatment plans stay where they are. We handle the communication layer and the scheduling touchpoints. Tell us what you run on your audit call and we will confirm fit.",
   },
   {
     question: "Is this HIPAA safe?",
@@ -285,8 +285,8 @@ export default function DentalVerticalPage() {
         headlineLine1Accent="the patient in the chair,"
         headlineLine2Start="the next one"
         headlineLine2Accent="is picking another office."
-        body="A done-for-you AI front desk for dental practices. Catch every new patient call in under 60 seconds, reactivate unscheduled treatment, and stop losing chair time to missed calls. We layer on top of Dentrix, Eaglesoft, Open Dental, and Curve. Your clinical workflow does not change."
-        footnote="Built for general, family, cosmetic, and pediatric dental practices running Dentrix, Dentrix Ascend, Eaglesoft, Open Dental, Curve, or Denticon."
+        body="A done-for-you AI front desk for dental practices. Catch every new patient call in under 60 seconds, reactivate unscheduled treatment, and stop losing chair time to missed calls. We layer on top of your existing dental practice management system. Your clinical workflow does not change."
+        footnote="Built for general, family, cosmetic, and pediatric dental practices running any major practice management system."
         primaryCta={{ label: "Get Your Free Dental Audit", href: "/book" }}
         secondaryCta={{ label: "See how it layers on your PMS", href: "#layers-on-pms" }}
         mockScreen={dentalScreen}
@@ -384,14 +384,14 @@ export default function DentalVerticalPage() {
 
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {pmsSystems.map((pms) => (
+            {pmsCategories.map((cat) => (
               <div
-                key={pms}
+                key={cat.label}
                 className="rounded-[14px] border border-white/10 bg-white/[0.04] px-4 py-4 text-center"
               >
-                <p className="font-serif text-lg text-cream">{pms}</p>
+                <p className="font-serif text-base text-cream leading-snug">{cat.label}</p>
                 <p className="font-mono text-[9px] uppercase tracking-widest text-cream/60 mt-1">
-                  supported
+                  {cat.caption}
                 </p>
               </div>
             ))}

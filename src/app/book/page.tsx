@@ -161,10 +161,9 @@ export default function BookPage() {
             recovered revenue.
           </p>
           <p className="mt-5 text-sm text-charcoal/70 leading-relaxed">
-            We work alongside booking workflows in tools like Boulevard,
-            Mangomint, Vagaro, Mindbody, Square Appointments, Acuity, Jane,
-            Dentrix, Eaglesoft, Open Dental, and Curve. Based in Orange
-            County, California. Served nationally.
+            We work alongside the booking and practice management software
+            your business already uses. Based in Orange County, California.
+            Served nationally.
           </p>
         </div>
       </section>

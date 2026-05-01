@@ -128,9 +128,9 @@ const salonCapabilities = [
 
 const salonFaqs = [
   {
-    question: "Does this work with Vagaro, Boulevard, or Square Appointments?",
+    question: "Does this work with my salon booking platform?",
     answer:
-      "Yes. The Noell system layers on top of the major salon booking platforms (Vagaro, Boulevard, Square, Mindbody, GlossGenius, and Fresha). Your staff keep using the software they already know. We handle the communication and reminder layer on top.",
+      "Yes. The Noell system layers on top of the major salon booking platforms. Your staff keep using the software they already know. We handle the communication and reminder layer on top. Tell us what you run on your audit call and we will confirm fit.",
   },
   {
     question: "Can each stylist have their own tone in messages?",
@@ -223,7 +223,7 @@ export default function SalonsVerticalPage() {
         headlineLine2Start="Missed calls"
         headlineLine2Accent="close it early."
         body="A done-for-you AI front desk for hair and color salons. Rebook rate protected by column, missed calls routed to the right stylist, and chair utilization climbing without adding a front-desk hire."
-        footnote="Built for full-service salons, color-specialist studios, and multi-stylist shops running Vagaro, Boulevard, Square, Mindbody, GlossGenius, or Fresha."
+        footnote="Built for full-service salons, color-specialist studios, and multi-stylist shops running any major booking platform."
         primaryCta={{ label: "Get Your Free Salon Audit", href: "/book" }}
         secondaryCta={{
           label: "See how it protects rebook rate",

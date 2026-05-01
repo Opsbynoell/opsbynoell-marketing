@@ -36,7 +36,7 @@ const defaultFaqs: FaqItem[] = [
   {
     question: "Do I need to replace my current booking tool?",
     answer:
-      "No. We integrate with the major scheduling platforms (Calendly, Acuity, Vagaro, and similar). The Noell system layers on top with smart booking logic, missed-call recovery, reminders, and review capture.",
+      "No. We integrate with the major scheduling and practice management platforms. The Noell system layers on top with smart booking logic, missed-call recovery, reminders, and review capture.",
   },
   {
     question: "What does \"managed\" actually mean?",

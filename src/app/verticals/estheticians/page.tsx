@@ -145,7 +145,7 @@ const estheticianFaqs = [
   {
     question: "What booking tools do you support?",
     answer:
-      "We layer on top of the booking tools estheticians actually use: Boulevard, Vagaro, Square Appointments, Acuity, GlossGenius, Mindbody, and similar. Your clinical notes and treatment plan records stay in your current system.",
+      "We layer on top of the booking and client management tools estheticians actually use. Your clinical notes and treatment plan records stay in your current system. Tell us what you run on your audit call and we will confirm fit.",
   },
 ];
 
@@ -225,7 +225,7 @@ export default function EstheticiansVerticalPage() {
         headlineLine2Start="The system keeps them"
         headlineLine2Accent="coming back for the routine."
         body="A done-for-you AI front desk for licensed estheticians and skincare studios. Treatment plans held on cadence, routine facials rebooked at the right window, membership quietly protected. All in a tone that sounds like you."
-        footnote="Built for licensed estheticians, skincare studios, and membership-based practices running Boulevard, Vagaro, Square, Acuity, GlossGenius, or Mindbody."
+        footnote="Built for licensed estheticians, skincare studios, and membership-based practices running any major booking platform."
         primaryCta={{ label: "Get Your Free Skincare Audit", href: "/book" }}
         secondaryCta={{
           label: "See how the plan stays on cadence",

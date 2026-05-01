@@ -98,7 +98,7 @@ const frontDeskFaqs = [
   {
     question: "Does it integrate with my current booking tool?",
     answer:
-      "Yes. We layer the Noell system on top of the major scheduling platforms (Calendly, Acuity, Vagaro, and similar) and extend them with smart booking logic, reminders, reschedules, review capture, and reactivation.",
+      "Yes. We layer the Noell system on top of the major scheduling and practice management platforms and extend them with smart booking logic, reminders, reschedules, review capture, and reactivation.",
   },
   {
     question: "What does \"managed\" actually mean?",

@@ -37,7 +37,7 @@ const rows: CompareRow[] = [
   {
     capability: "Works with your booking tool",
     opsByNoell:
-      "Yes. Installed around Calendly, Acuity, Vagaro, practice management, or whatever you already use.",
+      "Yes. Installed around the booking, scheduling, or practice management software you already use.",
     alternative:
       "Depends on the integration list. Often limited to calendar links.",
   },

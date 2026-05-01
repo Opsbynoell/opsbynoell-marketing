@@ -96,14 +96,15 @@ const processSteps: ProcessStep[] = [
   },
 ];
 
-const marqueeIntegrations = [
-  "Dentrix",
-  "Open Dental",
-  "Mindbody",
-  "Boulevard",
-  "Vagaro",
-  "ServiceTitan",
-  "Housecall Pro",
+const supportedCategories = [
+  { label: "Dental practice management", caption: "PMS-layer" },
+  { label: "Salon & spa booking", caption: "booking-layer" },
+  { label: "Med spa & wellness scheduling", caption: "booking-layer" },
+  { label: "Massage & solo wellness", caption: "booking-layer" },
+  { label: "Chiropractic EHR", caption: "EHR-layer" },
+  { label: "Home services field management", caption: "FSM-layer" },
+  { label: "General scheduling tools", caption: "calendar-layer" },
+  { label: "Custom & in-house systems", caption: "case-by-case" },
 ];
 
 export default function SystemsPage() {
@@ -287,22 +288,29 @@ export default function SystemsPage() {
 
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {marqueeIntegrations.map((tool) => (
+            {supportedCategories.map((cat) => (
               <div
-                key={tool}
+                key={cat.label}
                 className="rounded-[14px] border border-white/10 bg-white/[0.04] px-4 py-5 text-center"
               >
-                <p className="font-serif text-lg text-cream">{tool}</p>
+                <p className="font-serif text-base text-cream leading-snug">{cat.label}</p>
                 <p className="font-mono text-[9px] uppercase tracking-widest text-cream/60 mt-1">
-                  supported
+                  {cat.caption}
                 </p>
               </div>
             ))}
           </div>
           <p className="text-center text-sm text-cream/60 mt-8 max-w-2xl mx-auto leading-relaxed">
-            Also supported: Dentrix Ascend, Eaglesoft, Curve Dental, Denticon,
-            Booker, Jobber, and most vertical-standard tools. If yours isn&apos;t
-            listed, the audit tells us whether it&apos;s supported.
+            We work with most vertical-standard booking, PMS, EHR, and field
+            service platforms. Tell us what you run on your audit call and we
+            will confirm fit.
+          </p>
+          <p className="text-center text-xs text-cream/40 mt-4 max-w-2xl mx-auto leading-relaxed">
+            Ops by Noell is an independent service provider and is not
+            affiliated with, endorsed by, or a certified partner of any
+            specific scheduling, practice management, or field service
+            platform. All third-party brand names are the property of their
+            respective owners.
           </p>
           <p className="text-center text-xs text-cream/65 mt-6 max-w-2xl mx-auto leading-relaxed">
             Deep two-way integration (read availability, write bookings back)
