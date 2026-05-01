@@ -91,7 +91,7 @@ export default function Home() {
         headlineLine2Accent="that stop that."
         headlineLine2Smaller={false}
         body="Every missed call, every no-show, every slow follow-up is revenue walking out the door. We build done-for-you AI front desks for massage therapists, dental practices, med spas, and local service businesses — installed in 14 days, running in the background while you do the work you’re actually good at."
-        footnote="Done for you. Built around booking workflows in tools like Boulevard, Mangomint, Vagaro, Mindbody, Square Appointments, Acuity, Jane, Dentrix, Eaglesoft, Open Dental, and Curve."
+        footnote="Done for you. Built around the booking and practice management software your business already uses."
         primaryCta={{ label: "See What You’re Losing", href: "/resources/revenue-calculator" }}
         secondaryCta={{ label: "Book a Free Audit", href: "/book" }}
         showProofBar={false}

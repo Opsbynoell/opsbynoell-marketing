@@ -20,17 +20,18 @@ export function IntegrationBand({ className }: IntegrationBandProps) {
           Built around the booking workflows you already use.
         </h2>
         <p className="mt-5 text-base text-charcoal/80 leading-relaxed">
-          Designed to support service businesses using tools like Boulevard,
-          Mangomint, Vagaro, Mindbody, Square, Square Appointments, Acuity,
-          Jane, Dentrix, Eaglesoft, Open Dental, and Curve. Your booking system
-          stays the system of record. We build the front desk layer around it
-          and run it every day.
+          Designed to support service businesses across salons, spas, dental,
+          and wellness — using whichever booking or practice management
+          software you already run. Your booking system stays the system of
+          record. We build the front desk layer around it and run it every
+          day.
         </p>
         <p className="mt-5 text-xs text-muted-strong leading-relaxed max-w-2xl mx-auto">
-          We are not a native partner or certified integration of these
-          systems. We design the front desk layer around the booking workflows
-          they support. If you do not see your system listed, ask on the
-          working call. Most front desk workflows can be built around it.
+          We are an independent service provider and are not affiliated with,
+          endorsed by, or a certified partner of any specific scheduling or
+          practice management platform. We design the front desk layer around
+          the booking workflows your software supports. Tell us what you use
+          on the working call and we will confirm fit.
         </p>
       </div>
     </section>
