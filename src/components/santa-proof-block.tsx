@@ -18,9 +18,10 @@ export function SantaProofBlock({ className }: SantaProofBlockProps) {
           Case study · Healing Hands by Santa · Laguna Niguel, CA
         </p>
         <p className="font-serif text-xl md:text-2xl text-charcoal leading-snug mb-5">
-          Santa Essenberge has been a licensed massage therapist for 25 years.
-          Before Ops by Noell, her phone went quiet every time she was with a client.
-          No one followed up. Clients booked elsewhere.
+          Santa, owner of Healing Hands by Santa, has been a licensed massage
+          therapist for 25 years. Before Ops by Noell, her phone went quiet
+          every time she was with a client. No one followed up. Clients
+          booked elsewhere.
         </p>
         <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="text-center">

@@ -333,8 +333,8 @@ export function RevenueCalculator() {
 
           {/* Assumption note */}
           <p className="text-[11px] text-charcoal/50 leading-relaxed mb-6">
-            Model assumes +21.5% booking conversion lift and 67.5% no-show reduction (midpoints of verified ranges). 
-            Santa Essenberge saw 75% no-show reduction and $960 recovered in 14 days. 
+            Model assumes +21.5% booking conversion lift and 67.5% no-show reduction (midpoints of verified ranges).
+            Healing Hands by Santa saw 75% no-show reduction and $960 recovered in 14 days.
             Your results depend on lead volume, timing, and existing workflow.
           </p>
 

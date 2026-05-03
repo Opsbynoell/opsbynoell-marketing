@@ -616,7 +616,7 @@ export default function PredictiveCustomerIntelligencePage() {
         eyebrow="Proof"
         headlineStart="The system that recovered $960 in 14 days for one massage therapist"
         headlineAccent="runs the same way for you."
-        body="Santa, a massage therapist in Laguna Niguel, went from digital patchwork to a system that watched her client patterns, caught her missed calls, and protected her calendar. Inside 14 days, the system had paid for itself."
+        body="Santa, owner of Healing Hands by Santa, a licensed massage therapist in Laguna Niguel, went from digital patchwork to a system that watched her client patterns, caught her missed calls, and protected her calendar. Inside 14 days, the system had paid for itself."
         ctaLabel="Book your free audit"
         sourcePage={SOURCE_PAGE}
         sourceSection="proof"

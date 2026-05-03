@@ -222,7 +222,7 @@ Variables: `{{1}}` = first name, `{{2}}` = Google review URL
 **Template name:** `healing_hands_reactivation`  
 **Body text:**
 ```
-Hi {{1}}, it's been a while and I'd love to see you back on my table. I have openings this week: {{2}} — Santa
+Hi {{1}}, it's been a while and I'd love to see you back in for an appointment. I have openings this week: {{2}} — Santa
 ```
 Variables: `{{1}}` = first name, `{{2}}` = booking URL
 
