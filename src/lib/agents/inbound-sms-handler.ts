@@ -1,16 +1,23 @@
 /**
- * Two-way SMS reply bridge — core handler logic.
+ * Two-way SMS reply bridge - core handler logic.
  *
  * Extracted from the Next.js route so it can be unit-tested without
  * needing the Next.js runtime or a bundler.
  *
  * Phone semantics (CRITICAL):
- *   Outbound alert:  from = fromNumber (+19499973915)  →  to = alertSmsTo (+19497849726)
- *   Nikki's reply:   from = +19497849726               →  to = +19499973915
- *   Table key:       from_phone = alertSmsTo (the REPLIER)
- *                    to_phone   = fromNumber (the receiver / LC Phone)
+ *   Outbound alert:  from = fromNumber (shared client number)  ->  to = <one of alertSmsTo[]> (operator)
+ *   Operator reply:  from = <that operator>                    ->  to = fromNumber
+ *   Table key:       from_phone = operator (the REPLIER)
+ *                    to_phone   = fromNumber (the shared client number)
+ *
+ * Multi-operator: one client may have several operator phones in
+ * cfg.smsConfig.alertSmsTo. Each operator gets its own row in
+ * sms_alert_sessions, keyed by (from_phone, to_phone). cfg.smsConfig.operators
+ * maps operator phone -> display name (e.g. "Nikki", "Santa") so the
+ * inserted message attributes correctly.
  */
 
+import { getClientConfig } from "./config";
 import { sbInsert, sbSelect, sbUpdate } from "./supabase";
 
 // ---------------------------------------------------------------------------
@@ -26,16 +33,16 @@ export interface SmsAlertSessionRow {
 }
 
 export interface InboundSmsPayload {
-  /** Sender phone (E.164) — the owner / alertSmsTo. Maps to from_phone in table. */
+  /** Sender phone (E.164) - the operator. Maps to from_phone in table. */
   fromPhone: string;
   /**
-   * Receiving LC Phone (E.164) — the fromNumber used for outbound. Maps to to_phone.
-   * Optional: when absent the handler falls back to the most recent session row
-   * matching from_phone (ORDER BY created_at DESC LIMIT 1). Safe because one owner
-   * phone normally has only one active session at a time.
+   * Receiving shared client number (E.164) - the fromNumber used for
+   * outbound. Maps to to_phone. Optional: when absent the handler falls
+   * back to the most recent session row matching from_phone (ORDER BY
+   * created_at DESC LIMIT 1).
    */
   toPhone: string | null;
-  /** The SMS body text sent by the owner. */
+  /** The SMS body text sent by the operator. */
   messageText: string;
 }
 
@@ -47,10 +54,6 @@ export type InboundSmsResult =
 // Table routing
 // ---------------------------------------------------------------------------
 
-/**
- * Resolve the Supabase table names for a given agent kind.
- * Mirrors the logic in takeover/route.ts and message/route.ts.
- */
 export function resolveTables(agent: string): {
   sessionsTable: string;
   messagesTable: string;
@@ -76,7 +79,7 @@ export function resolveTables(agent: string): {
         sessionIdField: "session_id",
       };
     default:
-      // "support" → chatSessions / chatMessages (legacy camelCase columns)
+      // "support" -> chatSessions / chatMessages (legacy camelCase columns)
       return {
         sessionsTable: "chatSessions",
         messagesTable: "chatMessages",
@@ -88,42 +91,88 @@ export function resolveTables(agent: string): {
 }
 
 // ---------------------------------------------------------------------------
-// Core handler
+// Operator attribution + label stripping
 // ---------------------------------------------------------------------------
 
 /**
- * Handle an inbound owner SMS and route it into the visitor's session.
+ * Resolve the human-readable operator name for a given sender phone by
+ * looking up cfg.smsConfig.operators[fromPhone]. Falls back to
+ * "Operator" when the phone is not in the map (and never crashes).
  *
- * Steps:
- *   1. Look up sms_alert_sessions by (from_phone, to_phone)
- *   2. If not found → return no-op (unknown sender)
- *   3. Insert a human message with author "Nikki (human)"
- *   4. Flip humanTakeover=true on the session
+ * Returns also the optional clientLabel so the caller can strip a
+ * leading "[Label] " prefix the operator may have echoed back from the
+ * relayed message body.
  */
+async function resolveOperatorContext(
+  clientId: string,
+  fromPhone: string
+): Promise<{ operatorName: string; clientLabel: string | null }> {
+  try {
+    const cfg = await getClientConfig(clientId);
+    const operatorsRaw = cfg.smsConfig?.operators;
+    let operatorName = "Operator";
+    if (operatorsRaw && typeof operatorsRaw === "object" && !Array.isArray(operatorsRaw)) {
+      const map = operatorsRaw as Record<string, unknown>;
+      const candidate = map[fromPhone];
+      if (typeof candidate === "string" && candidate.trim().length > 0) {
+        operatorName = candidate.trim();
+      }
+    }
+    const labelRaw = cfg.smsConfig?.clientLabel;
+    const clientLabel =
+      typeof labelRaw === "string" && labelRaw.trim().length > 0
+        ? labelRaw.trim()
+        : null;
+    return { operatorName, clientLabel };
+  } catch (err) {
+    console.warn(
+      `[inbound-sms] could not load client config for ${clientId} - falling back to "Operator":`,
+      err instanceof Error ? err.message : err
+    );
+    return { operatorName: "Operator", clientLabel: null };
+  }
+}
+
+/**
+ * Strip a leading `[clientLabel] ` prefix from the message body, only
+ * when the label matches exactly. Operators sometimes hit reply on the
+ * relayed prefixed message; we don't want that prefix echoed back into
+ * the visitor session.
+ */
+function stripClientLabelPrefix(text: string, clientLabel: string | null): string {
+  if (!clientLabel) return text;
+  const prefix = `[${clientLabel}] `;
+  if (text.startsWith(prefix)) {
+    return text.slice(prefix.length);
+  }
+  return text;
+}
+
+// ---------------------------------------------------------------------------
+// Core handler
+// ---------------------------------------------------------------------------
+
 export async function handleInboundSms(
   payload: InboundSmsPayload
 ): Promise<InboundSmsResult> {
   const { fromPhone, toPhone, messageText } = payload;
 
-  // ── 1. Look up session mapping ───────────────────────────────────────────
+  // 1. Look up session mapping
   let mapping: SmsAlertSessionRow | null = null;
   try {
     if (toPhone) {
-      // Exact match when toNumber is provided.
       const rows = await sbSelect<SmsAlertSessionRow>(
         "sms_alert_sessions",
         {
           from_phone: `eq.${fromPhone}`,
-          to_phone:   `eq.${toPhone}`,
+          to_phone: `eq.${toPhone}`,
         },
         { limit: 1 }
       );
       mapping = rows[0] ?? null;
     } else {
-      // toNumber was absent from the webhook — fall back to most recent session
-      // for this sender. One owner phone normally has only one active session.
       console.info(
-        `[inbound-sms] toPhone missing for ${fromPhone} — falling back to most recent session`
+        `[inbound-sms] toPhone missing for ${fromPhone} - falling back to most recent session`
       );
       const rows = await sbSelect<SmsAlertSessionRow>(
         "sms_alert_sessions",
@@ -141,19 +190,28 @@ export async function handleInboundSms(
 
   if (!mapping) {
     console.warn(
-      `[inbound-sms] No session mapping for from=${fromPhone} to=${toPhone} — no-op`
+      `[inbound-sms] No session mapping for from=${fromPhone} to=${toPhone} - no-op`
     );
     return { ok: false, reason: "no_mapping" };
   }
 
-  const { session_id, agent } = mapping;
-  const text = messageText.trim() || "(empty)";
+  const { session_id, agent, client_id } = mapping;
 
-  console.info(
-    `[inbound-sms] Reply from ${fromPhone} → session=${session_id} agent=${agent}: "${text.slice(0, 80)}"`
+  // 2. Resolve operator name + client label so we can attribute the
+  // message and strip an echoed-back prefix.
+  const { operatorName, clientLabel } = await resolveOperatorContext(
+    client_id,
+    fromPhone
   );
 
-  // ── 2. Resolve tables for the agent ──────────────────────────────────────
+  const stripped = stripClientLabelPrefix(messageText, clientLabel);
+  const text = stripped.trim() || "(empty)";
+
+  console.info(
+    `[inbound-sms] Reply from ${fromPhone} (${operatorName}) -> session=${session_id} agent=${agent}: "${text.slice(0, 80)}"`
+  );
+
+  // 3. Resolve tables for the agent
   const {
     sessionsTable,
     messagesTable,
@@ -162,12 +220,12 @@ export async function handleInboundSms(
     sessionIdField,
   } = resolveTables(agent);
 
-  // ── 3. Insert message + flip takeover ────────────────────────────────────
+  // 4. Insert message + flip takeover
   const messageRow: Record<string, unknown> = {
     [sessionIdField]: session_id,
     role: "human",
     content: text,
-    author: "Nikki (human)",
+    author: `${operatorName} (human)`,
   };
 
   const sessionPatch: Record<string, unknown> = {
@@ -178,11 +236,7 @@ export async function handleInboundSms(
   try {
     await Promise.all([
       sbInsert(messagesTable, messageRow),
-      sbUpdate(
-        sessionsTable,
-        { id: `eq.${session_id}` },
-        sessionPatch
-      ),
+      sbUpdate(sessionsTable, { id: `eq.${session_id}` }, sessionPatch),
     ]);
   } catch (err) {
     console.error(
@@ -196,18 +250,9 @@ export async function handleInboundSms(
 }
 
 // ---------------------------------------------------------------------------
-// Payload extractor — normalises GHL/LC webhook variants
+// Payload extractor - normalises GHL/LC/Twilio webhook variants
 // ---------------------------------------------------------------------------
 
-/**
- * Extract phones and message text from any GHL webhook body variant.
- *
- * GHL Conversations webhook (primary):
- *   { phone: "+1...", toNumber: "+1...", body: "..." }
- *
- * LC Workflow action (alternate):
- *   { from: "+1...", to: "+1...", message: "..." }
- */
 export function extractInboundPayload(
   body: Record<string, unknown>
 ): { fromPhone: string; toPhone: string | null; messageText: string } | null {

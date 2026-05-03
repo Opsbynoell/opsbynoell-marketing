@@ -2,20 +2,20 @@
  * Tests for the two-way SMS reply bridge.
  *
  * Tests handleInboundSms() and extractInboundPayload() from
- * inbound-sms-handler.ts — the pure logic layer, decoupled from the
+ * inbound-sms-handler.ts - the pure logic layer, decoupled from the
  * Next.js route wrapper.
  *
  * Phone semantic verification (the most common bug in two-way bridges):
- *   Outbound alert:  from = fromNumber (+19499973915)  →  to = alertSmsTo (+19497849726)
- *   Nikki's reply:   from = +19497849726               →  to = +19499973915
- *   Table key:       from_phone = alertSmsTo (+19497849726)   ← REPLIER
- *                    to_phone   = fromNumber (+19499973915)   ← LC Phone
+ *   Outbound alert:  from = fromNumber  ->  to = <one of alertSmsTo[]>
+ *   Operator reply:  from = <that operator>  ->  to = fromNumber
+ *   Table key:       from_phone = operator (REPLIER)
+ *                    to_phone   = fromNumber (shared client number)
  */
 
 import { strict as assert } from "node:assert";
 import { mock, test } from "node:test";
 
-// ── Mocks ──────────────────────────────────────────────────────────────────
+// Mocks
 
 const sbSelectCalls: Array<{ table: string; params: Record<string, unknown> }> = [];
 const sbInsertCalls: Array<{ table: string; row: Record<string, unknown> }> = [];
@@ -25,13 +25,30 @@ const sbUpdateCalls: Array<{
   patch: Record<string, unknown>;
 }> = [];
 
-// Overrideable session mapping returned by sbSelect.
 let mockMapping: Record<string, unknown> | null = {
   from_phone: "+19497849726",
   to_phone: "+19499973915",
   session_id: "sess-uuid-001",
   agent: "support",
-  client_id: "client-abc",
+  client_id: "opsbynoell",
+};
+
+// Per-client config returned by getClientConfig mock.
+let mockClientCfg: Record<string, Record<string, unknown>> = {
+  opsbynoell: {
+    smsConfig: {
+      operators: { "+19497849726": "Nikki" },
+    },
+  },
+  santa: {
+    smsConfig: {
+      operators: {
+        "+19497849726": "Nikki",
+        "+19493030798": "Santa",
+      },
+      clientLabel: "Santa",
+    },
+  },
 };
 
 mock.module("./supabase.ts", {
@@ -59,10 +76,27 @@ mock.module("./supabase.ts", {
   },
 });
 
+mock.module("./config.ts", {
+  namedExports: {
+    getClientConfig: async (clientId: string) => {
+      const cfg = mockClientCfg[clientId];
+      if (!cfg) throw new Error(`Unknown clientId: ${clientId}`);
+      return {
+        clientId,
+        businessName: clientId,
+        vertical: "test",
+        agents: { support: true, frontDesk: true, care: true },
+        active: true,
+        ...cfg,
+      };
+    },
+  },
+});
+
 const { handleInboundSms, extractInboundPayload, resolveTables } =
   await import("./inbound-sms-handler.ts");
 
-// ── Helpers ────────────────────────────────────────────────────────────────
+// Helpers
 
 function resetCalls() {
   sbSelectCalls.length = 0;
@@ -70,7 +104,7 @@ function resetCalls() {
   sbUpdateCalls.length = 0;
 }
 
-// ── Unit tests: extractInboundPayload ──────────────────────────────────────
+// extractInboundPayload
 
 test("extractInboundPayload: primary GHL shape (phone / toNumber / body)", () => {
   const result = extractInboundPayload({
@@ -109,9 +143,9 @@ test("extractInboundPayload: returns payload with toPhone=null when toNumber is 
   assert.equal(result.messageText, "hello");
 });
 
-// ── Unit tests: resolveTables ──────────────────────────────────────────────
+// resolveTables
 
-test("resolveTables: support → chatSessions / chatMessages (camelCase)", () => {
+test("resolveTables: support -> chatSessions / chatMessages (camelCase)", () => {
   const t = resolveTables("support");
   assert.equal(t.sessionsTable, "chatSessions");
   assert.equal(t.messagesTable, "chatMessages");
@@ -119,7 +153,7 @@ test("resolveTables: support → chatSessions / chatMessages (camelCase)", () =>
   assert.equal(t.sessionIdField, "sessionId");
 });
 
-test("resolveTables: frontDesk → front_desk_sessions / front_desk_messages", () => {
+test("resolveTables: frontDesk -> front_desk_sessions / front_desk_messages", () => {
   const t = resolveTables("frontDesk");
   assert.equal(t.sessionsTable, "front_desk_sessions");
   assert.equal(t.messagesTable, "front_desk_messages");
@@ -127,7 +161,7 @@ test("resolveTables: frontDesk → front_desk_sessions / front_desk_messages", (
   assert.equal(t.sessionIdField, "session_id");
 });
 
-test("resolveTables: care → care_sessions / care_messages", () => {
+test("resolveTables: care -> care_sessions / care_messages", () => {
   const t = resolveTables("care");
   assert.equal(t.sessionsTable, "care_sessions");
   assert.equal(t.messagesTable, "care_messages");
@@ -135,33 +169,24 @@ test("resolveTables: care → care_sessions / care_messages", () => {
   assert.equal(t.sessionIdField, "session_id");
 });
 
-// ── Integration tests: handleInboundSms ───────────────────────────────────
+// handleInboundSms
 
-test("phone semantics: looks up (from_phone=alertSmsTo, to_phone=fromNumber)", async () => {
+test("phone semantics: looks up (from_phone=operator, to_phone=fromNumber)", async () => {
   resetCalls();
-  // Nikki (+19497849726) replies to the LC Phone (+19499973915).
   await handleInboundSms({
-    fromPhone: "+19497849726", // owner / alertSmsTo → will be inbound `from`
-    toPhone: "+19499973915",   // LC Phone / fromNumber → will be inbound `to`
+    fromPhone: "+19497849726",
+    toPhone: "+19499973915",
     messageText: "Heyyyyyy",
   });
 
   assert.equal(sbSelectCalls.length, 1);
   assert.equal(sbSelectCalls[0].table, "sms_alert_sessions");
   const params = sbSelectCalls[0].params as Record<string, string>;
-  assert.equal(
-    params.from_phone,
-    "eq.+19497849726",
-    "from_phone must be the replier (alertSmsTo / Nikki's cell)"
-  );
-  assert.equal(
-    params.to_phone,
-    "eq.+19499973915",
-    "to_phone must be the LC Phone (fromNumber used in outbound)"
-  );
+  assert.equal(params.from_phone, "eq.+19497849726");
+  assert.equal(params.to_phone, "eq.+19499973915");
 });
 
-test("known sender: inserts human message into chatMessages with author 'Nikki (human)'", async () => {
+test("known sender (opsbynoell): author resolves to 'Nikki (human)' from operators map", async () => {
   resetCalls();
   const result = await handleInboundSms({
     fromPhone: "+19497849726",
@@ -172,8 +197,6 @@ test("known sender: inserts human message into chatMessages with author 'Nikki (
   assert.equal(result.ok, true);
   if (!result.ok) throw new Error("expected ok");
   assert.equal(result.sessionId, "sess-uuid-001");
-
-  // One insert (message), one update (session patch).
   assert.equal(sbInsertCalls.length, 1);
   assert.equal(sbUpdateCalls.length, 1);
 
@@ -205,7 +228,7 @@ test("known sender (frontDesk): uses front_desk_messages and human_takeover", as
     to_phone: "+19499973915",
     session_id: "sess-fd-002",
     agent: "frontDesk",
-    client_id: "client-abc",
+    client_id: "opsbynoell",
   };
   try {
     const result = await handleInboundSms({
@@ -239,7 +262,7 @@ test("known sender (care): uses care_messages and human_takeover", async () => {
     to_phone: "+19499973915",
     session_id: "sess-care-003",
     agent: "care",
-    client_id: "client-abc",
+    client_id: "opsbynoell",
   };
   try {
     await handleInboundSms({
@@ -280,14 +303,13 @@ test("empty message body is stored as '(empty)'", async () => {
   await handleInboundSms({
     fromPhone: "+19497849726",
     toPhone: "+19499973915",
-    messageText: "   ", // whitespace only
+    messageText: "   ",
   });
   assert.equal(sbInsertCalls[0].row.content, "(empty)");
 });
 
 test("falls back to most recent row when toNumber is omitted", async () => {
   resetCalls();
-  // toPhone is null — no toNumber in the webhook body
   const result = await handleInboundSms({
     fromPhone: "+19497849726",
     toPhone: null,
@@ -298,15 +320,164 @@ test("falls back to most recent row when toNumber is omitted", async () => {
   if (!result.ok) throw new Error("expected ok");
   assert.equal(result.sessionId, "sess-uuid-001");
 
-  // Must query by from_phone only (no to_phone filter).
   assert.equal(sbSelectCalls.length, 1);
   const params = sbSelectCalls[0].params as Record<string, string>;
   assert.equal(params.from_phone, "eq.+19497849726");
-  assert.equal(params.to_phone, undefined, "should NOT filter by to_phone when toPhone is null");
+  assert.equal(params.to_phone, undefined);
 
-  // Still inserts the human message and flips takeover.
   assert.equal(sbInsertCalls.length, 1);
   assert.equal(sbUpdateCalls.length, 1);
   assert.equal(sbInsertCalls[0].row.content, "Calling without toNumber");
   assert.equal(sbInsertCalls[0].row.author, "Nikki (human)");
+});
+
+// Multi-operator (santa) cases
+
+test("santa: Nikki replying gets attributed 'Nikki (human)'", async () => {
+  resetCalls();
+  const saved = mockMapping;
+  mockMapping = {
+    from_phone: "+19497849726",
+    to_phone: "+19499196118",
+    session_id: "sess-santa-001",
+    agent: "support",
+    client_id: "santa",
+  };
+  try {
+    await handleInboundSms({
+      fromPhone: "+19497849726",
+      toPhone: "+19499196118",
+      messageText: "Got it",
+    });
+    assert.equal(sbInsertCalls[0].row.author, "Nikki (human)");
+  } finally {
+    mockMapping = saved;
+  }
+});
+
+test("santa: Santa replying gets attributed 'Santa (human)'", async () => {
+  resetCalls();
+  const saved = mockMapping;
+  mockMapping = {
+    from_phone: "+19493030798",
+    to_phone: "+19499196118",
+    session_id: "sess-santa-002",
+    agent: "support",
+    client_id: "santa",
+  };
+  try {
+    await handleInboundSms({
+      fromPhone: "+19493030798",
+      toPhone: "+19499196118",
+      messageText: "On my way",
+    });
+    assert.equal(sbInsertCalls[0].row.author, "Santa (human)");
+  } finally {
+    mockMapping = saved;
+  }
+});
+
+test("unknown operator phone falls back to 'Operator (human)' (does not crash)", async () => {
+  resetCalls();
+  const saved = mockMapping;
+  mockMapping = {
+    from_phone: "+15550009999",
+    to_phone: "+19499196118",
+    session_id: "sess-santa-003",
+    agent: "support",
+    client_id: "santa",
+  };
+  try {
+    const result = await handleInboundSms({
+      fromPhone: "+15550009999",
+      toPhone: "+19499196118",
+      messageText: "Who am I",
+    });
+    assert.equal(result.ok, true);
+    assert.equal(sbInsertCalls[0].row.author, "Operator (human)");
+  } finally {
+    mockMapping = saved;
+  }
+});
+
+test("santa: leading [Santa] prefix is stripped before insert", async () => {
+  resetCalls();
+  const saved = mockMapping;
+  mockMapping = {
+    from_phone: "+19497849726",
+    to_phone: "+19499196118",
+    session_id: "sess-santa-004",
+    agent: "support",
+    client_id: "santa",
+  };
+  try {
+    await handleInboundSms({
+      fromPhone: "+19497849726",
+      toPhone: "+19499196118",
+      messageText: "[Santa] sure, see you Friday",
+    });
+    assert.equal(sbInsertCalls[0].row.content, "sure, see you Friday");
+  } finally {
+    mockMapping = saved;
+  }
+});
+
+test("santa: prefix that does not match clientLabel is left intact", async () => {
+  resetCalls();
+  const saved = mockMapping;
+  mockMapping = {
+    from_phone: "+19497849726",
+    to_phone: "+19499196118",
+    session_id: "sess-santa-005",
+    agent: "support",
+    client_id: "santa",
+  };
+  try {
+    await handleInboundSms({
+      fromPhone: "+19497849726",
+      toPhone: "+19499196118",
+      messageText: "[Other] not stripped",
+    });
+    assert.equal(sbInsertCalls[0].row.content, "[Other] not stripped");
+  } finally {
+    mockMapping = saved;
+  }
+});
+
+test("opsbynoell: no clientLabel means [anything] is left untouched", async () => {
+  resetCalls();
+  // opsbynoell mock has no clientLabel.
+  await handleInboundSms({
+    fromPhone: "+19497849726",
+    toPhone: "+19499973915",
+    messageText: "[Santa] should remain",
+  });
+  assert.equal(sbInsertCalls[0].row.content, "[Santa] should remain");
+});
+
+test("getClientConfig failure does not crash; falls back to 'Operator (human)' and unstripped body", async () => {
+  resetCalls();
+  const savedCfg = mockClientCfg;
+  const savedMap = mockMapping;
+  mockClientCfg = {}; // any lookup throws
+  mockMapping = {
+    from_phone: "+19497849726",
+    to_phone: "+19499196118",
+    session_id: "sess-fallback-001",
+    agent: "support",
+    client_id: "ghost",
+  };
+  try {
+    const result = await handleInboundSms({
+      fromPhone: "+19497849726",
+      toPhone: "+19499196118",
+      messageText: "[Santa] still goes through",
+    });
+    assert.equal(result.ok, true);
+    assert.equal(sbInsertCalls[0].row.author, "Operator (human)");
+    assert.equal(sbInsertCalls[0].row.content, "[Santa] still goes through");
+  } finally {
+    mockClientCfg = savedCfg;
+    mockMapping = savedMap;
+  }
 });
