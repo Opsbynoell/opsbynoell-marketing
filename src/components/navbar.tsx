@@ -38,6 +38,7 @@ export const Navbar = () => {
     { name: "About", link: "/about" },
     { name: "Verticals", link: "/verticals" },
     { name: "Agents", link: "/agents" },
+    { name: "What You Get", link: "/what-you-get" },
     { name: "Pricing", link: "/pricing" },
     { name: "Noell Support", link: "/noell-support", isAccent: true },
     { name: "Book", link: "/book" },

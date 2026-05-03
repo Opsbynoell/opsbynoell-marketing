@@ -13,7 +13,7 @@ export function Testimonials({
   eyebrow = "Proof",
   headlineStart = "A quiet week.",
   headlineAccent = "Then a full calendar.",
-  body = "Santa, a massage therapist in Laguna Niguel, went from digital patchwork to a system that followed up, reminded clients, and protected her calendar. Inside 14 days, the system had paid for itself.",
+  body = "Santa, owner of Healing Hands by Santa, a licensed massage therapist in Laguna Niguel, went from digital patchwork to a system that followed up, reminded clients, and protected her calendar. Inside 14 days, the system had paid for itself.",
   ctaLabel = "Book your free audit",
   ctaHref = "/book",
   sourcePage,

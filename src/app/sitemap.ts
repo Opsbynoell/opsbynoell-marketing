@@ -18,6 +18,7 @@ const entries: Entry[] = [
     priority: 0.9,
   },
   { path: "/pricing", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/what-you-get", changeFrequency: "weekly", priority: 0.9 },
   { path: "/roi", changeFrequency: "monthly", priority: 0.7 },
   {
     path: "/resources/revenue-calculator",

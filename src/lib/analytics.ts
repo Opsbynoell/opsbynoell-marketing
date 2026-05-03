@@ -60,7 +60,8 @@ export type SourcePage =
   | "footer"
   | "global_chat"
   | "predictive-customer-intelligence"
-  | "revenue_calculator";
+  | "revenue_calculator"
+  | "what_you_get";
 
 /**
  * Semantic section where the click happened. Keep values kebab_case and

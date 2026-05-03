@@ -155,8 +155,9 @@ export default function BookPage() {
           </p>
           <p className="font-serif text-lg md:text-xl text-charcoal leading-snug">
             Currently keeping the front desk moving for Healing Hands by
-            Santa, a solo massage practice in Laguna Niguel. In fourteen days,
-            four missed calls turned into booked appointments and{" "}
+            Santa — a solo licensed therapeutic massage practice in Laguna
+            Niguel run by Santa, the owner. In fourteen days, four missed
+            calls turned into booked appointments and{" "}
             <span className="text-wine">nine hundred sixty dollars</span> in
             recovered revenue.
           </p>

@@ -28,7 +28,7 @@ export const metadata = pageMetadata({
   path: "/verticals/massage",
   title: "AI Front Desk for Massage Therapy",
   description:
-    "Hands on a client while the phone rings. Ops by Noell catches missed calls, confirms appointments, and keeps your calendar full without making you feel like a salesperson on top of being a therapist.",
+    "In session with a client while the phone rings. Ops by Noell catches missed calls, confirms appointments, and keeps your calendar full without making you feel like a salesperson on top of being a therapist.",
 });
 
 const massageStats = [
@@ -60,10 +60,10 @@ type Concern = {
 const massageConcerns: Concern[] = [
   {
     icon: <IconPhoneOff size={22} />,
-    tag: "On the table",
-    title: "Hands on a client while the phone rings.",
+    tag: "In session with a client",
+    title: "In session with a client while the phone rings.",
     worry:
-      "You are in a session. The phone buzzes in the other room. You hear it. You cannot answer it. By the time your client is off the table and the sheets are changed, the caller has already Googled another therapist in your zip code.",
+      "You are in a session. The phone buzzes in the other room. You hear it. You cannot answer it. By the time the appointment ends and the room is reset, the caller has already Googled another therapist in your zip code.",
     answer:
       "The missed call triggers an on-brand text in under ten seconds. Your next two openings, a warm note in your voice, and a direct booking link. Most prospects book themselves before you are even back at the front.",
   },
@@ -167,7 +167,7 @@ const massageScreen = (
       <div className="flex items-start justify-between">
         <div>
           <p className="text-[10px] uppercase tracking-widest text-wine/70 font-medium">
-            Missed call, on the table
+            Missed call, with a client
           </p>
           <p className="text-sm text-charcoal font-medium mt-0.5">Santa E.</p>
           <p className="text-[11px] text-charcoal/70">Auto-text sent, 8s</p>
@@ -218,8 +218,8 @@ export default function MassageVerticalPage() {
       />
       <Hero
         eyebrow="Ops by Noell for Massage Therapy"
-        headlineLine1Start="Hands on"
-        headlineLine1Accent="a client."
+        headlineLine1Start="In session"
+        headlineLine1Accent="with a client."
         headlineLine2Start="Phone"
         headlineLine2Accent="ringing off the hook."
         body="A done-for-you AI front desk for solo and small-team massage practices. Missed calls caught in seconds, reminders that keep no-shows low, and quiet reactivation that fills slow weeks before they show up on the calendar."

@@ -55,12 +55,13 @@ export default function CaseStudy() {
         meta="Orange County, CA · Solo massage practice · 14-day result"
       >
         <p>
-          Santa has run a solo massage practice in Orange County for almost a
-          decade. Most of her calendar is regulars, but her growth engine has
-          always been new-client intent from Google and word of mouth. Until
-          install, that intent lived and died on voicemail. Hands on a client,
-          phone ringing in the next room — by the time she could call back,
-          the caller had already booked somewhere else.
+          Santa, owner of Healing Hands by Santa, has run a solo licensed
+          massage practice in Orange County for almost a decade. Most of her
+          calendar is regulars, but her growth engine has always been
+          new-client intent from Google and word of mouth. Until install, that
+          intent lived and died on voicemail. In session with a client, phone
+          ringing in the next room — by the time she could call back, the
+          caller had already booked somewhere else.
         </p>
 
         <h2>The problem, in her words</h2>
